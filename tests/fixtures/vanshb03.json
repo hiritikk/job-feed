@@ -1,0 +1,82 @@
+[
+  {
+    "date_updated": 1743415809,
+    "url": "https://go.vansh.nyc/i2",
+    "company_name": "Qualcomm",
+    "title": "Embedded DSP Software Engineer",
+    "locations": [
+      "San Diego, CA"
+    ],
+    "sponsorship": "Other",
+    "active": true,
+    "source": "cvrve-bot",
+    "id": "5dac35b2-b148-49f8-b3f5-828ba68da99c",
+    "date_posted": 1743415809,
+    "company_url": "",
+    "is_visible": true
+  },
+  {
+    "date_updated": 1743854268,
+    "url": "https://go.vansh.nyc/ig",
+    "company_name": "Tesla",
+    "title": "Software Engineer, Traction Control & Stability",
+    "locations": [
+      "Palo Alto, CA"
+    ],
+    "sponsorship": "Other",
+    "active": true,
+    "source": "cvrve-bot",
+    "id": "fc942483-7ef4-4281-8187-1278fca8904a",
+    "date_posted": 1743854268,
+    "company_url": "",
+    "is_visible": true
+  },
+  {
+    "date_updated": 1744461114,
+    "url": "https://go.vansh.nyc/ir",
+    "company_name": "Tesla",
+    "title": "Software Engineer, Drivers & Control Plane, Dojo",
+    "locations": [
+      "Palo Alto, CA"
+    ],
+    "sponsorship": "Offers Sponsorship",
+    "active": true,
+    "source": "vanshb03",
+    "id": "f0c2be17-3aca-4d9f-b2b0-deabfbda7824",
+    "date_posted": 1744461114,
+    "company_url": "",
+    "is_visible": true
+  },
+  {
+    "date_updated": 1744461156,
+    "url": "https://go.vansh.nyc/is",
+    "company_name": "Tesla",
+    "title": "Software Engineer, Metrics, GenAI Model Evaluation",
+    "locations": [
+      "Palo Alto, CA"
+    ],
+    "sponsorship": "Offers Sponsorship",
+    "active": true,
+    "source": "vanshb03",
+    "id": "d58dd8cd-d5b1-4b7e-afba-c8a0952ed039",
+    "date_posted": 1744461156,
+    "company_url": "",
+    "is_visible": true
+  },
+  {
+    "date_updated": 1744461195,
+    "url": "https://go.vansh.nyc/it",
+    "company_name": "Tesla",
+    "title": "Frontend Engineer, GenAI Model Evaluation",
+    "locations": [
+      "Palo Alto, CA"
+    ],
+    "sponsorship": "Other",
+    "active": true,
+    "source": "vanshb03",
+    "id": "407a24d3-3108-4887-a98f-fccebb440501",
+    "date_posted": 1744461195,
+    "company_url": "",
+    "is_visible": true
+  }
+]
