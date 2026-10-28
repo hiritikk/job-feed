@@ -2,16 +2,11 @@ import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { fetchArbeitnow, fetchHimalayas, fetchJobicy, fetchRemoteOk, fetchRemotive, fetchTheMuse } from "./adapters/aggregators.js";
-import { fetchAshby } from "./adapters/ashby.js";
+import { ATS_FETCHERS } from "./adapters/ats.js";
 import { bigTechAdapters } from "./adapters/bigtech/index.js";
 import { communityAdapters } from "./adapters/communityLists.js";
-import { fetchGreenhouse } from "./adapters/greenhouse.js";
 import { fetchHnHiring } from "./adapters/hn.js";
 import { fetchAdzuna, fetchJooble } from "./adapters/keyed.js";
-import { fetchLever } from "./adapters/lever.js";
-import { fetchSmartRecruiters } from "./adapters/smartrecruiters.js";
-import { fetchWorkable } from "./adapters/workable.js";
-import { fetchWorkday } from "./adapters/workday.js";
 import { matchesRule, planNotifications, sendNtfy } from "./alerts.js";
 import { classify } from "./classify.js";
 import { loadAlertRules, loadCompanies, loadSources, type AlertRule } from "./config.js";
@@ -44,10 +39,6 @@ const FAMILY_FAILURE_LIMIT = 0.5;
 const COMPLETE_SOURCES = new Set(["greenhouse", "lever", "ashby", "workable", "simplify", "vanshb03", "speedyapply", "hanzili", "jobright"]);
 
 type Task = { source: string; run: () => Promise<{ raw: RawJob[]; carried?: Job[]; ok?: boolean; error?: string }> };
-const FETCHERS = {
-  greenhouse: fetchGreenhouse, lever: fetchLever, ashby: fetchAshby, workday: fetchWorkday,
-  workable: fetchWorkable, smartrecruiters: fetchSmartRecruiters,
-} as const;
 
 function loadPrev(dataDir: string): { state: State; firstRun: boolean } {
   const jobsPath = join(dataDir, "jobs.json");
@@ -74,7 +65,7 @@ function buildTasks(opts: RunOptions, prev: State): Task[] {
   const { http, env, sources } = opts;
   const tasks: Task[] = [];
 
-  for (const family of Object.keys(FETCHERS) as (keyof typeof FETCHERS)[]) {
+  for (const family of Object.keys(ATS_FETCHERS) as (keyof typeof ATS_FETCHERS)[]) {
     const entries = opts.companies.filter((c) => c.ats === family);
     if (entries.length === 0) continue;
     tasks.push({
@@ -85,7 +76,7 @@ function buildTasks(opts: RunOptions, prev: State): Task[] {
         const failed: string[] = [];
         await pool(entries, 8, async (entry) => {
           try {
-            raw.push(...(await FETCHERS[family](entry, http)));
+            raw.push(...(await ATS_FETCHERS[family](entry, http)));
           } catch (err) {
             failed.push(`${entry.name} (${(err as Error).message})`);
             // keep what we already knew about this company so one flaky board can't close its jobs

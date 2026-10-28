@@ -119,4 +119,34 @@ describe("runPipeline", () => {
     expect(jobs.map((j) => j.title)).toEqual(["Software Engineer, New Grad 2", "Software Engineer, New Grad 1"]);
     expect(jobs[0]).toMatchObject({ cities: ["Toronto"], postedPrecision: "exact", tier: 1 });
   });
+
+  test("company boards go through the real ATS path: a failing board keeps its previous jobs, a healthy one is fetched", async () => {
+    const dataDir = mkdtempSync(join(tmpdir(), "run-ats-"));
+    const boards: Record<string, unknown> = {
+      acme: { jobs: [{ id: 1, title: "Software Engineer, New Grad", absolute_url: "https://boards.greenhouse.io/acme/jobs/1", location: { name: "Toronto, ON" }, first_published: "2026-10-27T08:00:00Z", content: "" }] },
+      flaky: { jobs: [{ id: 2, title: "Backend Engineer, New Grad", absolute_url: "https://boards.greenhouse.io/flaky/jobs/2", location: { name: "Vancouver, BC" }, first_published: "2026-10-27T08:00:00Z", content: "" }] },
+    };
+    let flakyDown = false;
+    const http: Http = {
+      json: async (url: string) => {
+        const slug = /boards\/([^/]+)\/jobs/.exec(url)?.[1] ?? "";
+        if (slug === "flaky" && flakyDown) throw new Error("HTTP 503");
+        return boards[slug] as never;
+      },
+      text: async () => "",
+    };
+    const entries: CompanyEntry[] = [
+      { name: "Acme", ats: "greenhouse", slug: "acme", tier: 1 },
+      { name: "Flaky", ats: "greenhouse", slug: "flaky", tier: 1 },
+    ];
+    const probe: Probe = async (url) => ({ status: 200, finalUrl: url });
+    const go = (now: Date) => runPipeline({ dataDir, now, http, probe, env: {}, companies: entries, rules, siteUrl: "https://s.app", sources: {} });
+    await go(t0);
+    flakyDown = true;
+    await go(later(30));
+    const file = JSON.parse(readFileSync(join(dataDir, "jobs.json"), "utf8")) as JobsFile;
+    expect(file.jobs.map((j) => j.company).sort()).toEqual(["Acme", "Flaky"]);
+    expect(file.jobs.every((j) => j.closedAt === null)).toBe(true);
+    expect(file.sources.find((s) => s.source === "greenhouse")!.status).toBe("ok");
+  });
 });
