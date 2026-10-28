@@ -21,6 +21,22 @@ describe("createHttp", () => {
     expect(fetchImpl).toHaveBeenCalledTimes(2);
   });
 
+  test("429 honours Retry-After and retries once", async () => {
+    const fetchImpl = vi.fn()
+      .mockResolvedValueOnce(new Response("slow down", { status: 429, headers: { "retry-after": "0" } }))
+      .mockResolvedValueOnce(ok({ done: true }));
+    const http = createHttp({ fetchImpl: fetchImpl as unknown as typeof fetch, retryDelayMs: 0 });
+    expect(await http.json("https://x.test/a")).toEqual({ done: true });
+    expect(fetchImpl).toHaveBeenCalledTimes(2);
+  });
+
+  test("a persistent 429 throws HTTP 429 after the retry", async () => {
+    const fetchImpl = vi.fn(async () => new Response("slow down", { status: 429, headers: { "retry-after": "0" } }));
+    const http = createHttp({ fetchImpl: fetchImpl as unknown as typeof fetch, retryDelayMs: 0 });
+    await expect(http.json("https://x.test/a")).rejects.toThrow(/HTTP 429/);
+    expect(fetchImpl).toHaveBeenCalledTimes(2);
+  });
+
   test("a persistent 404 throws 'HTTP 404' without retrying", async () => {
     const fetchImpl = vi.fn(async () => new Response("nope", { status: 404 }));
     const http = createHttp({ fetchImpl: fetchImpl as unknown as typeof fetch, retryDelayMs: 0 });

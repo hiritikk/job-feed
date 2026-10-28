@@ -9,3 +9,9 @@ themuse: false   # unauthenticated API 403s from CloudFront under light use and 
 hn: true
 adzuna: true
 jooble: true
+# Big-tech career sites (own JSON endpoints, honest User-Agent, >= 1 s between requests)
+amazon: true
+google: true
+microsoft: true
+netflix: true
+oracle: true

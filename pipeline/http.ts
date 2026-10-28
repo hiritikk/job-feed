@@ -28,6 +28,13 @@ class Semaphore {
 
 class TimeoutError extends Error {}
 
+/** Retry-After in seconds (capped at 10 s so a run never stalls); falls back to a few seconds when absent. */
+function retryAfterMs(res: Response, fallbackBase: number): number {
+  const secs = Number(res.headers.get("retry-after"));
+  if (res.headers.get("retry-after") !== null && Number.isFinite(secs)) return Math.min(secs * 1000, 10_000);
+  return Math.min(fallbackBase * 6, 10_000);
+}
+
 export function createHttp(opts: HttpOptions = {}): Http {
   const timeoutMs = opts.timeoutMs ?? 25_000;
   const max = opts.perHostConcurrency ?? 4;
@@ -75,8 +82,8 @@ export function createHttp(opts: HttpOptions = {}): Http {
           await new Promise((r) => setTimeout(r, retryDelayMs));
           continue;
         }
-        if (res.status >= 500 && i === 0) {
-          await new Promise((r) => setTimeout(r, retryDelayMs));
+        if ((res.status >= 500 || res.status === 429) && i === 0) {
+          await new Promise((r) => setTimeout(r, res.status === 429 ? retryAfterMs(res, retryDelayMs) : retryDelayMs));
           continue;
         }
         break;
