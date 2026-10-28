@@ -4,7 +4,7 @@ import { loadAlertRules } from "../pipeline/config.js";
 import { parseLocations } from "../pipeline/location.js";
 import type { Http, Job } from "../pipeline/types.js";
 
-const [rule] = loadAlertRules();
+const [rule, plainRule] = loadAlertRules();
 const NOW = "2026-10-27T12:00:00.000Z";
 function job(over: Partial<Job> & { loc?: string[] } = {}): Job {
   const locations = over.loc ?? ["Toronto, ON"];
@@ -34,6 +34,34 @@ describe("matchesRule (default core rule)", () => {
   test("a job whose link is dead does not match", () => expect(matchesRule(job({ linkStatus: "dead" }), rule)).toBe(false));
   test("a job whose link status is unknown still matches", () => expect(matchesRule(job({ linkStatus: "unknown" }), rule)).toBe(true));
   test("a closed job does not match", () => expect(matchesRule(job({ closedAt: NOW }), rule)).toBe(false));
+});
+
+describe("plain-title rule (level other at tier 1-2 in Canada)", () => {
+  const plain = (over: Partial<Job> & { loc?: string[] } = {}) => job({ level: "other", gradYear: null, title: "Software Engineer", ...over });
+  test("a plain 'Software Engineer' at a tier-1 company in Toronto matches", () => expect(matchesRule(plain(), plainRule)).toBe(true));
+  test("so does a tier-2 company", () => expect(matchesRule(plain({ tier: 2 }), plainRule)).toBe(true));
+  test("it does not match when the posting asks for 5+ years", () => expect(matchesRule(plain({ yearsRequired: 5 }), plainRule)).toBe(false));
+  test("it matches when the posting asks for up to 2 years or states nothing", () => {
+    expect(matchesRule(plain({ yearsRequired: 2 }), plainRule)).toBe(true);
+    expect(matchesRule(plain({ yearsRequired: 0 }), plainRule)).toBe(true);
+    expect(matchesRule(plain({ yearsRequired: null }), plainRule)).toBe(true);
+    expect(matchesRule(plain({ yearsRequired: undefined }), plainRule)).toBe(true);
+  });
+  test("tier 3, other countries and restricted postings stay out", () => {
+    expect(matchesRule(plain({ tier: 3 }), plainRule)).toBe(false);
+    expect(matchesRule(plain({ loc: ["San Francisco, CA"] }), plainRule)).toBe(false);
+    expect(matchesRule(plain({ workAuth: "restricted" }), plainRule)).toBe(false);
+  });
+  test("the core rule still ignores plain titles, so new-grad alerts keep their own rule", () => {
+    expect(matchesRule(plain(), rule)).toBe(false);
+  });
+  test("a plain-title job produces a normal-priority alert, a new-grad tier-1 job stays high", () => {
+    const p = plain({ company: "Shopify" });
+    const g = job({ company: "Stripe" });
+    const plan = planNotifications([p, g], [rule, plainRule], "https://s.app");
+    expect(plan.messages.find((m) => m.title.startsWith("Shopify"))!.priority).toBe(3);
+    expect(plan.messages.find((m) => m.title.startsWith("Stripe"))!.priority).toBe(4);
+  });
 });
 
 describe("planNotifications", () => {

@@ -34,6 +34,7 @@ export type Job = {
   roleType: RoleType;
   level: Level;
   gradYear: 2026 | 2027 | 2028 | null;
+  yearsRequired?: number | null;
   workAuth: WorkAuth;
   tier: Tier;
   snippet: string;

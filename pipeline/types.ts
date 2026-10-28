@@ -33,6 +33,8 @@ export type Job = {
   roleType: RoleType;
   level: Level;
   gradYear: 2026 | 2027 | 2028 | null;
+  /** Smallest years of experience the posting asks for; undefined on data published before this field existed. */
+  yearsRequired?: number | null;
   workAuth: WorkAuth;
   tier: Tier;
   snippet: string;

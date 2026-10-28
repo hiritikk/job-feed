@@ -8,3 +8,16 @@
   tiers: [1, 2]
   exclude_work_auth: [restricted]
   priority: { 1: high, 2: default }
+
+# Plain titles ("Software Engineer", no new-grad wording) at tier 1-2 companies in Canada. Quieter than the rule above, and
+# skipped when the posting asks for more than 2 years of experience (a senior role in disguise).
+- name: plain-title-top-companies
+  countries: [CA]
+  remote_ok: true
+  levels: [other]
+  grad_years: [2027, null]
+  role_types: [sde, ml-ai, backend, fullstack, infra, data]
+  tiers: [1, 2]
+  exclude_work_auth: [restricted]
+  max_years: 2
+  priority: { 1: default, 2: default }

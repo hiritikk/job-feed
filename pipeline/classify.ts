@@ -30,6 +30,16 @@ export function classifyLevel(title: string, description = ""): Level {
   return "other";
 }
 
+/** The smallest number of years of experience the posting asks for, or null when it states none ("5+ years of experience" -> 5). */
+export function classifyYearsRequired(text: string): number | null {
+  const found: number[] = [];
+  for (const m of text.matchAll(/(\d{1,2})(?:\s*(?:-|–|to)\s*\d{1,2})?\s*\+?\s*years?\b/gi)) {
+    const around = text.slice(Math.max(0, m.index - 30), m.index + m[0].length + 60);
+    if (/experience/i.test(around)) found.push(Number(m[1])); // "10 years in business" is not a requirement
+  }
+  return found.length > 0 ? Math.min(...found) : null;
+}
+
 const GRAD_TERMS = /(new[\s-]?grad|graduate|college grad|university grad|class of|start|campus)/i;
 
 export function classifyGradYear(title: string, description = ""): 2026 | 2027 | 2028 | null {
@@ -98,6 +108,7 @@ export function classify(raw: RawJob, tierOf: (company: string) => Tier, now: Da
     roleType: classifyRoleType(raw.title),
     level: classifyLevel(raw.title, text),
     gradYear: classifyGradYear(raw.title, text),
+    yearsRequired: classifyYearsRequired(text),
     workAuth: classifyWorkAuth(`${raw.title} ${text}`, raw.sponsorshipHint),
     tier: tierOf(raw.company),
     snippet: toSnippet(raw.descriptionHtml ?? "", 400),

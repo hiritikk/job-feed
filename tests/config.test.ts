@@ -20,6 +20,15 @@ describe("loadAlertRules", () => {
   });
 });
 
+describe("alert rules: plain-title roles at top companies", () => {
+  test("the default config has a second, quieter rule for level 'other' with a years cap", () => {
+    const rules = loadAlertRules();
+    expect(rules.map((r) => r.name)).toEqual(["core", "plain-title-top-companies"]);
+    expect(rules[1]).toMatchObject({ levels: ["other"], max_years: 2, tiers: [1, 2], countries: ["CA"] });
+    expect(rules[0].max_years).toBeUndefined();
+  });
+});
+
 describe("loadCompanies", () => {
   test("parses valid entries", () => {
     const p = tmpFile("c.yml", "- { name: Stripe, ats: greenhouse, slug: stripe, tier: 1 }\n- { name: NVIDIA, ats: workday, slug: nvidia, tier: 1, site: NVIDIAExternalCareerSite, wd: 5 }\n");

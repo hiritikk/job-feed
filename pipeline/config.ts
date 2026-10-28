@@ -29,6 +29,7 @@ const alertRuleSchema = z.object({
   role_types: z.array(z.enum(["sde", "ml-ai", "backend", "fullstack", "infra", "data", "other"])),
   tiers: z.array(tier),
   exclude_work_auth: z.array(z.enum(["none", "restricted", "sponsors", "unknown"])),
+  max_years: z.number().int().min(0).optional(),
   priority: z.record(z.string(), z.enum(["high", "default", "low"])),
 });
 
@@ -41,6 +42,8 @@ export type AlertRule = {
   role_types: Job["roleType"][];
   tiers: (1 | 2 | 3)[];
   exclude_work_auth: Job["workAuth"][];
+  /** When set, a posting that asks for more years of experience than this does not match (unknown experience still matches). */
+  max_years?: number;
   priority: Record<string, "high" | "default" | "low">;
 };
 

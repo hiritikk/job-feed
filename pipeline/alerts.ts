@@ -22,7 +22,8 @@ export function matchesRule(job: Job, rule: AlertRule): boolean {
     rule.grad_years.includes(job.gradYear) &&
     rule.role_types.includes(job.roleType) &&
     rule.tiers.includes(job.tier) &&
-    !rule.exclude_work_auth.includes(job.workAuth)
+    !rule.exclude_work_auth.includes(job.workAuth) &&
+    (rule.max_years === undefined || job.yearsRequired === undefined || job.yearsRequired === null || job.yearsRequired <= rule.max_years)
   );
 }
 

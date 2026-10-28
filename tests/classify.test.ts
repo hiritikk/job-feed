@@ -1,6 +1,6 @@
 import { describe, test, expect } from "vitest";
 import {
-  classify, classifyGradYear, classifyLevel, classifyRoleType, classifyWorkAuth, isInternship, isSenior,
+  classify, classifyGradYear, classifyLevel, classifyRoleType, classifyWorkAuth, classifyYearsRequired, isInternship, isSenior,
 } from "../pipeline/classify.js";
 import type { RawJob } from "../pipeline/types.js";
 
@@ -78,6 +78,21 @@ describe("classifyWorkAuth", () => {
   ])("%s / %s -> %s", (text, hint, expected) => expect(classifyWorkAuth(text, hint)).toBe(expected));
 });
 
+describe("classifyYearsRequired", () => {
+  test.each([
+    ["5+ years of experience in backend development", 5],
+    ["3-5 years of professional experience", 3],
+    ["At least 4 years experience with distributed systems", 4],
+    ["Minimum of 2 years of relevant experience", 2],
+    ["1+ year of experience", 1],
+    ["0-2 years of experience", 0],
+    ["Bachelor's degree in CS. Strong problem solving.", null],
+    ["We have been around for 10 years and ship weekly", null],
+    ["5+ years of experience, or 2 years with a PhD", 2],
+    ["", null],
+  ])("%s -> %s", (text, expected) => expect(classifyYearsRequired(text)).toBe(expected));
+});
+
 describe("isSenior", () => {
   test.each([
     ["Senior Software Engineer", true], ["Sr. Backend Developer", true], ["Staff Engineer", true], ["Principal Engineer", true],
@@ -125,6 +140,10 @@ describe("classify", () => {
     expect(job.postedAt).toBe(now.toISOString());
     expect(job.postedApprox).toBe(true);
     expect(job.tier).toBe(3);
+  });
+  test("records the years of experience the posting asks for", () => {
+    expect(classify({ ...raw, descriptionHtml: "<p>You have 4+ years of experience.</p>" }, () => 1, now)!.yearsRequired).toBe(4);
+    expect(classify({ ...raw, descriptionHtml: "<p>Great team.</p>" }, () => 1, now)!.yearsRequired).toBeNull();
   });
   test("sets cities, precision and link fields", () => {
     const job = classify(raw, () => 1, now)!;
