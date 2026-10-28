@@ -1,0 +1,21 @@
+{
+  "name": "job-feed",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "vitest run",
+    "pipeline": "tsx pipeline/run.ts",
+    "validate": "tsx scripts/validate-companies.ts"
+  },
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  },
+  "dependencies": {
+    "yaml": "^2.9.1",
+    "zod": "^4.6.7"
+  }
+}
