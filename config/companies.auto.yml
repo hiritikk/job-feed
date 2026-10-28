@@ -1,0 +1,1079 @@
+# Auto-discovered boards (scripts/expand-companies.ts). Source of the slugs: github.com/Feashliaa/job-board-aggregator (MIT).
+# Each board listed engineering roles open to a Canadian new grad when it was probed.
+- { name: "Jobgether", ats: lever, slug: jobgether, tier: 3 }  # relevant 460, canada 34, entry-level 11
+- { name: "Baseten", ats: ashby, slug: baseten, tier: 3 }  # relevant 35, canada 20, entry-level 0
+- { name: "Syntronic", ats: lever, slug: syntronic, tier: 3 }  # relevant 9, canada 9, entry-level 0
+- { name: "Forum Ventures", ats: ashby, slug: forum-ventures, tier: 3 }  # relevant 9, canada 9, entry-level 0
+- { name: "Render", ats: ashby, slug: render, tier: 3 }  # relevant 9, canada 9, entry-level 0
+- { name: "Xsolla", ats: lever, slug: xsolla, tier: 3 }  # relevant 21, canada 8, entry-level 2
+- { name: "Workos", ats: ashby, slug: workos, tier: 3 }  # relevant 8, canada 8, entry-level 0
+- { name: "Shyftlabs", ats: lever, slug: shyftlabs, tier: 3 }  # relevant 6, canada 6, entry-level 1
+- { name: "Vo2 Group", ats: lever, slug: vo2-group, tier: 3 }  # relevant 6, canada 6, entry-level 0
+- { name: "fil", ats: workday, slug: fil, tier: 3, site: "fidelitycanada", wd: 3 }  # relevant 6, canada 6, entry-level 0
+- { name: "Doppel", ats: ashby, slug: doppel, tier: 3 }  # relevant 12, canada 5, entry-level 0
+- { name: "Wmg", ats: lever, slug: wmg, tier: 3 }  # relevant 6, canada 5, entry-level 0
+- { name: "Smiledigitalhealth", ats: lever, slug: smiledigitalhealth, tier: 3 }  # relevant 5, canada 5, entry-level 0
+- { name: "Agentis Capital Advisors", ats: ashby, slug: agentis-capital-advisors, tier: 3 }  # relevant 5, canada 5, entry-level 0
+- { name: "Lightspeedhq", ats: ashby, slug: lightspeedhq, tier: 3 }  # relevant 5, canada 5, entry-level 0
+- { name: "Magnetforensics", ats: lever, slug: magnetforensics, tier: 3 }  # relevant 5, canada 4, entry-level 0
+- { name: "Eqbank", ats: lever, slug: eqbank, tier: 3 }  # relevant 4, canada 4, entry-level 0
+- { name: "Pointclickcare", ats: lever, slug: pointclickcare, tier: 3 }  # relevant 4, canada 4, entry-level 1
+- { name: "Firecrawl", ats: ashby, slug: firecrawl, tier: 3 }  # relevant 4, canada 4, entry-level 0
+- { name: "Reflow", ats: ashby, slug: reflow, tier: 3 }  # relevant 4, canada 4, entry-level 0
+- { name: "Stratum Ai", ats: ashby, slug: stratum-ai, tier: 3 }  # relevant 4, canada 4, entry-level 0
+- { name: "Yobi", ats: ashby, slug: yobi, tier: 3 }  # relevant 4, canada 4, entry-level 0
+- { name: "Rws", ats: lever, slug: rws, tier: 3 }  # relevant 78, canada 3, entry-level 0
+- { name: "Tsmg", ats: lever, slug: tsmg, tier: 3 }  # relevant 62, canada 3, entry-level 1
+- { name: "Larian", ats: lever, slug: larian, tier: 3 }  # relevant 7, canada 3, entry-level 4
+- { name: "Lilt Production", ats: ashby, slug: lilt-production, tier: 3 }  # relevant 5, canada 3, entry-level 0
+- { name: "Sardine", ats: ashby, slug: sardine, tier: 3 }  # relevant 5, canada 3, entry-level 0
+- { name: "Aviyatech", ats: lever, slug: aviyatech, tier: 3 }  # relevant 3, canada 3, entry-level 0
+- { name: "Kogniz", ats: lever, slug: kogniz, tier: 3 }  # relevant 3, canada 3, entry-level 0
+- { name: "Cambio", ats: ashby, slug: cambio, tier: 3 }  # relevant 3, canada 3, entry-level 0
+- { name: "Keycard Labs", ats: ashby, slug: keycard-labs, tier: 3 }  # relevant 3, canada 3, entry-level 0
+- { name: "Periodic Labs", ats: ashby, slug: periodic-labs, tier: 3 }  # relevant 3, canada 3, entry-level 0
+- { name: "Remarcable Inc", ats: ashby, slug: remarcable-inc, tier: 3 }  # relevant 3, canada 3, entry-level 0
+- { name: "Searchapi", ats: ashby, slug: searchapi, tier: 3 }  # relevant 3, canada 3, entry-level 0
+- { name: "Stedi", ats: ashby, slug: stedi, tier: 3 }  # relevant 3, canada 3, entry-level 0
+- { name: "lseg", ats: workday, slug: lseg, tier: 3, site: "graduate_careers", wd: 3 }  # relevant 3, canada 3, entry-level 3
+- { name: "Elevenlabs", ats: ashby, slug: elevenlabs, tier: 3 }  # relevant 30, canada 2, entry-level 0
+- { name: "Snowflake", ats: ashby, slug: snowflake, tier: 3 }  # relevant 14, canada 2, entry-level 1
+- { name: "Livekit", ats: ashby, slug: livekit, tier: 3 }  # relevant 6, canada 2, entry-level 0
+- { name: "Caseware", ats: lever, slug: caseware, tier: 3 }  # relevant 5, canada 2, entry-level 1
+- { name: "Immiland Canada Inc", ats: lever, slug: immiland-canada-inc, tier: 3 }  # relevant 4, canada 2, entry-level 0
+- { name: "Netlight", ats: lever, slug: netlight, tier: 3 }  # relevant 4, canada 2, entry-level 2
+- { name: "Bree", ats: ashby, slug: bree, tier: 3 }  # relevant 3, canada 2, entry-level 0
+- { name: "Ema", ats: ashby, slug: ema, tier: 3 }  # relevant 3, canada 2, entry-level 0
+- { name: "Featherlessai", ats: ashby, slug: featherlessai, tier: 3 }  # relevant 3, canada 2, entry-level 1
+- { name: "Revic", ats: ashby, slug: revic, tier: 3 }  # relevant 3, canada 2, entry-level 0
+- { name: "Bosonai", ats: lever, slug: bosonai, tier: 3 }  # relevant 2, canada 2, entry-level 0
+- { name: "Mirego", ats: lever, slug: mirego, tier: 3 }  # relevant 2, canada 2, entry-level 0
+- { name: "Numeris", ats: lever, slug: numeris, tier: 3 }  # relevant 2, canada 2, entry-level 0
+- { name: "Pelmorex", ats: lever, slug: pelmorex, tier: 3 }  # relevant 2, canada 2, entry-level 0
+- { name: "Policyme", ats: lever, slug: policyme, tier: 3 }  # relevant 2, canada 2, entry-level 1
+- { name: "Promiserobotics", ats: lever, slug: promiserobotics, tier: 3 }  # relevant 2, canada 2, entry-level 0
+- { name: "Homebase", ats: ashby, slug: homebase, tier: 3 }  # relevant 2, canada 2, entry-level 1
+- { name: "Influxdata", ats: ashby, slug: influxdata, tier: 3 }  # relevant 2, canada 2, entry-level 0
+- { name: "Maxima", ats: ashby, slug: maxima, tier: 3 }  # relevant 2, canada 2, entry-level 0
+- { name: "Nationgraph", ats: ashby, slug: nationgraph, tier: 3 }  # relevant 2, canada 2, entry-level 0
+- { name: "Patlytics", ats: ashby, slug: patlytics, tier: 3 }  # relevant 2, canada 2, entry-level 0
+- { name: "People Culture Talent", ats: ashby, slug: people-culture-talent, tier: 3 }  # relevant 2, canada 2, entry-level 0
+- { name: "Replicant", ats: ashby, slug: replicant, tier: 3 }  # relevant 2, canada 2, entry-level 0
+- { name: "Scribdinc", ats: ashby, slug: scribdinc, tier: 3 }  # relevant 2, canada 2, entry-level 1
+- { name: "Yotta", ats: ashby, slug: yotta, tier: 3 }  # relevant 2, canada 2, entry-level 0
+- { name: "aviva", ats: workday, slug: aviva, tier: 3, site: "external", wd: 1 }  # relevant 2, canada 2, entry-level 0
+- { name: "bb", ats: workday, slug: bb, tier: 3, site: "blackberry", wd: 3 }  # relevant 2, canada 2, entry-level 1
+- { name: "bb", ats: workday, slug: bb, tier: 3, site: "qnx", wd: 3 }  # relevant 2, canada 2, entry-level 1
+- { name: "bdo", ats: workday, slug: bdo, tier: 3, site: "bdo", wd: 3 }  # relevant 2, canada 2, entry-level 0
+- { name: "brilliancanada", ats: workday, slug: brilliancanada, tier: 3, site: "portfolioplus", wd: 3 }  # relevant 2, canada 2, entry-level 0
+- { name: "curtisswright", ats: workday, slug: curtisswright, tier: 3, site: "cw_external_career_site", wd: 1 }  # relevant 2, canada 2, entry-level 0
+- { name: "equisoft", ats: workday, slug: equisoft, tier: 3, site: "external", wd: 10 }  # relevant 2, canada 2, entry-level 0
+- { name: "equifax", ats: workday, slug: equifax, tier: 3, site: "external", wd: 5 }  # relevant 2, canada 2, entry-level 0
+- { name: "ferrovial", ats: workday, slug: ferrovial, tier: 3, site: "ferrovial_career_site", wd: 3 }  # relevant 2, canada 2, entry-level 0
+- { name: "ledcor", ats: workday, slug: ledcor, tier: 3, site: "ledcor_external", wd: 3 }  # relevant 2, canada 2, entry-level 0
+- { name: "mlse", ats: workday, slug: mlse, tier: 3, site: "mlse", wd: 3 }  # relevant 2, canada 2, entry-level 0
+- { name: "lbg", ats: workday, slug: lbg, tier: 3, site: "graduate_careers", wd: 3 }  # relevant 10, canada 1, entry-level 10
+- { name: "Alan", ats: ashby, slug: alan, tier: 3 }  # relevant 8, canada 1, entry-level 2
+- { name: "Kong", ats: ashby, slug: kong, tier: 3 }  # relevant 7, canada 1, entry-level 4
+- { name: "Socure", ats: ashby, slug: socure, tier: 3 }  # relevant 7, canada 1, entry-level 1
+- { name: "guidewire", ats: workday, slug: guidewire, tier: 3, site: "external", wd: 5 }  # relevant 7, canada 1, entry-level 6
+- { name: "Reteam", ats: ashby, slug: reteam, tier: 3 }  # relevant 6, canada 1, entry-level 0
+- { name: "Sandboxaq", ats: ashby, slug: sandboxaq, tier: 3 }  # relevant 6, canada 1, entry-level 0
+- { name: "Netomi", ats: lever, slug: netomi, tier: 3 }  # relevant 5, canada 1, entry-level 2
+- { name: "Lavendo", ats: ashby, slug: lavendo, tier: 3 }  # relevant 4, canada 1, entry-level 0
+- { name: "Brafton", ats: lever, slug: brafton, tier: 3 }  # relevant 3, canada 1, entry-level 0
+- { name: "Matchgroup", ats: lever, slug: matchgroup, tier: 3 }  # relevant 3, canada 1, entry-level 2
+- { name: "Adaption", ats: ashby, slug: adaption, tier: 3 }  # relevant 3, canada 1, entry-level 0
+- { name: "Docebo", ats: ashby, slug: docebo, tier: 3 }  # relevant 3, canada 1, entry-level 1
+- { name: "Eliseai", ats: ashby, slug: eliseai, tier: 3 }  # relevant 3, canada 1, entry-level 2
+- { name: "Zip", ats: ashby, slug: zip, tier: 3 }  # relevant 3, canada 1, entry-level 0
+- { name: "adtran", ats: workday, slug: adtran, tier: 3, site: "adtran", wd: 3 }  # relevant 3, canada 1, entry-level 3
+- { name: "Luxurypresence", ats: lever, slug: luxurypresence, tier: 3 }  # relevant 2, canada 1, entry-level 0
+- { name: "Megaport", ats: lever, slug: megaport, tier: 3 }  # relevant 2, canada 1, entry-level 0
+- { name: "Pigment", ats: lever, slug: pigment, tier: 3 }  # relevant 2, canada 1, entry-level 1
+- { name: "Sophos", ats: lever, slug: sophos, tier: 3 }  # relevant 2, canada 1, entry-level 0
+- { name: "Toptal", ats: lever, slug: toptal, tier: 3 }  # relevant 2, canada 1, entry-level 0
+- { name: "Aerovect", ats: ashby, slug: aerovect, tier: 3 }  # relevant 2, canada 1, entry-level 0
+- { name: "Mystenlabs", ats: ashby, slug: mystenlabs, tier: 3 }  # relevant 2, canada 1, entry-level 0
+- { name: "Nerdwallet", ats: ashby, slug: nerdwallet, tier: 3 }  # relevant 2, canada 1, entry-level 0
+- { name: "Obvio", ats: ashby, slug: obvio, tier: 3 }  # relevant 2, canada 1, entry-level 0
+- { name: "Stradahq", ats: ashby, slug: stradahq, tier: 3 }  # relevant 2, canada 1, entry-level 1
+- { name: "Uncountable", ats: ashby, slug: uncountable, tier: 3 }  # relevant 2, canada 1, entry-level 0
+- { name: "Xyz Reality", ats: ashby, slug: xyz-reality, tier: 3 }  # relevant 2, canada 1, entry-level 0
+- { name: "gentex", ats: workday, slug: gentex, tier: 3, site: "gentex", wd: 5 }  # relevant 2, canada 1, entry-level 1
+- { name: "Acceldata", ats: lever, slug: acceldata, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Air Tek", ats: lever, slug: air-tek, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Alimentiv 2", ats: lever, slug: alimentiv-2, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Altaml", ats: lever, slug: altaml, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Betr", ats: lever, slug: betr, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Bounteous", ats: lever, slug: bounteous, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Dutch", ats: lever, slug: dutch, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Electricmind", ats: lever, slug: electricmind, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Emburse", ats: lever, slug: emburse, tier: 3 }  # relevant 1, canada 1, entry-level 1
+- { name: "Flynncompanies", ats: lever, slug: flynncompanies, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Getduranta", ats: lever, slug: getduranta, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Kabam", ats: lever, slug: kabam, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Keyloop", ats: lever, slug: keyloop, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Kepler", ats: lever, slug: kepler, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Mechanicalorchard", ats: lever, slug: mechanicalorchard, tier: 3 }  # relevant 1, canada 1, entry-level 1
+- { name: "Osedea", ats: lever, slug: osedea, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Otilumionics", ats: lever, slug: otilumionics, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Quincus", ats: lever, slug: quincus, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Shakudo", ats: lever, slug: shakudo, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Serotonin", ats: lever, slug: serotonin, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Skyboxlabs", ats: lever, slug: skyboxlabs, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Spiria", ats: lever, slug: spiria, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Telesat", ats: lever, slug: telesat, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Trailappliances", ats: lever, slug: trailappliances, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Versapay", ats: lever, slug: versapay, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Verygoodsecurity", ats: lever, slug: verygoodsecurity, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Waveapps", ats: lever, slug: waveapps, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Commons", ats: ashby, slug: commons, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Eli", ats: ashby, slug: eli, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Greatquestion", ats: ashby, slug: greatquestion, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Heymilo", ats: ashby, slug: heymilo, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Highbeam", ats: ashby, slug: highbeam, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Ideogram", ats: ashby, slug: ideogram, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Infisical", ats: ashby, slug: infisical, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Intellistack", ats: ashby, slug: intellistack, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Jane", ats: ashby, slug: jane, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Kindred", ats: ashby, slug: kindred, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Loopio", ats: ashby, slug: loopio, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Method Crm", ats: ashby, slug: method-crm, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Nango", ats: ashby, slug: nango, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Nascent", ats: ashby, slug: nascent, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Nomic", ats: ashby, slug: nomic, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Nylas", ats: ashby, slug: nylas, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Obsidiansystems", ats: ashby, slug: obsidiansystems, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Semperis", ats: ashby, slug: semperis, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Socket", ats: ashby, slug: socket, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Tenor", ats: ashby, slug: tenor, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Vantageanalytics", ats: ashby, slug: vantageanalytics, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Vasco", ats: ashby, slug: vasco, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Viggle", ats: ashby, slug: viggle, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Voldex", ats: ashby, slug: voldex, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Workwhilejobs", ats: ashby, slug: workwhilejobs, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "Xona Space", ats: ashby, slug: xona-space, tier: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "acciona", ats: workday, slug: acciona, tier: 3, site: "acciona_employment_channel", wd: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "agf", ats: workday, slug: agf, tier: 3, site: "agf_careers", wd: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "agf", ats: workday, slug: agf, tier: 3, site: "indeed_careers", wd: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "agf", ats: workday, slug: agf, tier: 3, site: "glassdoor_careers", wd: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "albertamotorassociation", ats: workday, slug: albertamotorassociation, tier: 3, site: "ama", wd: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "altera", ats: workday, slug: altera, tier: 3, site: "altera", wd: 1 }  # relevant 1, canada 1, entry-level 0
+- { name: "bakerhughes", ats: workday, slug: bakerhughes, tier: 3, site: "bakerhughes", wd: 5 }  # relevant 1, canada 1, entry-level 0
+- { name: "bdc", ats: workday, slug: bdc, tier: 3, site: "bdc_careers", wd: 10 }  # relevant 1, canada 1, entry-level 0
+- { name: "ci", ats: workday, slug: ci, tier: 3, site: "ci_financial_external_career-site", wd: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "clio", ats: workday, slug: clio, tier: 3, site: "cliocareersite", wd: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "ellisdon", ats: workday, slug: ellisdon, tier: 3, site: "ellis-don", wd: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "evercommerce", ats: workday, slug: evercommerce, tier: 3, site: "evercommerce_careers", wd: 1 }  # relevant 1, canada 1, entry-level 1
+- { name: "fccfac", ats: workday, slug: fccfac, tier: 3, site: "careers-carrieres", wd: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "foresters", ats: workday, slug: foresters, tier: 3, site: "forestersfinancialcareers", wd: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "hoopp", ats: workday, slug: hoopp, tier: 3, site: "hoopp", wd: 10 }  # relevant 1, canada 1, entry-level 0
+- { name: "hitachi", ats: workday, slug: hitachi, tier: 3, site: "hitachi", wd: 1 }  # relevant 1, canada 1, entry-level 0
+- { name: "iko", ats: workday, slug: iko, tier: 3, site: "iko_careers", wd: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "intelcomgroup", ats: workday, slug: intelcomgroup, tier: 3, site: "intelcom", wd: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "interac", ats: workday, slug: interac, tier: 3, site: "interac", wd: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "lifeworks", ats: workday, slug: lifeworks, tier: 3, site: "external", wd: 3 }  # relevant 1, canada 1, entry-level 0
+- { name: "mksinst", ats: workday, slug: mksinst, tier: 3, site: "mkscareersamericas", wd: 1 }  # relevant 1, canada 1, entry-level 0
+- { name: "Bjakcareer", ats: ashby, slug: bjakcareer, tier: 3 }  # relevant 1086, canada 0, entry-level 0
+- { name: "Bluelightconsulting", ats: lever, slug: bluelightconsulting, tier: 3 }  # relevant 206, canada 0, entry-level 0
+- { name: "Cgsfederal", ats: lever, slug: cgsfederal, tier: 3 }  # relevant 111, canada 0, entry-level 1
+- { name: "Airapps", ats: ashby, slug: airapps, tier: 3 }  # relevant 107, canada 0, entry-level 0
+- { name: "10xteam", ats: ashby, slug: 10xteam, tier: 3 }  # relevant 81, canada 0, entry-level 0
+- { name: "Wyetechllc", ats: lever, slug: wyetechllc, tier: 3 }  # relevant 62, canada 0, entry-level 62
+- { name: "Ciandt", ats: lever, slug: ciandt, tier: 3 }  # relevant 34, canada 0, entry-level 0
+- { name: "Terac", ats: ashby, slug: terac, tier: 3 }  # relevant 22, canada 0, entry-level 0
+- { name: "Getwingapp", ats: lever, slug: getwingapp, tier: 3 }  # relevant 19, canada 0, entry-level 0
+- { name: "42dot", ats: ashby, slug: 42dot, tier: 3 }  # relevant 19, canada 0, entry-level 0
+- { name: "Truelogic", ats: ashby, slug: truelogic, tier: 3 }  # relevant 19, canada 0, entry-level 0
+- { name: "Brainco", ats: ashby, slug: brainco, tier: 3 }  # relevant 18, canada 0, entry-level 4
+- { name: "Skydio", ats: ashby, slug: skydio, tier: 3 }  # relevant 18, canada 0, entry-level 0
+- { name: "Bedrock Robotics", ats: ashby, slug: bedrock-robotics, tier: 3 }  # relevant 16, canada 0, entry-level 0
+- { name: "Distyl", ats: ashby, slug: distyl, tier: 3 }  # relevant 15, canada 0, entry-level 0
+- { name: "Writer", ats: ashby, slug: writer, tier: 3 }  # relevant 15, canada 0, entry-level 0
+- { name: "Faculty", ats: ashby, slug: faculty, tier: 3 }  # relevant 14, canada 0, entry-level 0
+- { name: "Gohighlevel", ats: lever, slug: gohighlevel, tier: 3 }  # relevant 13, canada 0, entry-level 4
+- { name: "Satispay", ats: ashby, slug: satispay, tier: 3 }  # relevant 13, canada 0, entry-level 0
+- { name: "Tailor", ats: ashby, slug: tailor, tier: 3 }  # relevant 13, canada 0, entry-level 0
+- { name: "Pingwind", ats: lever, slug: pingwind, tier: 3 }  # relevant 12, canada 0, entry-level 1
+- { name: "Resend", ats: ashby, slug: resend, tier: 3 }  # relevant 12, canada 0, entry-level 0
+- { name: "Benchling", ats: ashby, slug: benchling, tier: 3 }  # relevant 11, canada 0, entry-level 0
+- { name: "Claylabs", ats: ashby, slug: claylabs, tier: 3 }  # relevant 11, canada 0, entry-level 0
+- { name: "Thinkahead", ats: lever, slug: thinkahead, tier: 3 }  # relevant 10, canada 0, entry-level 6
+- { name: "Plaud", ats: ashby, slug: plaud, tier: 3 }  # relevant 10, canada 0, entry-level 0
+- { name: "Pluralis Research", ats: ashby, slug: pluralis-research, tier: 3 }  # relevant 10, canada 0, entry-level 0
+- { name: "Silver", ats: ashby, slug: silver, tier: 3 }  # relevant 10, canada 0, entry-level 0
+- { name: "Sprinter Health", ats: ashby, slug: sprinter-health, tier: 3 }  # relevant 10, canada 0, entry-level 0
+- { name: "Datologyai", ats: ashby, slug: datologyai, tier: 3 }  # relevant 9, canada 0, entry-level 0
+- { name: "Hcompany", ats: ashby, slug: hcompany, tier: 3 }  # relevant 9, canada 0, entry-level 0
+- { name: "Primeintellect", ats: ashby, slug: primeintellect, tier: 3 }  # relevant 9, canada 0, entry-level 0
+- { name: "Siftstack", ats: ashby, slug: siftstack, tier: 3 }  # relevant 9, canada 0, entry-level 0
+- { name: "Tenex", ats: ashby, slug: tenex, tier: 3 }  # relevant 9, canada 0, entry-level 3
+- { name: "Ajax", ats: lever, slug: ajax, tier: 3 }  # relevant 8, canada 0, entry-level 8
+- { name: "Drivetrain", ats: lever, slug: drivetrain, tier: 3 }  # relevant 8, canada 0, entry-level 0
+- { name: "Entefy", ats: lever, slug: entefy, tier: 3 }  # relevant 8, canada 0, entry-level 0
+- { name: "Shieldai", ats: lever, slug: shieldai, tier: 3 }  # relevant 8, canada 0, entry-level 8
+- { name: "Cantina", ats: ashby, slug: cantina, tier: 3 }  # relevant 8, canada 0, entry-level 0
+- { name: "Commure", ats: ashby, slug: commure, tier: 3 }  # relevant 8, canada 0, entry-level 0
+- { name: "Iceye", ats: ashby, slug: iceye, tier: 3 }  # relevant 8, canada 0, entry-level 0
+- { name: "Lendable", ats: ashby, slug: lendable, tier: 3 }  # relevant 8, canada 0, entry-level 1
+- { name: "Mapbox", ats: ashby, slug: mapbox, tier: 3 }  # relevant 8, canada 0, entry-level 4
+- { name: "Voodoo", ats: ashby, slug: voodoo, tier: 3 }  # relevant 8, canada 0, entry-level 0
+- { name: "Brillio 2", ats: lever, slug: brillio-2, tier: 3 }  # relevant 7, canada 0, entry-level 1
+- { name: "Ion", ats: lever, slug: ion, tier: 3 }  # relevant 7, canada 0, entry-level 6
+- { name: "Foundry For Good", ats: ashby, slug: foundry-for-good, tier: 3 }  # relevant 7, canada 0, entry-level 0
+- { name: "Friendliai", ats: ashby, slug: friendliai, tier: 3 }  # relevant 7, canada 0, entry-level 0
+- { name: "G2i", ats: ashby, slug: g2i, tier: 3 }  # relevant 7, canada 0, entry-level 0
+- { name: "Holywater", ats: ashby, slug: holywater, tier: 3 }  # relevant 7, canada 0, entry-level 0
+- { name: "Meshy", ats: ashby, slug: meshy, tier: 3 }  # relevant 7, canada 0, entry-level 0
+- { name: "Newxel", ats: ashby, slug: newxel, tier: 3 }  # relevant 7, canada 0, entry-level 0
+- { name: "Thought Machine", ats: ashby, slug: thought-machine, tier: 3 }  # relevant 7, canada 0, entry-level 1
+- { name: "boeing", ats: workday, slug: boeing, tier: 3, site: "external_careers", wd: 1 }  # relevant 7, canada 0, entry-level 7
+- { name: "gdit", ats: workday, slug: gdit, tier: 3, site: "external_career_site", wd: 5 }  # relevant 7, canada 0, entry-level 7
+- { name: "Despegar", ats: lever, slug: despegar, tier: 3 }  # relevant 6, canada 0, entry-level 6
+- { name: "Pditechnologies", ats: lever, slug: pditechnologies, tier: 3 }  # relevant 6, canada 0, entry-level 6
+- { name: "Safe", ats: lever, slug: safe, tier: 3 }  # relevant 6, canada 0, entry-level 6
+- { name: "Achira", ats: ashby, slug: achira, tier: 3 }  # relevant 6, canada 0, entry-level 0
+- { name: "Astera", ats: ashby, slug: astera, tier: 3 }  # relevant 6, canada 0, entry-level 0
+- { name: "Blissway", ats: ashby, slug: blissway, tier: 3 }  # relevant 6, canada 0, entry-level 1
+- { name: "Circuithub", ats: ashby, slug: circuithub, tier: 3 }  # relevant 6, canada 0, entry-level 0
+- { name: "Cogent Security", ats: ashby, slug: cogent-security, tier: 3 }  # relevant 6, canada 0, entry-level 0
+- { name: "Hirehangar", ats: ashby, slug: hirehangar, tier: 3 }  # relevant 6, canada 0, entry-level 0
+- { name: "Kayak", ats: ashby, slug: kayak, tier: 3 }  # relevant 6, canada 0, entry-level 1
+- { name: "Lexroom", ats: ashby, slug: lexroom, tier: 3 }  # relevant 6, canada 0, entry-level 1
+- { name: "Niantic Spatial", ats: ashby, slug: niantic-spatial, tier: 3 }  # relevant 6, canada 0, entry-level 0
+- { name: "Omnea", ats: ashby, slug: omnea, tier: 3 }  # relevant 6, canada 0, entry-level 2
+- { name: "Outset", ats: ashby, slug: outset, tier: 3 }  # relevant 6, canada 0, entry-level 0
+- { name: "Solvd", ats: ashby, slug: solvd, tier: 3 }  # relevant 6, canada 0, entry-level 0
+- { name: "Toku", ats: ashby, slug: toku, tier: 3 }  # relevant 6, canada 0, entry-level 0
+- { name: "Wincent", ats: ashby, slug: wincent, tier: 3 }  # relevant 6, canada 0, entry-level 0
+- { name: "citjpl", ats: workday, slug: citjpl, tier: 3, site: "jobs", wd: 5 }  # relevant 6, canada 0, entry-level 6
+- { name: "dbs", ats: workday, slug: dbs, tier: 3, site: "dbs_careers", wd: 3 }  # relevant 6, canada 0, entry-level 6
+- { name: "ghr", ats: workday, slug: ghr, tier: 3, site: "lateral-ba_continuum", wd: 1 }  # relevant 6, canada 0, entry-level 6
+- { name: "Crosscountry Consulting", ats: lever, slug: crosscountry-consulting, tier: 3 }  # relevant 5, canada 0, entry-level 3
+- { name: "Margo Group", ats: lever, slug: margo-group, tier: 3 }  # relevant 5, canada 0, entry-level 1
+- { name: "Mactores", ats: lever, slug: mactores, tier: 3 }  # relevant 5, canada 0, entry-level 0
+- { name: "Truezerotech", ats: lever, slug: truezerotech, tier: 3 }  # relevant 5, canada 0, entry-level 1
+- { name: "Vacancies", ats: lever, slug: vacancies, tier: 3 }  # relevant 5, canada 0, entry-level 0
+- { name: "Addi", ats: ashby, slug: addi, tier: 3 }  # relevant 5, canada 0, entry-level 0
+- { name: "Airwallex", ats: ashby, slug: airwallex, tier: 3 }  # relevant 5, canada 0, entry-level 2
+- { name: "Amber", ats: ashby, slug: amber, tier: 3 }  # relevant 5, canada 0, entry-level 0
+- { name: "Cape", ats: ashby, slug: cape, tier: 3 }  # relevant 5, canada 0, entry-level 0
+- { name: "Lightning", ats: ashby, slug: lightning, tier: 3 }  # relevant 5, canada 0, entry-level 0
+- { name: "Mollie", ats: ashby, slug: mollie, tier: 3 }  # relevant 5, canada 0, entry-level 3
+- { name: "Netgear", ats: ashby, slug: netgear, tier: 3 }  # relevant 5, canada 0, entry-level 1
+- { name: "Nooks", ats: ashby, slug: nooks, tier: 3 }  # relevant 5, canada 0, entry-level 3
+- { name: "Numeral", ats: ashby, slug: numeral, tier: 3 }  # relevant 5, canada 0, entry-level 0
+- { name: "Pear Vc", ats: ashby, slug: pear-vc, tier: 3 }  # relevant 5, canada 0, entry-level 0
+- { name: "Pragmatike", ats: ashby, slug: pragmatike, tier: 3 }  # relevant 5, canada 0, entry-level 0
+- { name: "Quindar", ats: ashby, slug: quindar, tier: 3 }  # relevant 5, canada 0, entry-level 0
+- { name: "Rain", ats: ashby, slug: rain, tier: 3 }  # relevant 5, canada 0, entry-level 0
+- { name: "Robin Radar", ats: ashby, slug: robin-radar, tier: 3 }  # relevant 5, canada 0, entry-level 1
+- { name: "Sagecare", ats: ashby, slug: sagecare, tier: 3 }  # relevant 5, canada 0, entry-level 0
+- { name: "Speak", ats: ashby, slug: speak, tier: 3 }  # relevant 5, canada 0, entry-level 0
+- { name: "Titan Ai", ats: ashby, slug: titan-ai, tier: 3 }  # relevant 5, canada 0, entry-level 0
+- { name: "Trading212", ats: ashby, slug: trading212, tier: 3 }  # relevant 5, canada 0, entry-level 3
+- { name: "Whitecircle", ats: ashby, slug: whitecircle, tier: 3 }  # relevant 5, canada 0, entry-level 0
+- { name: "abcfinancial", ats: workday, slug: abcfinancial, tier: 3, site: "abcfinancialservices", wd: 5 }  # relevant 5, canada 0, entry-level 5
+- { name: "cadence", ats: workday, slug: cadence, tier: 3, site: "external_careers", wd: 1 }  # relevant 5, canada 0, entry-level 5
+- { name: "entrust", ats: workday, slug: entrust, tier: 3, site: "entrustcareers", wd: 1 }  # relevant 5, canada 0, entry-level 5
+- { name: "Latitudeinc", ats: lever, slug: latitudeinc, tier: 3 }  # relevant 4, canada 0, entry-level 3
+- { name: "Muttdata", ats: lever, slug: muttdata, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Oddin", ats: lever, slug: oddin, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Provectus", ats: lever, slug: provectus, tier: 3 }  # relevant 4, canada 0, entry-level 1
+- { name: "Remedyproductstudio", ats: lever, slug: remedyproductstudio, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Resilientco", ats: lever, slug: resilientco, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Weride", ats: lever, slug: weride, tier: 3 }  # relevant 4, canada 0, entry-level 4
+- { name: "Ambrook", ats: ashby, slug: ambrook, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Datafold", ats: ashby, slug: datafold, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Designworkstalent", ats: ashby, slug: designworkstalent, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Eloquentai", ats: ashby, slug: eloquentai, tier: 3 }  # relevant 4, canada 0, entry-level 1
+- { name: "Koahlabs", ats: ashby, slug: koahlabs, tier: 3 }  # relevant 4, canada 0, entry-level 1
+- { name: "Luminary", ats: ashby, slug: luminary, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Melotech", ats: ashby, slug: melotech, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Mirelo", ats: ashby, slug: mirelo, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Netic", ats: ashby, slug: netic, tier: 3 }  # relevant 4, canada 0, entry-level 4
+- { name: "Neuralconcept", ats: ashby, slug: neuralconcept, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Omni", ats: ashby, slug: omni, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Reaktor", ats: ashby, slug: reaktor, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Stack Ai", ats: ashby, slug: stack-ai, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Statista", ats: ashby, slug: statista, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Substack", ats: ashby, slug: substack, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Sxaler", ats: ashby, slug: sxaler, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Trainline", ats: ashby, slug: trainline, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Tycho Ai", ats: ashby, slug: tycho-ai, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "Wraithwatch", ats: ashby, slug: wraithwatch, tier: 3 }  # relevant 4, canada 0, entry-level 0
+- { name: "cambiahealth", ats: workday, slug: cambiahealth, tier: 3, site: "external", wd: 504 }  # relevant 4, canada 0, entry-level 4
+- { name: "eng", ats: workday, slug: eng, tier: 3, site: "externalcareers", wd: 3 }  # relevant 4, canada 0, entry-level 4
+- { name: "ghr", ats: workday, slug: ghr, tier: 3, site: "us-emplsv", wd: 1 }  # relevant 4, canada 0, entry-level 4
+- { name: "Arsiem", ats: lever, slug: arsiem, tier: 3 }  # relevant 3, canada 0, entry-level 3
+- { name: "Datalabusa", ats: lever, slug: datalabusa, tier: 3 }  # relevant 3, canada 0, entry-level 3
+- { name: "Fampay", ats: lever, slug: fampay, tier: 3 }  # relevant 3, canada 0, entry-level 3
+- { name: "Flashapp", ats: lever, slug: flashapp, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Getmidas", ats: lever, slug: getmidas, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Glass Health Inc", ats: lever, slug: glass-health-inc, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Innovativesol 2", ats: lever, slug: innovativesol-2, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Kobie", ats: lever, slug: kobie, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Patchmypc", ats: lever, slug: patchmypc, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Rocketpartners", ats: lever, slug: rocketpartners, tier: 3 }  # relevant 3, canada 0, entry-level 3
+- { name: "Spreetail", ats: lever, slug: spreetail, tier: 3 }  # relevant 3, canada 0, entry-level 1
+- { name: "Supermove", ats: lever, slug: supermove, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Vida", ats: lever, slug: vida, tier: 3 }  # relevant 3, canada 0, entry-level 1
+- { name: "Velo3d", ats: lever, slug: velo3d, tier: 3 }  # relevant 3, canada 0, entry-level 3
+- { name: "Woven By Toyota", ats: lever, slug: woven-by-toyota, tier: 3 }  # relevant 3, canada 0, entry-level 3
+- { name: "Almedia", ats: ashby, slug: almedia, tier: 3 }  # relevant 3, canada 0, entry-level 3
+- { name: "Apify", ats: ashby, slug: apify, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Augmodo", ats: ashby, slug: augmodo, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Bio", ats: ashby, slug: bio, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Blank Metal", ats: ashby, slug: blank-metal, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Braintrust", ats: ashby, slug: braintrust, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Camunda", ats: ashby, slug: camunda, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Cognition", ats: ashby, slug: cognition, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Demandbase", ats: ashby, slug: demandbase, tier: 3 }  # relevant 3, canada 0, entry-level 1
+- { name: "Embedding Vc", ats: ashby, slug: embedding-vc, tier: 3 }  # relevant 3, canada 0, entry-level 1
+- { name: "Euphoric", ats: ashby, slug: euphoric, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Fieldguide", ats: ashby, slug: fieldguide, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Focused", ats: ashby, slug: focused, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Hoxhunt", ats: ashby, slug: hoxhunt, tier: 3 }  # relevant 3, canada 0, entry-level 1
+- { name: "Iambic Therapeutics", ats: ashby, slug: iambic-therapeutics, tier: 3 }  # relevant 3, canada 0, entry-level 1
+- { name: "Latentlabs", ats: ashby, slug: latentlabs, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Leadbank", ats: ashby, slug: leadbank, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Loveholidays", ats: ashby, slug: loveholidays, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Lyric", ats: ashby, slug: lyric, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Maincode", ats: ashby, slug: maincode, tier: 3 }  # relevant 3, canada 0, entry-level 1
+- { name: "Meridianlink", ats: ashby, slug: meridianlink, tier: 3 }  # relevant 3, canada 0, entry-level 3
+- { name: "Middesk", ats: ashby, slug: middesk, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Meter", ats: ashby, slug: meter, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Mobilefirst", ats: ashby, slug: mobilefirst, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Nexxen", ats: ashby, slug: nexxen, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Normalcomputing", ats: ashby, slug: normalcomputing, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Orb", ats: ashby, slug: orb, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Parafin", ats: ashby, slug: parafin, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Partiful", ats: ashby, slug: partiful, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Permitflow", ats: ashby, slug: permitflow, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Playerzero", ats: ashby, slug: playerzero, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Rainforest Pay", ats: ashby, slug: rainforest-pay, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Reacher", ats: ashby, slug: reacher, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Red Gate", ats: ashby, slug: red-gate, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Rillet", ats: ashby, slug: rillet, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Runway Ml", ats: ashby, slug: runway-ml, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Scribe", ats: ashby, slug: scribe, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Skelar", ats: ashby, slug: skelar, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Skydropx", ats: ashby, slug: skydropx, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Solace", ats: ashby, slug: solace, tier: 3 }  # relevant 3, canada 0, entry-level 2
+- { name: "Solidgate", ats: ashby, slug: solidgate, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Space44", ats: ashby, slug: space44, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Tavus", ats: ashby, slug: tavus, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Tarro", ats: ashby, slug: tarro, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Telus Digital", ats: ashby, slug: telus-digital, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "The Global Talent Co", ats: ashby, slug: the-global-talent-co, tier: 3 }  # relevant 3, canada 0, entry-level 1
+- { name: "Uipath", ats: ashby, slug: uipath, tier: 3 }  # relevant 3, canada 0, entry-level 3
+- { name: "Ultralytics", ats: ashby, slug: ultralytics, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Valinor", ats: ashby, slug: valinor, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "Zeely", ats: ashby, slug: zeely, tier: 3 }  # relevant 3, canada 0, entry-level 0
+- { name: "abbott", ats: workday, slug: abbott, tier: 3, site: "abbottcareers2", wd: 5 }  # relevant 3, canada 0, entry-level 3
+- { name: "accelya", ats: workday, slug: accelya, tier: 3, site: "careers", wd: 103 }  # relevant 3, canada 0, entry-level 3
+- { name: "alegeus", ats: workday, slug: alegeus, tier: 3, site: "alegeus_external_careers", wd: 1 }  # relevant 3, canada 0, entry-level 3
+- { name: "amgen", ats: workday, slug: amgen, tier: 3, site: "careers", wd: 1 }  # relevant 3, canada 0, entry-level 3
+- { name: "archgroup", ats: workday, slug: archgroup, tier: 3, site: "careers", wd: 1 }  # relevant 3, canada 0, entry-level 3
+- { name: "arcticwolf", ats: workday, slug: arcticwolf, tier: 3, site: "external", wd: 1 }  # relevant 3, canada 0, entry-level 3
+- { name: "blackrock", ats: workday, slug: blackrock, tier: 3, site: "blackrock_professional", wd: 1 }  # relevant 3, canada 0, entry-level 3
+- { name: "cadence", ats: workday, slug: cadence, tier: 3, site: "univ_careers", wd: 1 }  # relevant 3, canada 0, entry-level 3
+- { name: "cambiumlearning", ats: workday, slug: cambiumlearning, tier: 3, site: "opportunities", wd: 1 }  # relevant 3, canada 0, entry-level 0
+- { name: "cmegroup", ats: workday, slug: cmegroup, tier: 3, site: "cme_careers", wd: 1 }  # relevant 3, canada 0, entry-level 3
+- { name: "cnx", ats: workday, slug: cnx, tier: 3, site: "external_global", wd: 1 }  # relevant 3, canada 0, entry-level 3
+- { name: "ddcdine", ats: workday, slug: ddcdine, tier: 3, site: "ddc_careers", wd: 501 }  # relevant 3, canada 0, entry-level 1
+- { name: "duckcreek", ats: workday, slug: duckcreek, tier: 3, site: "duckcreek-linkedin", wd: 1 }  # relevant 3, canada 0, entry-level 3
+- { name: "duckcreek", ats: workday, slug: duckcreek, tier: 3, site: "duckcreekcareers", wd: 1 }  # relevant 3, canada 0, entry-level 3
+- { name: "embryriddle", ats: workday, slug: embryriddle, tier: 3, site: "external", wd: 1 }  # relevant 3, canada 0, entry-level 3
+- { name: "generac", ats: workday, slug: generac, tier: 3, site: "externalcareers", wd: 5 }  # relevant 3, canada 0, entry-level 3
+- { name: "hkex", ats: workday, slug: hkex, tier: 3, site: "hkexcareerpage", wd: 3 }  # relevant 3, canada 0, entry-level 3
+- { name: "jda", ats: workday, slug: jda, tier: 3, site: "jda_careers", wd: 5 }  # relevant 3, canada 0, entry-level 3
+- { name: "leonardocompany", ats: workday, slug: leonardocompany, tier: 3, site: "leonardocareersite", wd: 3 }  # relevant 3, canada 0, entry-level 3
+- { name: "lennar", ats: workday, slug: lennar, tier: 3, site: "lennar_jobs", wd: 1 }  # relevant 3, canada 0, entry-level 3
+- { name: "maersk", ats: workday, slug: maersk, tier: 3, site: "maersk_manual", wd: 3 }  # relevant 3, canada 0, entry-level 3
+- { name: "mimecast", ats: workday, slug: mimecast, tier: 3, site: "mimecast-careers", wd: 5 }  # relevant 3, canada 0, entry-level 3
+- { name: "mobility", ats: workday, slug: mobility, tier: 3, site: "mobility", wd: 503 }  # relevant 3, canada 0, entry-level 3
+- { name: "2brains", ats: lever, slug: 2brains, tier: 3 }  # relevant 2, canada 0, entry-level 1
+- { name: "Ae 2", ats: lever, slug: ae-2, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Arootah", ats: lever, slug: arootah, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Blue", ats: lever, slug: blue, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Campusworksinc", ats: lever, slug: campusworksinc, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Coinmarketcap", ats: lever, slug: coinmarketcap, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Dadavidson", ats: lever, slug: dadavidson, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Decilegroup", ats: lever, slug: decilegroup, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Dijital Team Pty Ltd", ats: lever, slug: dijital-team-pty-ltd, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Dnb", ats: lever, slug: dnb, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Eleks", ats: lever, slug: eleks, tier: 3 }  # relevant 2, canada 0, entry-level 1
+- { name: "Envato 2", ats: lever, slug: envato-2, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Fireworkhq", ats: lever, slug: fireworkhq, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Futureof Life", ats: lever, slug: futureof-life, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Galatea Associates", ats: lever, slug: galatea-associates, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Gate", ats: lever, slug: gate, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Gushwork", ats: lever, slug: gushwork, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "H1", ats: lever, slug: h1, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Hevodata", ats: lever, slug: hevodata, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Intersect", ats: lever, slug: intersect, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Mashgin", ats: lever, slug: mashgin, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Masterborn 2", ats: lever, slug: masterborn-2, tier: 3 }  # relevant 2, canada 0, entry-level 1
+- { name: "Mendix", ats: lever, slug: mendix, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Merklescience", ats: lever, slug: merklescience, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Massive Rocket", ats: lever, slug: massive-rocket, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Offchainlabs", ats: lever, slug: offchainlabs, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Optionmetrics", ats: lever, slug: optionmetrics, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Overmind", ats: lever, slug: overmind, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Peakgames", ats: lever, slug: peakgames, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Rainfocus", ats: lever, slug: rainfocus, tier: 3 }  # relevant 2, canada 0, entry-level 1
+- { name: "Qualysoft", ats: lever, slug: qualysoft, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Recordpoint", ats: lever, slug: recordpoint, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Redhorsecorp", ats: lever, slug: redhorsecorp, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Redcanyonsoftware", ats: lever, slug: redcanyonsoftware, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Significanceinc", ats: lever, slug: significanceinc, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Simulmedia", ats: lever, slug: simulmedia, tier: 3 }  # relevant 2, canada 0, entry-level 1
+- { name: "Skywarditsolutions", ats: lever, slug: skywarditsolutions, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Spear Ai", ats: lever, slug: spear-ai, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Sysdig", ats: lever, slug: sysdig, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Theathletic", ats: lever, slug: theathletic, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Traackr", ats: lever, slug: traackr, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Trueml", ats: lever, slug: trueml, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Ttecdigital", ats: lever, slug: ttecdigital, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Abound", ats: ashby, slug: abound, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Abby Care", ats: ashby, slug: abby-care, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Adaptyv", ats: ashby, slug: adaptyv, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Agent", ats: ashby, slug: agent, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Aegis Ai", ats: ashby, slug: aegis-ai, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Wingtra 2", ats: lever, slug: wingtra-2, tier: 3 }  # relevant 2, canada 0, entry-level 1
+- { name: "Antaiventures", ats: ashby, slug: antaiventures, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Artafinance", ats: ashby, slug: artafinance, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Asteriai", ats: ashby, slug: asteriai, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Assorthealth", ats: ashby, slug: assorthealth, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Axle Careers", ats: ashby, slug: axle-careers, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Blockstream", ats: ashby, slug: blockstream, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Blp Digital", ats: ashby, slug: blp-digital, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Brinc", ats: ashby, slug: brinc, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Broccoli", ats: ashby, slug: broccoli, tier: 3 }  # relevant 2, canada 0, entry-level 1
+- { name: "Brigit", ats: ashby, slug: brigit, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Built Robotics", ats: ashby, slug: built-robotics, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "C1", ats: ashby, slug: c1, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Canals", ats: ashby, slug: canals, tier: 3 }  # relevant 2, canada 0, entry-level 1
+- { name: "Capsule", ats: ashby, slug: capsule, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Castle", ats: ashby, slug: castle, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Centerfield", ats: ashby, slug: centerfield, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Clasp Group", ats: ashby, slug: clasp-group, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Clipbook", ats: ashby, slug: clipbook, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Colonist", ats: ashby, slug: colonist, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Conductorai", ats: ashby, slug: conductorai, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Convex Dev", ats: ashby, slug: convex-dev, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Counsel", ats: ashby, slug: counsel, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Crossjoin Solutions", ats: ashby, slug: crossjoin-solutions, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Dispatch", ats: ashby, slug: dispatch, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Deposco", ats: ashby, slug: deposco, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Docplanner", ats: ashby, slug: docplanner, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Easygenerator", ats: ashby, slug: easygenerator, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Ekumenlabs", ats: ashby, slug: ekumenlabs, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Engflow", ats: ashby, slug: engflow, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Empirical Security", ats: ashby, slug: empirical-security, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Epistemix", ats: ashby, slug: epistemix, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "First Resonance", ats: ashby, slug: first-resonance, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Foundationhealthcareers", ats: ashby, slug: foundationhealthcareers, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Foxglove", ats: ashby, slug: foxglove, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Geobrowser", ats: ashby, slug: geobrowser, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Gigaml", ats: ashby, slug: gigaml, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Glide", ats: ashby, slug: glide, tier: 3 }  # relevant 2, canada 0, entry-level 1
+- { name: "Gradient", ats: ashby, slug: gradient, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Govwell", ats: ashby, slug: govwell, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Handshake", ats: ashby, slug: handshake, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Halter", ats: ashby, slug: halter, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Hawk", ats: ashby, slug: hawk, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Havocai", ats: ashby, slug: havocai, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Helius", ats: ashby, slug: helius, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Hellopatient", ats: ashby, slug: hellopatient, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Hiya", ats: ashby, slug: hiya, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Homevision", ats: ashby, slug: homevision, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Immersivelabs", ats: ashby, slug: immersivelabs, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Imprint", ats: ashby, slug: imprint, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Infinity Constellation", ats: ashby, slug: infinity-constellation, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Intro", ats: ashby, slug: intro, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Jellyfishcareers", ats: ashby, slug: jellyfishcareers, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Jobs Valence", ats: ashby, slug: jobs-valence, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Julius", ats: ashby, slug: julius, tier: 3 }  # relevant 2, canada 0, entry-level 1
+- { name: "Joko", ats: ashby, slug: joko, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Kaizenlabs", ats: ashby, slug: kaizenlabs, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Katapult Labs", ats: ashby, slug: katapult-labs, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Kovo", ats: ashby, slug: kovo, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Latamcent", ats: ashby, slug: latamcent, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Lgads", ats: ashby, slug: lgads, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Lilt Corporate", ats: ashby, slug: lilt-corporate, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Liquid Ai", ats: ashby, slug: liquid-ai, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Liveflow", ats: ashby, slug: liveflow, tier: 3 }  # relevant 2, canada 0, entry-level 1
+- { name: "Marshmallow", ats: ashby, slug: marshmallow, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Mia Labs", ats: ashby, slug: mia-labs, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Moderntreasury", ats: ashby, slug: moderntreasury, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Mytomorrows", ats: ashby, slug: mytomorrows, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "N1", ats: ashby, slug: n1, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Nano Qt", ats: ashby, slug: nano-qt, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Neara", ats: ashby, slug: neara, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Neuroscale", ats: ashby, slug: neuroscale, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Nightfall Ai", ats: ashby, slug: nightfall-ai, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Observable Space", ats: ashby, slug: observable-space, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Openevidence", ats: ashby, slug: openevidence, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Onramp", ats: ashby, slug: onramp, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Palladio", ats: ashby, slug: palladio, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Pariveda", ats: ashby, slug: pariveda, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Partisiablockchain", ats: ashby, slug: partisiablockchain, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Patrianna", ats: ashby, slug: patrianna, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Patreon", ats: ashby, slug: patreon, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Perk", ats: ashby, slug: perk, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Polarsteps", ats: ashby, slug: polarsteps, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Posthog", ats: ashby, slug: posthog, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Poshmark", ats: ashby, slug: poshmark, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Prelude", ats: ashby, slug: prelude, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Prefect", ats: ashby, slug: prefect, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Promise", ats: ashby, slug: promise, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Prophet Security", ats: ashby, slug: prophet-security, tier: 3 }  # relevant 2, canada 0, entry-level 1
+- { name: "Qed Ai", ats: ashby, slug: qed-ai, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Quantum", ats: ashby, slug: quantum, tier: 3 }  # relevant 2, canada 0, entry-level 1
+- { name: "Realmalliance", ats: ashby, slug: realmalliance, tier: 3 }  # relevant 2, canada 0, entry-level 1
+- { name: "Reedsy", ats: ashby, slug: reedsy, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Ruby Labs", ats: ashby, slug: ruby-labs, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Second Front Systems", ats: ashby, slug: second-front-systems, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Sei Labs", ats: ashby, slug: sei-labs, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Sensorfact", ats: ashby, slug: sensorfact, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Sequence", ats: ashby, slug: sequence, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Sevenai", ats: ashby, slug: sevenai, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Simspace Corporation", ats: ashby, slug: simspace-corporation, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Skyflow", ats: ashby, slug: skyflow, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Southgeeks", ats: ashby, slug: southgeeks, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Spekit", ats: ashby, slug: spekit, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Spellbrush", ats: ashby, slug: spellbrush, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Stellar", ats: ashby, slug: stellar, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Stuut Ai", ats: ashby, slug: stuut-ai, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Sunrise", ats: ashby, slug: sunrise, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Teamworks", ats: ashby, slug: teamworks, tier: 3 }  # relevant 2, canada 0, entry-level 1
+- { name: "Tensorwave", ats: ashby, slug: tensorwave, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Teya", ats: ashby, slug: teya, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Unstructured", ats: ashby, slug: unstructured, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Valon", ats: ashby, slug: valon, tier: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "Versemedical", ats: ashby, slug: versemedical, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Voladynamics", ats: ashby, slug: voladynamics, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Vori", ats: ashby, slug: vori, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Wealth Com", ats: ashby, slug: wealth-com, tier: 3 }  # relevant 2, canada 0, entry-level 1
+- { name: "Weave", ats: ashby, slug: weave, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Whippy", ats: ashby, slug: whippy, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Wirescreen", ats: ashby, slug: wirescreen, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Wynd Labs", ats: ashby, slug: wynd-labs, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Zettabyte Space", ats: ashby, slug: zettabyte-space, tier: 3 }  # relevant 2, canada 0, entry-level 1
+- { name: "Zefr", ats: ashby, slug: zefr, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Zello", ats: ashby, slug: zello, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Zowie", ats: ashby, slug: zowie, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "Webai", ats: ashby, slug: webai, tier: 3 }  # relevant 2, canada 0, entry-level 0
+- { name: "abbott", ats: workday, slug: abbott, tier: 3, site: "abbottcareers", wd: 5 }  # relevant 2, canada 0, entry-level 2
+- { name: "aspentech", ats: workday, slug: aspentech, tier: 3, site: "aspentech", wd: 5 }  # relevant 2, canada 0, entry-level 2
+- { name: "astreya", ats: workday, slug: astreya, tier: 3, site: "life-at-astreya-opportunities", wd: 5 }  # relevant 2, canada 0, entry-level 2
+- { name: "cadence", ats: workday, slug: cadence, tier: 3, site: "university_talent", wd: 1 }  # relevant 2, canada 0, entry-level 2
+- { name: "capgroup", ats: workday, slug: capgroup, tier: 3, site: "capitalgroupcareers", wd: 1 }  # relevant 2, canada 0, entry-level 2
+- { name: "collegeboard", ats: workday, slug: collegeboard, tier: 3, site: "careers", wd: 1 }  # relevant 2, canada 0, entry-level 2
+- { name: "costar", ats: workday, slug: costar, tier: 3, site: "costarcareers", wd: 1 }  # relevant 2, canada 0, entry-level 2
+- { name: "dentsuaegis", ats: workday, slug: dentsuaegis, tier: 3, site: "dan_global", wd: 3 }  # relevant 2, canada 0, entry-level 2
+- { name: "elevancehealth", ats: workday, slug: elevancehealth, tier: 3, site: "carelonglobal_in", wd: 1 }  # relevant 2, canada 0, entry-level 2
+- { name: "exelixis", ats: workday, slug: exelixis, tier: 3, site: "exel", wd: 1 }  # relevant 2, canada 0, entry-level 2
+- { name: "ffive", ats: workday, slug: ffive, tier: 3, site: "f5jobs", wd: 5 }  # relevant 2, canada 0, entry-level 2
+- { name: "flir", ats: workday, slug: flir, tier: 3, site: "flircareers", wd: 1 }  # relevant 2, canada 0, entry-level 2
+- { name: "fnbcorp", ats: workday, slug: fnbcorp, tier: 3, site: "fnbcorp", wd: 501 }  # relevant 2, canada 0, entry-level 2
+- { name: "frostbank", ats: workday, slug: frostbank, tier: 3, site: "external", wd: 5 }  # relevant 2, canada 0, entry-level 2
+- { name: "ghr", ats: workday, slug: ghr, tier: 3, site: "lateral-apac", wd: 1 }  # relevant 2, canada 0, entry-level 2
+- { name: "globusmedical", ats: workday, slug: globusmedical, tier: 3, site: "gmed_careers", wd: 5 }  # relevant 2, canada 0, entry-level 2
+- { name: "globalfoundries", ats: workday, slug: globalfoundries, tier: 3, site: "external", wd: 1 }  # relevant 2, canada 0, entry-level 2
+- { name: "homedepot", ats: workday, slug: homedepot, tier: 3, site: "careerdepot", wd: 5 }  # relevant 2, canada 0, entry-level 2
+- { name: "hpe", ats: workday, slug: hpe, tier: 3, site: "acjobsite", wd: 5 }  # relevant 2, canada 0, entry-level 2
+- { name: "hpe", ats: workday, slug: hpe, tier: 3, site: "jobsathpe", wd: 5 }  # relevant 2, canada 0, entry-level 2
+- { name: "invesco", ats: workday, slug: invesco, tier: 3, site: "ivz", wd: 1 }  # relevant 2, canada 0, entry-level 2
+- { name: "iqvia", ats: workday, slug: iqvia, tier: 3, site: "iqvia", wd: 1 }  # relevant 2, canada 0, entry-level 2
+- { name: "jda", ats: workday, slug: jda, tier: 3, site: "university", wd: 5 }  # relevant 2, canada 0, entry-level 2
+- { name: "kbr", ats: workday, slug: kbr, tier: 3, site: "kbr_careers", wd: 5 }  # relevant 2, canada 0, entry-level 2
+- { name: "levistraussandco", ats: workday, slug: levistraussandco, tier: 3, site: "external", wd: 5 }  # relevant 2, canada 0, entry-level 2
+- { name: "lplfinancial", ats: workday, slug: lplfinancial, tier: 3, site: "university", wd: 1 }  # relevant 2, canada 0, entry-level 2
+- { name: "modivcare", ats: workday, slug: modivcare, tier: 3, site: "careers", wd: 1 }  # relevant 2, canada 0, entry-level 1
+- { name: "90seconds", ats: lever, slug: 90seconds, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Accesssoftek", ats: lever, slug: accesssoftek, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Adventus", ats: lever, slug: adventus, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Aeratechnology", ats: lever, slug: aeratechnology, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Agile Defense", ats: lever, slug: agile-defense, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Airtm", ats: lever, slug: airtm, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Ampeco Global", ats: lever, slug: ampeco-global, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Apex Ai", ats: lever, slug: apex-ai, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Bellese", ats: lever, slug: bellese, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Base Flowa", ats: lever, slug: base-flowa, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Bfsaul", ats: lever, slug: bfsaul, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Biointellisense", ats: lever, slug: biointellisense, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Bloomon", ats: lever, slug: bloomon, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Blueland", ats: lever, slug: blueland, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Brevo", ats: lever, slug: brevo, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Blencorp", ats: lever, slug: blencorp, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Brooksrunning", ats: lever, slug: brooksrunning, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Brightedge", ats: lever, slug: brightedge, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Brightmachines", ats: lever, slug: brightmachines, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Captivateiq", ats: lever, slug: captivateiq, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Celaralabs", ats: lever, slug: celaralabs, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Coalfire", ats: lever, slug: coalfire, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Clearedge", ats: lever, slug: clearedge, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Coins", ats: lever, slug: coins, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Companial", ats: lever, slug: companial, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Cprime", ats: lever, slug: cprime, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Cti Md", ats: lever, slug: cti-md, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Coupa", ats: lever, slug: coupa, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Deepsky", ats: lever, slug: deepsky, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Demiurgestudios", ats: lever, slug: demiurgestudios, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Dreamgames", ats: lever, slug: dreamgames, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Edpuzzle", ats: lever, slug: edpuzzle, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Educative", ats: lever, slug: educative, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Egen", ats: lever, slug: egen, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Ellevationeducation", ats: lever, slug: ellevationeducation, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Ekimetrics", ats: lever, slug: ekimetrics, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Elty", ats: lever, slug: elty, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Everbridge", ats: lever, slug: everbridge, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Farfetch", ats: lever, slug: farfetch, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Entrata", ats: lever, slug: entrata, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Economicmodeling", ats: lever, slug: economicmodeling, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Filevine", ats: lever, slug: filevine, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Fp", ats: lever, slug: fp, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Foxitsoftware", ats: lever, slug: foxitsoftware, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Fundrise", ats: lever, slug: fundrise, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Freedompay", ats: lever, slug: freedompay, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Gorh", ats: lever, slug: gorh, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Harmony", ats: lever, slug: harmony, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Havenparkcommunities", ats: lever, slug: havenparkcommunities, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Humanityprotocol", ats: lever, slug: humanityprotocol, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Idealistconsulting", ats: lever, slug: idealistconsulting, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Immuta", ats: lever, slug: immuta, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Influ2", ats: lever, slug: influ2, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Inflowfed", ats: lever, slug: inflowfed, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Insomniacdesign", ats: lever, slug: insomniacdesign, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Jobandtalent", ats: lever, slug: jobandtalent, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Kyivstar", ats: lever, slug: kyivstar, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Kpler", ats: lever, slug: kpler, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Laminarprojects", ats: lever, slug: laminarprojects, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Levelup", ats: lever, slug: levelup, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Klearnow", ats: lever, slug: klearnow, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Makpar", ats: lever, slug: makpar, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Mcaconnect", ats: lever, slug: mcaconnect, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Mytos", ats: lever, slug: mytos, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Nahc", ats: lever, slug: nahc, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Minted", ats: lever, slug: minted, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Nibiru", ats: lever, slug: nibiru, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Odaseva", ats: lever, slug: odaseva, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Olo", ats: lever, slug: olo, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Oowlish", ats: lever, slug: oowlish, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Patch", ats: lever, slug: patch, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Picklerobot", ats: lever, slug: picklerobot, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Pibenchmark", ats: lever, slug: pibenchmark, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Piplabs", ats: lever, slug: piplabs, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Pivotenergy", ats: lever, slug: pivotenergy, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Planner5d", ats: lever, slug: planner5d, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Pioneer Services", ats: lever, slug: pioneer-services, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Padsplit", ats: lever, slug: padsplit, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Portcast", ats: lever, slug: portcast, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Portpro", ats: lever, slug: portpro, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Postera", ats: lever, slug: postera, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Plus 2", ats: lever, slug: plus-2, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Prosper", ats: lever, slug: prosper, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Relay", ats: lever, slug: relay, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Rightsideup", ats: lever, slug: rightsideup, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Rover", ats: lever, slug: rover, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Scale3c", ats: lever, slug: scale3c, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Shakacode", ats: lever, slug: shakacode, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Smart Working Solutions", ats: lever, slug: smart-working-solutions, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Solutuslegal", ats: lever, slug: solutuslegal, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Sure", ats: lever, slug: sure, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Swapcard", ats: lever, slug: swapcard, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Tag", ats: lever, slug: tag, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Terrahq", ats: lever, slug: terrahq, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Truetandem", ats: lever, slug: truetandem, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Truv", ats: lever, slug: truv, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Tryjeeves", ats: lever, slug: tryjeeves, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Vana", ats: lever, slug: vana, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Unusual", ats: lever, slug: unusual, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Valkyrietrading", ats: lever, slug: valkyrietrading, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Venteur", ats: lever, slug: venteur, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Uvcyber", ats: lever, slug: uvcyber, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Walkme", ats: lever, slug: walkme, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Weekdayworks", ats: lever, slug: weekdayworks, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Wisecode", ats: lever, slug: wisecode, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Xcimer", ats: lever, slug: xcimer, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Zencore", ats: lever, slug: zencore, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Zeta", ats: lever, slug: zeta, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "0g", ats: ashby, slug: 0g, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "A Team", ats: ashby, slug: a-team, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Aescape", ats: ashby, slug: aescape, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Adelphi Ai", ats: ashby, slug: adelphi-ai, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Agentmail", ats: ashby, slug: agentmail, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Akasa", ats: ashby, slug: akasa, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Aleph", ats: ashby, slug: aleph, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Allica Bank", ats: ashby, slug: allica-bank, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Allspice", ats: ashby, slug: allspice, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Allium", ats: ashby, slug: allium, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Ampersand", ats: ashby, slug: ampersand, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Amboss", ats: ashby, slug: amboss, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Anrok", ats: ashby, slug: anrok, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Apex Technology Inc", ats: ashby, slug: apex-technology-inc, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "April", ats: ashby, slug: april, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Arb Interactive", ats: ashby, slug: arb-interactive, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Arizent", ats: ashby, slug: arizent, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Articul8", ats: ashby, slug: articul8, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Astronomer", ats: ashby, slug: astronomer, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Assembledhq", ats: ashby, slug: assembledhq, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Atg", ats: ashby, slug: atg, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Automat", ats: ashby, slug: automat, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Aurelian", ats: ashby, slug: aurelian, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Avoca", ats: ashby, slug: avoca, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Avelios Medical", ats: ashby, slug: avelios-medical, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Backmarket", ats: ashby, slug: backmarket, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Axle Mobility", ats: ashby, slug: axle-mobility, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Basis Research", ats: ashby, slug: basis-research, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Bem", ats: ashby, slug: bem, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Ben", ats: ashby, slug: ben, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Big Leap Health", ats: ashby, slug: big-leap-health, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Binti", ats: ashby, slug: binti, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Block Labs", ats: ashby, slug: block-labs, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Bluenote", ats: ashby, slug: bluenote, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Braiins", ats: ashby, slug: braiins, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Branchlab", ats: ashby, slug: branchlab, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Bobyard", ats: ashby, slug: bobyard, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Breakmark", ats: ashby, slug: breakmark, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Brandlight", ats: ashby, slug: brandlight, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Bubble", ats: ashby, slug: bubble, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Bynder", ats: ashby, slug: bynder, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Capchase", ats: ashby, slug: capchase, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Cas", ats: ashby, slug: cas, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Checkatrade", ats: ashby, slug: checkatrade, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Chestnut", ats: ashby, slug: chestnut, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Cinder", ats: ashby, slug: cinder, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Citadel Ai", ats: ashby, slug: citadel-ai, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Civilgrid", ats: ashby, slug: civilgrid, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Clair", ats: ashby, slug: clair, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Clarify", ats: ashby, slug: clarify, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Claritypay", ats: ashby, slug: claritypay, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Climate Finance Solutions", ats: ashby, slug: climate-finance-solutions, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Clinicallyai", ats: ashby, slug: clinicallyai, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Coderabbit", ats: ashby, slug: coderabbit, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Collective", ats: ashby, slug: collective, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Coder", ats: ashby, slug: coder, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Composio", ats: ashby, slug: composio, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Conduit Health", ats: ashby, slug: conduit-health, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Conduit", ats: ashby, slug: conduit, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Contra", ats: ashby, slug: contra, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Convey", ats: ashby, slug: convey, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Copilot Money", ats: ashby, slug: copilot-money, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Coreplan", ats: ashby, slug: coreplan, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Coverbase", ats: ashby, slug: coverbase, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Coworker", ats: ashby, slug: coworker, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Creatoriq", ats: ashby, slug: creatoriq, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Cubic3", ats: ashby, slug: cubic3, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Crogl", ats: ashby, slug: crogl, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Criticalloop", ats: ashby, slug: criticalloop, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Cybcube", ats: ashby, slug: cybcube, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "D Matrix", ats: ashby, slug: d-matrix, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Darkroom", ats: ashby, slug: darkroom, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Datatonic", ats: ashby, slug: datatonic, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Devsavant", ats: ashby, slug: devsavant, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Divineresearch", ats: ashby, slug: divineresearch, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Doublezero", ats: ashby, slug: doublezero, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Edited", ats: ashby, slug: edited, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Eightsleep", ats: ashby, slug: eightsleep, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Ellipsislabs", ats: ashby, slug: ellipsislabs, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Epidemic Sound", ats: ashby, slug: epidemic-sound, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Etched", ats: ashby, slug: etched, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Evertune", ats: ashby, slug: evertune, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "F2 Ai", ats: ashby, slug: f2-ai, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Fable", ats: ashby, slug: fable, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Factory", ats: ashby, slug: factory, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Finary", ats: ashby, slug: finary, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Fin", ats: ashby, slug: fin, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Flipper", ats: ashby, slug: flipper, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Flox", ats: ashby, slug: flox, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Fluidstack", ats: ashby, slug: fluidstack, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Foxelligroup", ats: ashby, slug: foxelligroup, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Fuel Cycle", ats: ashby, slug: fuel-cycle, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Fuser", ats: ashby, slug: fuser, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Gallatin", ats: ashby, slug: gallatin, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Gelato", ats: ashby, slug: gelato, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Generate", ats: ashby, slug: generate, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Gem Technologies", ats: ashby, slug: gem-technologies, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "G2", ats: ashby, slug: g2, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Genesis Molecular Ai", ats: ashby, slug: genesis-molecular-ai, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Genomics", ats: ashby, slug: genomics, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Genmo", ats: ashby, slug: genmo, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Getground", ats: ashby, slug: getground, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Glia", ats: ashby, slug: glia, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Gorilla", ats: ashby, slug: gorilla, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Gotphoto", ats: ashby, slug: gotphoto, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Haast", ats: ashby, slug: haast, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Halliday", ats: ashby, slug: halliday, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Haydenai", ats: ashby, slug: haydenai, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Hawkeyeinnovations", ats: ashby, slug: hawkeyeinnovations, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Healthleap", ats: ashby, slug: healthleap, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Higgsfieldai", ats: ashby, slug: higgsfieldai, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Hinge Health", ats: ashby, slug: hinge-health, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Hiverge", ats: ashby, slug: hiverge, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Hopae", ats: ashby, slug: hopae, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Hum Ai", ats: ashby, slug: hum-ai, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Hyperbolic", ats: ashby, slug: hyperbolic, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Incident", ats: ashby, slug: incident, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Inference", ats: ashby, slug: inference, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Infinitus", ats: ashby, slug: infinitus, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Injective", ats: ashby, slug: injective, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Instructure", ats: ashby, slug: instructure, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Inworld Ai", ats: ashby, slug: inworld-ai, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Ironcladhq", ats: ashby, slug: ironcladhq, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Jampack Ai", ats: ashby, slug: jampack-ai, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "January", ats: ashby, slug: january, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Kalshi", ats: ashby, slug: kalshi, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Kira", ats: ashby, slug: kira, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Kirin", ats: ashby, slug: kirin, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Kiwi", ats: ashby, slug: kiwi, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Knowtex", ats: ashby, slug: knowtex, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Kog", ats: ashby, slug: kog, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Lai", ats: ashby, slug: lai, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Ledger", ats: ashby, slug: ledger, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Leanlayer", ats: ashby, slug: leanlayer, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Lemfi", ats: ashby, slug: lemfi, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Lemon Markets", ats: ashby, slug: lemon-markets, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Lightdash", ats: ashby, slug: lightdash, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Linkup", ats: ashby, slug: linkup, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Lightfield", ats: ashby, slug: lightfield, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Limbic", ats: ashby, slug: limbic, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Lm Studio", ats: ashby, slug: lm-studio, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Loancrate", ats: ashby, slug: loancrate, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Lucidlink", ats: ashby, slug: lucidlink, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Lpadesignstudios", ats: ashby, slug: lpadesignstudios, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Lovable", ats: ashby, slug: lovable, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Lucis", ats: ashby, slug: lucis, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Magentic", ats: ashby, slug: magentic, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Madhive", ats: ashby, slug: madhive, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Manifest Law", ats: ashby, slug: manifest-law, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Maneuver Marketing", ats: ashby, slug: maneuver-marketing, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Matterworks", ats: ashby, slug: matterworks, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Marianaminerals", ats: ashby, slug: marianaminerals, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Mechanize", ats: ashby, slug: mechanize, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Matter Intelligence", ats: ashby, slug: matter-intelligence, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Mercor", ats: ashby, slug: mercor, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Midstream", ats: ashby, slug: midstream, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Mindly", ats: ashby, slug: mindly, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Miter", ats: ashby, slug: miter, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Molecule", ats: ashby, slug: molecule, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Motherduck", ats: ashby, slug: motherduck, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Moss", ats: ashby, slug: moss, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Mudflap", ats: ashby, slug: mudflap, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "N8n", ats: ashby, slug: n8n, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Munich Electrification", ats: ashby, slug: munich-electrification, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Nash", ats: ashby, slug: nash, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Ndeavour", ats: ashby, slug: ndeavour, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Nectar Social", ats: ashby, slug: nectar-social, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Netwealth", ats: ashby, slug: netwealth, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Newform", ats: ashby, slug: newform, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Nivoda", ats: ashby, slug: nivoda, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Northwoodspace", ats: ashby, slug: northwoodspace, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Notable", ats: ashby, slug: notable, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Obrio", ats: ashby, slug: obrio, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Nuna", ats: ashby, slug: nuna, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Oakslab", ats: ashby, slug: oakslab, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Oden Technologies", ats: ashby, slug: oden-technologies, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Office Hours", ats: ashby, slug: office-hours, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Onecrew", ats: ashby, slug: onecrew, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Ontic", ats: ashby, slug: ontic, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Onton", ats: ashby, slug: onton, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Ontologize", ats: ashby, slug: ontologize, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Opal", ats: ashby, slug: opal, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Openobserve Careers", ats: ashby, slug: openobserve-careers, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Optimum", ats: ashby, slug: optimum, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Orbem", ats: ashby, slug: orbem, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Orbitalindustries", ats: ashby, slug: orbitalindustries, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Oso", ats: ashby, slug: oso, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Ourritual", ats: ashby, slug: ourritual, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Outersignal", ats: ashby, slug: outersignal, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Output", ats: ashby, slug: output, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Paddle", ats: ashby, slug: paddle, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Parallel", ats: ashby, slug: parallel, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Pathos", ats: ashby, slug: pathos, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Pavebank", ats: ashby, slug: pavebank, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "People Data Labs", ats: ashby, slug: people-data-labs, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Persona", ats: ashby, slug: persona, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Plasmidsaurus", ats: ashby, slug: plasmidsaurus, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Plain", ats: ashby, slug: plain, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Plantingspace", ats: ashby, slug: plantingspace, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Playson", ats: ashby, slug: playson, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Pleo", ats: ashby, slug: pleo, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Pod Network", ats: ashby, slug: pod-network, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Polymarket", ats: ashby, slug: polymarket, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Polymath", ats: ashby, slug: polymath, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Powerline", ats: ashby, slug: powerline, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Prairielearn", ats: ashby, slug: prairielearn, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Procurementsciences", ats: ashby, slug: procurementsciences, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Pylon Labs", ats: ashby, slug: pylon-labs, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Pylon", ats: ashby, slug: pylon, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Pyyne", ats: ashby, slug: pyyne, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Quarks Tech", ats: ashby, slug: quarks-tech, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Railway", ats: ashby, slug: railway, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Ravenna", ats: ashby, slug: ravenna, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Read Ai", ats: ashby, slug: read-ai, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Regent", ats: ashby, slug: regent, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Rehire", ats: ashby, slug: rehire, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Relationrx", ats: ashby, slug: relationrx, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Rerun", ats: ashby, slug: rerun, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Rilla", ats: ashby, slug: rilla, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Roboflow", ats: ashby, slug: roboflow, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Rogerhealthcare", ats: ashby, slug: rogerhealthcare, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Runetech", ats: ashby, slug: runetech, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Sainapse", ats: ashby, slug: sainapse, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Sailorhealth", ats: ashby, slug: sailorhealth, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Schoolhouse World", ats: ashby, slug: schoolhouse-world, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Scientech Research", ats: ashby, slug: scientech-research, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Scan Com", ats: ashby, slug: scan-com, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Scarlet", ats: ashby, slug: scarlet, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Sellfire", ats: ashby, slug: sellfire, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Sentilink", ats: ashby, slug: sentilink, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Sereact", ats: ashby, slug: sereact, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Shift", ats: ashby, slug: shift, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Shuttlelabs", ats: ashby, slug: shuttlelabs, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Sibill", ats: ashby, slug: sibill, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Signal Ai", ats: ashby, slug: signal-ai, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Signoz", ats: ashby, slug: signoz, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Sitemate", ats: ashby, slug: sitemate, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Simpleclosure", ats: ashby, slug: simpleclosure, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Siteminder", ats: ashby, slug: siteminder, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Skip Loans", ats: ashby, slug: skip-loans, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Slant", ats: ashby, slug: slant, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Smarkets", ats: ashby, slug: smarkets, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Sola", ats: ashby, slug: sola, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Splitmetrics", ats: ashby, slug: splitmetrics, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Stackone", ats: ashby, slug: stackone, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Standinsurance", ats: ashby, slug: standinsurance, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Staycation", ats: ashby, slug: staycation, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Stora", ats: ashby, slug: stora, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Stickermule", ats: ashby, slug: stickermule, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Straia", ats: ashby, slug: straia, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Streetgroup", ats: ashby, slug: streetgroup, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Strella", ats: ashby, slug: strella, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Sunday", ats: ashby, slug: sunday, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Swap", ats: ashby, slug: swap, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Sydecar", ats: ashby, slug: sydecar, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Taaraconnect", ats: ashby, slug: taaraconnect, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Taekus", ats: ashby, slug: taekus, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Talentsafari", ats: ashby, slug: talentsafari, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Take2", ats: ashby, slug: take2, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Teambridge", ats: ashby, slug: teambridge, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Tempo Io", ats: ashby, slug: tempo-io, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Texture", ats: ashby, slug: texture, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Tracelabs", ats: ashby, slug: tracelabs, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Tribe Ai", ats: ashby, slug: tribe-ai, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Troveo", ats: ashby, slug: troveo, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Turnkey", ats: ashby, slug: turnkey, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Turquoise Health", ats: ashby, slug: turquoise-health, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "Uberall", ats: ashby, slug: uberall, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Unify", ats: ashby, slug: unify, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Unlearn", ats: ashby, slug: unlearn, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Upside", ats: ashby, slug: upside, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Vector", ats: ashby, slug: vector, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Veezu", ats: ashby, slug: veezu, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Virtahealth", ats: ashby, slug: virtahealth, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Vitalize", ats: ashby, slug: vitalize, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Vizcom", ats: ashby, slug: vizcom, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Watershed", ats: ashby, slug: watershed, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Wayflyer", ats: ashby, slug: wayflyer, tier: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "What3words", ats: ashby, slug: what3words, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Widgetfactory", ats: ashby, slug: widgetfactory, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Withpulley", ats: ashby, slug: withpulley, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Wormholelabs", ats: ashby, slug: wormholelabs, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Xephyr", ats: ashby, slug: xephyr, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Zoe", ats: ashby, slug: zoe, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "Ziplines", ats: ashby, slug: ziplines, tier: 3 }  # relevant 1, canada 0, entry-level 0
+- { name: "ace", ats: workday, slug: ace, tier: 3, site: "careers", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "acxiomllc", ats: workday, slug: acxiomllc, tier: 3, site: "acxiomchn", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "agilent", ats: workday, slug: agilent, tier: 3, site: "agilent_student_careers", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "alaskacommunications", ats: workday, slug: alaskacommunications, tier: 3, site: "alaska_communications", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "airasia", ats: workday, slug: airasia, tier: 3, site: "careers", wd: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "alation", ats: workday, slug: alation, tier: 3, site: "externalsite", wd: 503 }  # relevant 1, canada 0, entry-level 1
+- { name: "ascensushr", ats: workday, slug: ascensushr, tier: 3, site: "ascensuscareers", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "assetmark", ats: workday, slug: assetmark, tier: 3, site: "assetmark_careers", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "astro", ats: workday, slug: astro, tier: 3, site: "astro_careers", wd: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "att", ats: workday, slug: att, tier: 3, site: "attgeneral", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "avav", ats: workday, slug: avav, tier: 3, site: "avav", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "avnet", ats: workday, slug: avnet, tier: 3, site: "external", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "aveva", ats: workday, slug: aveva, tier: 3, site: "aveva_careers", wd: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "axos", ats: workday, slug: axos, tier: 3, site: "axos", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "badgermeter", ats: workday, slug: badgermeter, tier: 3, site: "badger_meter_europe", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "badgermeter", ats: workday, slug: badgermeter, tier: 3, site: "us_careersite", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "bcbsms", ats: workday, slug: bcbsms, tier: 3, site: "bcbsms", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "bdx", ats: workday, slug: bdx, tier: 3, site: "external_career_site_usa", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "blueorigin", ats: workday, slug: blueorigin, tier: 3, site: "blueorigin", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "boeing", ats: workday, slug: boeing, tier: 3, site: "external_ukcontingentworker", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "boeing", ats: workday, slug: boeing, tier: 3, site: "external_subsidiary", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "boeing", ats: workday, slug: boeing, tier: 3, site: "tap2", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "brandeis", ats: workday, slug: brandeis, tier: 3, site: "jobs", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "bristolmyerssquibb", ats: workday, slug: bristolmyerssquibb, tier: 3, site: "bms", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "cambiumlearning", ats: workday, slug: cambiumlearning, tier: 3, site: "camb", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "candescent", ats: workday, slug: candescent, tier: 3, site: "hiring", wd: 501 }  # relevant 1, canada 0, entry-level 1
+- { name: "cdk", ats: workday, slug: cdk, tier: 3, site: "cdk", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "centific", ats: workday, slug: centific, tier: 3, site: "centific_global", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "circle", ats: workday, slug: circle, tier: 3, site: "circle", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "citicclsa", ats: workday, slug: citicclsa, tier: 3, site: "external", wd: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "clearwateranalytics", ats: workday, slug: clearwateranalytics, tier: 3, site: "clearwater_analytics_careers", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "cni", ats: workday, slug: cni, tier: 3, site: "cni", wd: 503 }  # relevant 1, canada 0, entry-level 1
+- { name: "columbiabank", ats: workday, slug: columbiabank, tier: 3, site: "columbia", wd: 108 }  # relevant 1, canada 0, entry-level 1
+- { name: "collectorsuniverse", ats: workday, slug: collectorsuniverse, tier: 3, site: "collectors", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "coke", ats: workday, slug: coke, tier: 3, site: "coca-cola-careers", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "cox", ats: workday, slug: cox, tier: 3, site: "cox_external_career_site_1", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "cranecompany", ats: workday, slug: cranecompany, tier: 3, site: "careers", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "crowe", ats: workday, slug: crowe, tier: 3, site: "external_careers", wd: 12 }  # relevant 1, canada 0, entry-level 1
+- { name: "dataminr", ats: workday, slug: dataminr, tier: 3, site: "dataminr", wd: 12 }  # relevant 1, canada 0, entry-level 1
+- { name: "deluxe", ats: workday, slug: deluxe, tier: 3, site: "usa_can", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "echo", ats: workday, slug: echo, tier: 3, site: "echo_logistics", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "eosenergystorage", ats: workday, slug: eosenergystorage, tier: 3, site: "eos", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "epiqsystems", ats: workday, slug: epiqsystems, tier: 3, site: "epiq_careers", wd: 503 }  # relevant 1, canada 0, entry-level 1
+- { name: "factset", ats: workday, slug: factset, tier: 3, site: "factsetcareers", wd: 108 }  # relevant 1, canada 0, entry-level 1
+- { name: "extraspace", ats: workday, slug: extraspace, tier: 3, site: "ess_external", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "finastra", ats: workday, slug: finastra, tier: 3, site: "finc", wd: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "firstam", ats: workday, slug: firstam, tier: 3, site: "faicareers", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "fhlbtopeka", ats: workday, slug: fhlbtopeka, tier: 3, site: "fhlbt", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "fis", ats: workday, slug: fis, tier: 3, site: "searchjobs", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "fortra", ats: workday, slug: fortra, tier: 3, site: "fortracareers", wd: 12 }  # relevant 1, canada 0, entry-level 1
+- { name: "formulaone", ats: workday, slug: formulaone, tier: 3, site: "f1", wd: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "freudenberg", ats: workday, slug: freudenberg, tier: 3, site: "freudenberg-group", wd: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "generac", ats: workday, slug: generac, tier: 3, site: "external", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "genpt", ats: workday, slug: genpt, tier: 3, site: "careers", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "globalhr", ats: workday, slug: globalhr, tier: 3, site: "private_posting_no_tmp", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "globalhr", ats: workday, slug: globalhr, tier: 3, site: "rec_rtx_ext_gateway", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "ghr", ats: workday, slug: ghr, tier: 3, site: "lateral-emea", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "groundswell", ats: workday, slug: groundswell, tier: 3, site: "groundswell", wd: 12 }  # relevant 1, canada 0, entry-level 1
+- { name: "gsk", ats: workday, slug: gsk, tier: 3, site: "gskcareers", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "hagerty", ats: workday, slug: hagerty, tier: 3, site: "hagerty", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "halma", ats: workday, slug: halma, tier: 3, site: "halma", wd: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "hastingsdirect", ats: workday, slug: hastingsdirect, tier: 3, site: "external_careers", wd: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "healthonellc", ats: workday, slug: healthonellc, tier: 3, site: "healthonealliance", wd: 12 }  # relevant 1, canada 0, entry-level 1
+- { name: "hiscox", ats: workday, slug: hiscox, tier: 3, site: "hiscox_external_site", wd: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "hpe", ats: workday, slug: hpe, tier: 3, site: "wfmathpe", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "icf", ats: workday, slug: icf, tier: 3, site: "icfexternal_career_site", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "icon", ats: workday, slug: icon, tier: 3, site: "broadbean_external", wd: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "illumina", ats: workday, slug: illumina, tier: 3, site: "illumina-careers", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "infobip", ats: workday, slug: infobip, tier: 3, site: "infobipcareers", wd: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "intactfc", ats: workday, slug: intactfc, tier: 3, site: "intactfc", wd: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "ironmountain", ats: workday, slug: ironmountain, tier: 3, site: "iron-mountain-jobs", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "jbtm", ats: workday, slug: jbtm, tier: 3, site: "jbt_marel_career_site", wd: 108 }  # relevant 1, canada 0, entry-level 1
+- { name: "jci", ats: workday, slug: jci, tier: 3, site: "jci", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "jj", ats: workday, slug: jj, tier: 3, site: "noncompetetivehiring", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "jd", ats: workday, slug: jd, tier: 3, site: "campus_career_site", wd: 103 }  # relevant 1, canada 0, entry-level 1
+- { name: "kardex", ats: workday, slug: kardex, tier: 3, site: "kardex", wd: 103 }  # relevant 1, canada 0, entry-level 1
+- { name: "kissusa", ats: workday, slug: kissusa, tier: 3, site: "kiss_careers_external", wd: 12 }  # relevant 1, canada 0, entry-level 1
+- { name: "kyndryl", ats: workday, slug: kyndryl, tier: 3, site: "kyndrylearlycareers", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "lifefitness", ats: workday, slug: lifefitness, tier: 3, site: "searchlfn", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "litera", ats: workday, slug: litera, tier: 3, site: "litera_careers", wd: 12 }  # relevant 1, canada 0, entry-level 1
+- { name: "laticrete", ats: workday, slug: laticrete, tier: 3, site: "laticreteinternational", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "lnw", ats: workday, slug: lnw, tier: 3, site: "lightwonderexternalcareers", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "lowes", ats: workday, slug: lowes, tier: 3, site: "lws_external_cs", wd: 5 }  # relevant 1, canada 0, entry-level 1
+- { name: "magnitudesoftware", ats: workday, slug: magnitudesoftware, tier: 3, site: "external", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "maersk", ats: workday, slug: maersk, tier: 3, site: "maersk_careers", wd: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "mbda", ats: workday, slug: mbda, tier: 3, site: "mbda-uk", wd: 3 }  # relevant 1, canada 0, entry-level 1
+- { name: "medtronic", ats: workday, slug: medtronic, tier: 3, site: "medtroniccareers", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "medtronic", ats: workday, slug: medtronic, tier: 3, site: "redeploymentmedtroniccareers", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "millerknoll", ats: workday, slug: millerknoll, tier: 3, site: "millerknoll", wd: 1 }  # relevant 1, canada 0, entry-level 1
+- { name: "monolithicpower", ats: workday, slug: monolithicpower, tier: 3, site: "mps_careers", wd: 12 }  # relevant 1, canada 0, entry-level 1

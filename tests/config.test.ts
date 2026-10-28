@@ -37,6 +37,12 @@ describe("loadCompanies", () => {
     const p = tmpFile("c.yml", "- { name: A, ats: lever, slug: a, tier: 1 }\n- { name: A2, ats: lever, slug: a, tier: 2 }\n");
     expect(() => loadCompanies(p)).toThrow(/duplicate/i);
   });
+  test("the same workday tenant may appear with different sites, but not twice with the same site", () => {
+    const ok = tmpFile("c.yml", "- { name: BB, ats: workday, slug: bb, tier: 3, site: Ext, wd: 1 }\n- { name: BB2, ats: workday, slug: bb, tier: 3, site: Careers, wd: 1 }\n");
+    expect(loadCompanies(ok)).toHaveLength(2);
+    const dup = tmpFile("c.yml", "- { name: BB, ats: workday, slug: bb, tier: 3, site: Ext, wd: 1 }\n- { name: BB2, ats: workday, slug: bb, tier: 3, site: Ext, wd: 1 }\n");
+    expect(() => loadCompanies(dup)).toThrow(/duplicate/i);
+  });
   test("workday entry without site/wd throws", () => {
     const p = tmpFile("c.yml", "- { name: N, ats: workday, slug: n, tier: 1 }\n");
     expect(() => loadCompanies(p)).toThrow(/site|wd/);

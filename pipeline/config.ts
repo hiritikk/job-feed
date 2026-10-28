@@ -44,13 +44,16 @@ export type AlertRule = {
   priority: Record<string, "high" | "default" | "low">;
 };
 
+/** Identity of a board: ats + slug (+ site for Workday, where one tenant can host several career sites). */
+export const companyKey = (e: CompanyEntry): string => `${e.ats}:${e.slug.toLowerCase()}${e.site ? `:${e.site.toLowerCase()}` : ""}`;
+
 const readYaml = (path: string): unknown => parse(readFileSync(path, "utf8"));
 
 function parseCompanies(path: string): CompanyEntry[] {
   const entries = z.array(companySchema).parse(readYaml(path) ?? []) as CompanyEntry[];
   const seen = new Set<string>();
   for (const e of entries) {
-    const key = `${e.ats}:${e.slug.toLowerCase()}`;
+    const key = companyKey(e);
     if (seen.has(key)) throw new Error(`duplicate company entry: ${key}`);
     seen.add(key);
   }
@@ -62,8 +65,8 @@ export function loadCompanies(path = "config/companies.yml"): CompanyEntry[] {
   const curated = parseCompanies(path);
   const autoPath = join(dirname(path), "companies.auto.yml");
   if (!existsSync(autoPath)) return curated;
-  const have = new Set(curated.map((c) => `${c.ats}:${c.slug.toLowerCase()}`));
-  const auto = parseCompanies(autoPath).filter((c) => !have.has(`${c.ats}:${c.slug.toLowerCase()}`));
+  const have = new Set(curated.map(companyKey));
+  const auto = parseCompanies(autoPath).filter((c) => !have.has(companyKey(c)));
   return [...curated, ...auto];
 }
 

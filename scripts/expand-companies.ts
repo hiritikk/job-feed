@@ -12,7 +12,7 @@ import { fetchGreenhouse } from "../pipeline/adapters/greenhouse.js";
 import { fetchLever } from "../pipeline/adapters/lever.js";
 import { fetchWorkday } from "../pipeline/adapters/workday.js";
 import { classify, isSenior } from "../pipeline/classify.js";
-import { loadCompanies } from "../pipeline/config.js";
+import { companyKey, loadCompanies } from "../pipeline/config.js";
 import { createHttp } from "../pipeline/http.js";
 import type { CompanyEntry, RawJob } from "../pipeline/types.js";
 
@@ -49,26 +49,53 @@ export function parsePool(items: string[], allowPipes = false): string[] {
   return [...new Set(items.filter((s) => s && ok.test(s)))];
 }
 
+/** Errors that say "slow down" or "try later" rather than "this board does not exist"; they must be retried, never recorded as a result. */
+export function isThrottleError(message: string): boolean {
+  return /HTTP (406|429|403|5\d\d)\b|timed out/i.test(message);
+}
+
 const yamlLine = (e: CompanyEntry, s: BoardScore): string =>
   `- { name: ${JSON.stringify(e.name)}, ats: ${e.ats}, slug: ${e.slug}, tier: ${e.tier}${e.site ? `, site: ${JSON.stringify(e.site)}, wd: ${e.wd}` : ""} }  # relevant ${s.relevant}, canada ${s.canada}, entry-level ${s.earlyCareer}`;
 
+export type ProbeRecord = { ats: "greenhouse" | "lever" | "ashby" | "workday" | "bamboohr"; id: string; score?: BoardScore; error?: string };
+
+/** The companies.auto.yml text for probe results: boards with relevant jobs only, Canada-heavy first, capped. */
+export function renderAuto(records: ProbeRecord[], max = 3000): string {
+  const kept = records.filter((r) => (r.score?.relevant ?? 0) > 0);
+  kept.sort((a, b) => b.score!.canada - a.score!.canada || b.score!.relevant - a.score!.relevant);
+  const header = "# Auto-discovered boards (scripts/expand-companies.ts). Source of the slugs: github.com/Feashliaa/job-board-aggregator (MIT).\n# Each board listed engineering roles open to a Canadian new grad when it was probed.\n";
+  return header + kept.slice(0, max).map((r) => yamlLine(boardEntry(r.ats, r.id), r.score!)).join("\n") + "\n";
+}
+
+function render(resultsPath: string): void {
+  const records = readFileSync(resultsPath, "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l) as ProbeRecord);
+  const yaml = renderAuto(records);
+  writeFileSync("config/companies.auto.yml", yaml);
+  console.log(`kept ${yaml.split("\n").filter((l) => l.startsWith("- ")).length} boards of ${records.length} probed -> config/companies.auto.yml`);
+}
+
 async function main(): Promise<void> {
+  if (process.argv.includes("--render-only")) return render(process.env.RESULTS ?? "expand-results.jsonl");
   const poolDir = process.env.POOL_DIR ?? ".";
   const resultsPath = process.env.RESULTS ?? "expand-results.jsonl";
   const concurrency = Number(process.env.CONCURRENCY ?? 24);
   const now = new Date();
-  const http = createHttp({ perHostConcurrency: 16, timeoutMs: 20_000 });
-  const known = new Set(loadCompanies().map((c) => `${c.ats}:${c.slug.toLowerCase()}`));
+  const http = createHttp({ perHostConcurrency: Number(process.env.HOST_CONCURRENCY ?? 6), timeoutMs: 20_000 });
+  const only = (process.env.ONLY ?? "").split(",").filter(Boolean);
+  let throttled = 0; // consecutive throttle errors: the circuit breaker
+  let stop = false;
+  const known = new Set(loadCompanies().map(companyKey));
   const done = new Set<string>();
   if (existsSync(resultsPath)) for (const line of readFileSync(resultsPath, "utf8").split("\n").filter(Boolean)) done.add(JSON.parse(line).key);
 
   const work: { ats: "greenhouse" | "lever" | "ashby" | "workday" | "bamboohr"; id: string }[] = [];
   for (const ats of ["greenhouse", "lever", "ashby", "workday", "bamboohr"] as const) {
+    if (only.length > 0 && !only.includes(ats)) continue;
     const pool = parsePool(JSON.parse(readFileSync(join(poolDir, `${ats}.json`), "utf8")) as string[], ats === "workday");
     for (const id of pool) {
       const e = boardEntry(ats, id);
       const key = `${ats}:${id.toLowerCase()}`;
-      if (!known.has(`${ats}:${e.slug.toLowerCase()}`) && !done.has(key)) work.push({ ats, id });
+      if (!known.has(companyKey(e)) && !done.has(key)) work.push({ ats, id });
     }
   }
   console.log(`probing ${work.length} boards (${done.size} already done)`);
@@ -76,7 +103,7 @@ async function main(): Promise<void> {
   let next = 0;
   let finished = 0;
   async function worker(): Promise<void> {
-    while (next < work.length) {
+    while (next < work.length && !stop) {
       const { ats, id } = work[next++];
       const entry = boardEntry(ats, id);
       let record: Record<string, unknown>;
@@ -89,19 +116,25 @@ async function main(): Promise<void> {
           : await fetchWorkday(entry, http, { queries: ["software engineer"], maxPages: 1, now });
         record = { key: `${ats}:${id.toLowerCase()}`, ats, id, score: scoreBoard(raws, now) };
       } catch (err) {
-        record = { key: `${ats}:${id.toLowerCase()}`, ats, id, error: (err as Error).message.slice(0, 80) };
+        const message = (err as Error).message;
+        if (isThrottleError(message)) {
+          // not a verdict on the board: leave it unrecorded so a later run retries it, and back off if it keeps happening
+          if (++throttled >= 40) {
+            stop = true;
+            console.log(`stopping: ${throttled} throttle errors in a row (${message.slice(0, 60)}). Wait and rerun; results so far are saved.`);
+          }
+          continue;
+        }
+        record = { key: `${ats}:${id.toLowerCase()}`, ats, id, error: message.slice(0, 80) };
       }
+      throttled = 0;
       appendFileSync(resultsPath, JSON.stringify(record) + "\n");
       if (++finished % 500 === 0) console.log(`${finished}/${work.length}`);
     }
   }
   await Promise.all(Array.from({ length: concurrency }, worker));
 
-  const kept = readFileSync(resultsPath, "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.score?.relevant > 0);
-  kept.sort((a, b) => b.score.canada - a.score.canada || b.score.relevant - a.score.relevant);
-  const header = "# Auto-discovered boards (scripts/expand-companies.ts). Source of the slugs: github.com/Feashliaa/job-board-aggregator (MIT).\n# Each board listed engineering roles open to a Canadian new grad when it was probed.\n";
-  writeFileSync("config/companies.auto.yml", header + kept.map((r) => yamlLine(boardEntry(r.ats, r.id), r.score)).join("\n") + "\n");
-  console.log(`kept ${kept.length} boards -> config/companies.auto.yml`);
+  render(resultsPath);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) await main();

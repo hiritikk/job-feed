@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { scoreBoard, boardEntry, parsePool } from "../scripts/expand-companies.js";
+import { scoreBoard, boardEntry, parsePool, renderAuto, isThrottleError, type ProbeRecord } from "../scripts/expand-companies.js";
 import type { RawJob } from "../pipeline/types.js";
 
 const now = new Date("2026-10-27T12:00:00.000Z");
@@ -55,4 +55,34 @@ describe("parsePool", () => {
   test("keeps workday rows with pipes", () => {
     expect(parsePool(["t|wd5|Site_1"], true)).toEqual(["t|wd5|Site_1"]);
   });
+});
+
+describe("renderAuto", () => {
+  const rec = (ats: ProbeRecord["ats"], id: string, relevant: number, canada: number): ProbeRecord => ({ ats, id, score: { total: 10, relevant, canada, earlyCareer: 0 } });
+  test("keeps only boards with relevant jobs, Canada-heavy first, as loadable yaml", () => {
+    const yaml = renderAuto([rec("greenhouse", "a", 0, 0), rec("greenhouse", "b", 3, 0), rec("lever", "c", 2, 2), { ats: "ashby", id: "dead", error: "HTTP 404" } as ProbeRecord]);
+    const lines = yaml.split("\n").filter((l) => l.startsWith("- "));
+    expect(lines).toHaveLength(2);
+    expect(lines[0]).toContain("slug: c");
+    expect(lines[1]).toContain("slug: b");
+    expect(lines[0]).toContain("# relevant 2, canada 2");
+  });
+  test("workday rows keep their site and datacenter", () => {
+    expect(renderAuto([rec("workday", "acme|wd5|Careers", 1, 0)])).toContain('slug: acme, tier: 3, site: "Careers", wd: 5');
+  });
+  test("caps the list length", () => {
+    const many = Array.from({ length: 50 }, (_, i) => rec("greenhouse", `b${i}`, 1, 0));
+    expect(renderAuto(many, 10).split("\n").filter((l) => l.startsWith("- "))).toHaveLength(10);
+  });
+});
+
+describe("isThrottleError", () => {
+  test.each([
+    ["HTTP 406 https://boards-api.greenhouse.io/v1/boards/x/jobs", true],
+    ["HTTP 429 https://x", true],
+    ["HTTP 503 https://x", true],
+    ["request timed out after 20000ms: https://x", true],
+    ["HTTP 404 https://boards-api.greenhouse.io/v1/boards/x/jobs", false],
+    ["greenhouse x: response has no jobs array", false],
+  ])("%s -> %s", (msg, expected) => expect(isThrottleError(msg)).toBe(expected));
 });
