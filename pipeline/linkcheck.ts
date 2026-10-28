@@ -1,5 +1,6 @@
 import { isDirectSource } from "./dedupe.js";
 import { Semaphore } from "./http.js";
+import { stripTracking } from "./normalize.js";
 import type { Job, LinkStatus } from "./types.js";
 
 export type Probe = (url: string) => Promise<{ status: number; finalUrl: string }>;
@@ -59,8 +60,28 @@ export function createProbe(opts: { timeoutMs?: number; userAgent?: string; perH
   };
 }
 
+const AUTH_WALL = /(authwall|login|signin|sign-in|checkpoint|captcha)/i;
+
+/** The real destination of a redirect, if it is a different, public, non-login page; otherwise null. */
+function resolveTarget(original: string, finalUrl: string): string | null {
+  try {
+    const from = new URL(original);
+    const to = new URL(finalUrl);
+    if (to.protocol !== "https:" || to.host === from.host) return null;
+    if (/(^|\.)linkedin\.com$/i.test(to.hostname) && AUTH_WALL.test(to.pathname)) return null;
+    if (AUTH_WALL.test(to.pathname)) return null;
+    return stripTracking(to.toString());
+  } catch {
+    return null;
+  }
+}
+
+const relevance = (j: Job): number => ((j.countries.includes("CA") || j.remote === "remote") && j.level !== "other" ? 0 : 1);
+
 function due(job: Job, now: Date): boolean {
-  if (job.closedAt || isDirectSource(job.source)) return false;
+  if (job.closedAt) return false;
+  // Direct employer sources are authoritative while they still list the job; once it leaves a windowed listing, verify it.
+  if (isDirectSource(job.source) && job.lastSeenAt === now.toISOString()) return false;
   if (!job.linkCheckedAt) return true;
   if (job.linkStatus === "dead") return false;
   const age = (now.getTime() - new Date(job.linkCheckedAt).getTime()) / DAY;
@@ -71,21 +92,24 @@ function due(job: Job, now: Date): boolean {
 export async function verifyLinks(jobs: Job[], probe: Probe, opts: { now: Date; budget?: number; concurrency?: number }): Promise<Job[]> {
   const queue = jobs
     .filter((j) => due(j, opts.now))
-    .sort((a, b) => (a.linkCheckedAt ?? "").localeCompare(b.linkCheckedAt ?? ""))
+    // never-checked first, then Canada-relevant early-career roles, then the longest since last check
+    .sort((a, b) => Number(!!a.linkCheckedAt) - Number(!!b.linkCheckedAt) || relevance(a) - relevance(b) || (a.linkCheckedAt ?? "").localeCompare(b.linkCheckedAt ?? ""))
     .slice(0, opts.budget ?? 150);
-  const results = new Map<string, Pick<Job, "linkStatus" | "linkCheckedAt">>();
+  const results = new Map<string, Pick<Job, "linkStatus" | "linkCheckedAt" | "resolvedUrl">>();
   let next = 0;
   const worker = async (): Promise<void> => {
     while (next < queue.length) {
       const job = queue[next++];
       let linkStatus: LinkStatus = "unknown";
+      let resolvedUrl: string | null = job.resolvedUrl;
       try {
         const { status, finalUrl } = await probe(job.url);
         linkStatus = classifyLink(job.url, status, finalUrl);
+        resolvedUrl = linkStatus === "ok" ? resolveTarget(job.url, finalUrl) : null;
       } catch {
         // network error: leave unknown, retried after a day
       }
-      results.set(job.id, { linkStatus, linkCheckedAt: opts.now.toISOString() });
+      results.set(job.id, { linkStatus, linkCheckedAt: opts.now.toISOString(), resolvedUrl });
     }
   };
   await Promise.all(Array.from({ length: Math.min(opts.concurrency ?? 6, queue.length) }, worker));

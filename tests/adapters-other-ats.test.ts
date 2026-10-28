@@ -36,10 +36,19 @@ describe("fetchWorkday", () => {
     expect(calls[0].url).toBe("https://nvidia.wd5.myworkdayjobs.com/wday/cxs/nvidia/NVIDIAExternalCareerSite/jobs");
     expect(jobs).toHaveLength(5);
     expect(jobs[0]).toMatchObject({
-      source: "workday", company: "NVIDIA", postedApprox: true,
+      source: "workday", company: "NVIDIA", postedPrecision: "approx",
       url: `https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite${wd.jobPostings[0].externalPath}`,
       sourceId: wd.jobPostings[0].bulletFields[0],
     });
+  });
+
+  test("'N Days Ago' under 30 is day precision; '30+ Days Ago' stays approximate", async () => {
+    const http: Http = { json: async () => ({ total: 2, jobPostings: [
+      { title: "A", externalPath: "/job/a_JR1", locationsText: "Toronto", postedOn: "Posted 14 Days Ago", bulletFields: ["JR1"] },
+      { title: "B", externalPath: "/job/b_JR2", locationsText: "Toronto", postedOn: "Posted 30+ Days Ago", bulletFields: ["JR2"] },
+    ] }) as never, text: async () => "" };
+    const jobs = await fetchWorkday(nvidia, http, { queries: [""], now });
+    expect(jobs.map((j) => j.postedPrecision)).toEqual(["day", "approx"]);
   });
 
   test("pages until offset reaches total (40 jobs, 20 per page)", async () => {

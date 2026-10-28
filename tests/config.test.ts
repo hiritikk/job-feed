@@ -29,6 +29,10 @@ describe("loadCompanies", () => {
     const p = tmpFile("c.yml", "- { name: X, ats: taleo, slug: x, tier: 1 }\n");
     expect(() => loadCompanies(p)).toThrow(/ats/);
   });
+  test("ats: custom is accepted for employers served by a bespoke adapter", () => {
+    const p = tmpFile("c.yml", "- { name: Amazon, ats: custom, slug: amazon, tier: 1 }\n");
+    expect(loadCompanies(p)[0]).toMatchObject({ name: "Amazon", ats: "custom", tier: 1 });
+  });
   test("duplicate ats+slug throws", () => {
     const p = tmpFile("c.yml", "- { name: A, ats: lever, slug: a, tier: 1 }\n- { name: A2, ats: lever, slug: a, tier: 2 }\n");
     expect(() => loadCompanies(p)).toThrow(/duplicate/i);

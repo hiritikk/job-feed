@@ -49,7 +49,8 @@ export async function fetchWorkday(entry: CompanyEntry, http: Http, opts: Workda
           url: `${base}/${entry.site}${j.externalPath}`,
           locations: loc,
           postedAt: parseWorkdayPosted(j.postedOn ?? "", now),
-          postedApprox: true,
+          // "Posted 14 Days Ago" is accurate to the day; "30+" is only a lower bound
+          postedPrecision: /posted (today|yesterday|\d+ days? ago)/i.test(j.postedOn ?? "") && !/\+/.test(j.postedOn ?? "") ? "day" : "approx",
         });
       }
     }

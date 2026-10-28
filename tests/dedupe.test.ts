@@ -7,7 +7,7 @@ const NOW = "2026-10-27T12:00:00.000Z";
 function job(over: Partial<Job> & Pick<Job, "source" | "url">): Job {
   return {
     id: stableId(over.source, "x", over.url), company: "Stripe", title: "Software Engineer, New Grad", locations: ["Toronto, ON"],
-    countries: ["CA"], cities: ["Toronto"], remote: "unknown", remoteRegions: [], postedAt: "2026-10-20T00:00:00.000Z", postedApprox: false, postedPrecision: "exact", linkStatus: "unknown", linkCheckedAt: null,
+    countries: ["CA"], cities: ["Toronto"], remote: "unknown", remoteRegions: [], postedAt: "2026-10-20T00:00:00.000Z", postedApprox: false, postedPrecision: "exact", linkStatus: "unknown", linkCheckedAt: null, resolvedUrl: null,
     firstSeenAt: NOW, lastSeenAt: NOW, closedAt: null, sources: [over.source], roleType: "sde", level: "new-grad",
     gradYear: null, workAuth: "unknown", tier: 1, snippet: "", ...over,
   };

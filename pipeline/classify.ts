@@ -1,5 +1,5 @@
 import { parseCities, parseLocations } from "./location.js";
-import { stableId, toSnippet } from "./normalize.js";
+import { stableId, stripTracking, toSnippet } from "./normalize.js";
 import type { Job, Level, PostedPrecision, RawJob, RoleType, Tier, WorkAuth } from "./types.js";
 
 const INTERN = /\b(intern(ship)?s?|co-?ops?|apprentice(ship)?s?)\b/i;
@@ -56,7 +56,7 @@ export function cleanUrl(url: string): string | null {
     const u = new URL(url);
     if (u.protocol === "http:") u.protocol = "https:";
     else if (u.protocol !== "https:") return null;
-    return u.toString();
+    return stripTracking(u.toString());
   } catch {
     return null;
   }
@@ -89,6 +89,7 @@ export function classify(raw: RawJob, tierOf: (company: string) => Tier, now: Da
     closedAt: null,
     linkStatus: "unknown",
     linkCheckedAt: null,
+    resolvedUrl: null,
     source: raw.source,
     sources: [raw.source],
     roleType: classifyRoleType(raw.title),

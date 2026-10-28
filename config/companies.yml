@@ -1,0 +1,14 @@
+# Provisional seed used to exercise the pipeline; Task 15 replaces it with the full curated, validated list.
+- { name: Stripe, ats: greenhouse, slug: stripe, tier: 1 }
+- { name: Palantir, ats: lever, slug: palantir, tier: 1 }
+- { name: OpenAI, ats: ashby, slug: openai, tier: 1 }
+- { name: Cohere, ats: ashby, slug: cohere, tier: 2 }
+- { name: Wealthsimple, ats: ashby, slug: wealthsimple, tier: 2 }
+- { name: NVIDIA, ats: workday, slug: nvidia, tier: 1, site: NVIDIAExternalCareerSite, wd: 5 }
+- { name: ServiceNow, ats: smartrecruiters, slug: ServiceNow, tier: 2 }
+- { name: Hugging Face, ats: workable, slug: huggingface, tier: 2 }
+- { name: Amazon, ats: custom, slug: amazon, tier: 1 }
+- { name: Google, ats: custom, slug: google, tier: 1 }
+- { name: Microsoft, ats: custom, slug: microsoft, tier: 1 }
+- { name: Netflix, ats: custom, slug: netflix, tier: 1 }
+- { name: Oracle, ats: custom, slug: oracle, tier: 1 }

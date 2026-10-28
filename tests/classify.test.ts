@@ -97,7 +97,7 @@ describe("classify", () => {
       company: "Stripe", source: "greenhouse", sources: ["greenhouse"], tier: 1, level: "new-grad", gradYear: 2027,
       roleType: "sde", countries: ["CA"], postedAt: "2026-10-20T00:00:00.000Z", postedApprox: false,
       firstSeenAt: now.toISOString(), lastSeenAt: now.toISOString(), closedAt: null,
-      snippet: "Build things. Great team.", workAuth: "unknown", url: "https://stripe.com/jobs/1?utm_source=x",
+      snippet: "Build things. Great team.", workAuth: "unknown", url: "https://stripe.com/jobs/1", resolvedUrl: null,
     });
     expect(job.id).toHaveLength(40);
   });
@@ -130,6 +130,12 @@ describe("classify", () => {
     expect(classify({ ...raw, url: "/jobs/1" }, () => 1, now)).toBeNull();
     expect(classify({ ...raw, url: "javascript:alert(1)" }, () => 1, now)).toBeNull();
     expect(classify({ ...raw, url: "" }, () => 1, now)).toBeNull();
+  });
+  test("tracking parameters are stripped but meaningful ones (gh_jid) are kept", () => {
+    expect(classify({ ...raw, url: "https://jobright.ai/jobs/info/1?utm_campaign=Software%20Engineering&utm_source=1103" }, () => 1, now)!.url)
+      .toBe("https://jobright.ai/jobs/info/1");
+    expect(classify({ ...raw, url: "https://stripe.com/jobs/search?gh_jid=8172487&utm_medium=x" }, () => 1, now)!.url)
+      .toBe("https://stripe.com/jobs/search?gh_jid=8172487");
   });
   test("http urls are upgraded to https", () => {
     expect(classify({ ...raw, url: "http://stripe.com/jobs/1" }, () => 1, now)!.url).toBe("https://stripe.com/jobs/1");

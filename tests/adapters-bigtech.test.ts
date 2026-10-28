@@ -74,6 +74,19 @@ describe("fetchMicrosoft", () => {
     expect(http.urls).toHaveLength(1);
     expect(http.urls[0]).toContain("start=0");
   });
+  test("a rate limit mid-run returns what was collected instead of failing the whole source", async () => {
+    let n = 0;
+    const http: Http = {
+      json: async () => { if (n++ === 0) return data as never; throw new Error("HTTP 429 https://apply.careers.microsoft.com/api/pcsx/search"); },
+      text: async () => "",
+    };
+    const jobs = await fetchMicrosoft(http, { delayMs: 0, queries: ["a", "b", "c"], locations: ["Canada"] });
+    expect(jobs).toHaveLength(5);
+  });
+  test("a rate limit on the very first request still throws", async () => {
+    const http: Http = { json: async () => { throw new Error("HTTP 429 x"); }, text: async () => "" };
+    await expect(fetchMicrosoft(http, { delayMs: 0, queries: ["a"], locations: ["Canada"] })).rejects.toThrow(/429/);
+  });
   test("an error payload throws", async () => {
     await expect(fetchMicrosoft(fixed({ status: 500, data: null }), opts)).rejects.toThrow(/positions/);
   });

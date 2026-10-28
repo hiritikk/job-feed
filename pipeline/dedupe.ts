@@ -9,7 +9,7 @@ const priority = (source: string): number => (DIRECT.has(source) ? 0 : COMMUNITY
 
 const PRECISION_RANK = { exact: 0, day: 1, approx: 2, none: 3 } as const;
 const SUFFIX = /\b(inc|incorporated|ltd|limited|llc|corp|corporation|co|company|gmbh|plc)\b/g;
-const norm = (s: string): string => s.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(SUFFIX, " ").replace(/\s+/g, " ").trim();
+export const norm = (s: string): string => s.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(SUFFIX, " ").replace(/\s+/g, " ").trim();
 const city = (j: Job): string => (j.locations[0] ?? "").split(",")[0].toLowerCase().trim();
 export const fuzzyKey = (j: Job): string => `${norm(j.company)}|${norm(j.title)}|${city(j)}`;
 

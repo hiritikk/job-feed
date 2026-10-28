@@ -82,8 +82,9 @@ export function createHttp(opts: HttpOptions = {}): Http {
           await new Promise((r) => setTimeout(r, retryDelayMs));
           continue;
         }
-        if ((res.status >= 500 || res.status === 429) && i === 0) {
-          await new Promise((r) => setTimeout(r, res.status === 429 ? retryAfterMs(res, retryDelayMs) : retryDelayMs));
+        const got = res;
+        if ((got.status >= 500 || got.status === 429) && i === 0) {
+          await new Promise((r) => setTimeout(r, got.status === 429 ? retryAfterMs(got, retryDelayMs) : retryDelayMs));
           continue;
         }
         break;

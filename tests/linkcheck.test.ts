@@ -27,7 +27,7 @@ function job(n: number, over: Partial<Job> = {}): Job {
   return {
     id: `id${n}`, company: "Acme", title: `SWE ${n}`, url: `https://acme.com/jobs/${n}/swe`, locations: [], countries: [], cities: [], remote: "unknown",
     remoteRegions: [], postedAt: daysAgo(1), postedApprox: false, postedPrecision: "exact", firstSeenAt: daysAgo(1), lastSeenAt: daysAgo(0),
-    closedAt: null, linkStatus: "unknown", linkCheckedAt: null, source: "jobright", sources: ["jobright"], roleType: "sde", level: "new-grad",
+    closedAt: null, linkStatus: "unknown", linkCheckedAt: null, resolvedUrl: null, source: "jobright", sources: ["jobright"], roleType: "sde", level: "new-grad",
     gradYear: null, workAuth: "unknown", tier: 2, snippet: "", ...over,
   };
 }
@@ -74,6 +74,45 @@ describe("verifyLinks", () => {
     const out = await verifyLinks([job(1), job(2)], probe, { now: NOW });
     expect(out[0]).toMatchObject({ linkStatus: "unknown", linkCheckedAt: NOW.toISOString() });
     expect(out[1].linkStatus).toBe("ok");
+  });
+  test("a direct-source job that was NOT re-confirmed this run (left a windowed listing) is probed", async () => {
+    const probe = probeReturning(404);
+    const out = await verifyLinks([job(1, { source: "amazon", sources: ["amazon"], lastSeenAt: daysAgo(2) })], probe, { now: NOW });
+    expect(probe.calls).toHaveLength(1);
+    expect(out[0].linkStatus).toBe("dead");
+  });
+  test("a direct-source job re-confirmed this run is not probed", async () => {
+    const probe = probeReturning(404);
+    await verifyLinks([job(1, { source: "amazon", sources: ["amazon"], lastSeenAt: NOW.toISOString() })], probe, { now: NOW });
+    expect(probe.calls).toHaveLength(0);
+  });
+  test("a shortlink that redirects to another site is resolved (tracking params stripped)", async () => {
+    const probe = probeReturning(200, "https://boards.greenhouse.io/databricks/jobs/123?utm_source=vansh&gh_jid=123");
+    const out = await verifyLinks([job(1, { url: "https://go.vansh.nyc/B2" })], probe, { now: NOW });
+    expect(out[0]).toMatchObject({ linkStatus: "ok", resolvedUrl: "https://boards.greenhouse.io/databricks/jobs/123?gh_jid=123" });
+  });
+  test("a redirect within the same host does not set resolvedUrl", async () => {
+    const out = await verifyLinks([job(1)], probeReturning(200, "https://acme.com/en/jobs/1/swe"), { now: NOW });
+    expect(out[0].resolvedUrl).toBeNull();
+  });
+  test("a redirect to a login or auth wall is never used as the resolved link", async () => {
+    const out = await verifyLinks([job(1, { url: "https://go.vansh.nyc/B3" })], probeReturning(200, "https://www.linkedin.com/authwall?trk=x"), { now: NOW });
+    expect(out[0].resolvedUrl).toBeNull();
+  });
+  test("a dead link gets no resolvedUrl", async () => {
+    const out = await verifyLinks([job(1, { url: "https://go.vansh.nyc/B2" })], probeReturning(404, "https://boards.greenhouse.io/x/jobs/1"), { now: NOW });
+    expect(out[0]).toMatchObject({ linkStatus: "dead", resolvedUrl: null });
+  });
+  test("with a small budget, Canada-relevant early-career jobs are probed before irrelevant ones", async () => {
+    const probe = probeReturning(200);
+    const jobs = [
+      job(1, { countries: ["US"], level: "new-grad" }),
+      job(2, { countries: ["CA"], level: "other" }),
+      job(3, { countries: ["CA"], level: "new-grad" }),
+      job(4, { countries: [], remote: "remote", level: "early-career" }),
+    ];
+    await verifyLinks(jobs, probe, { now: NOW, budget: 2 });
+    expect(probe.calls.sort()).toEqual(["https://acme.com/jobs/3/swe", "https://acme.com/jobs/4/swe"]);
   });
   test("closed jobs are not probed", async () => {
     const probe = probeReturning(200);

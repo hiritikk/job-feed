@@ -26,6 +26,8 @@ export type Job = {
   closedAt: string | null;
   linkStatus: LinkStatus;
   linkCheckedAt: string | null;
+  /** Where a shortlink or tracker redirect really lands (set by the link checker); the site links here when present. */
+  resolvedUrl: string | null;
   source: string;
   sources: string[];
   roleType: RoleType;
@@ -66,7 +68,7 @@ export type Http = {
 
 export type CompanyEntry = {
   name: string;
-  ats: "greenhouse" | "lever" | "ashby" | "workday" | "workable" | "smartrecruiters";
+  ats: "greenhouse" | "lever" | "ashby" | "workday" | "workable" | "smartrecruiters" | "custom";
   slug: string;
   tier: Tier;
   site?: string;

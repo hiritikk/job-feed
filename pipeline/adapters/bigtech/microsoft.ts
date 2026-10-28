@@ -13,10 +13,17 @@ export async function fetchMicrosoft(http: Http, opts: BigTechOptions = {}): Pro
   for (const location of opts.locations ?? DEFAULT_LOCATIONS) {
     for (const query of opts.queries ?? DEFAULT_QUERIES) {
       for (let page = 0; page < (opts.maxPages ?? 1); page++) {
-        const data = await http.json<{ data?: { count?: number; positions?: Position[] } }>(
-          `https://apply.careers.microsoft.com/api/pcsx/search?domain=microsoft.com&query=${encodeURIComponent(query)}` +
-            `&location=${encodeURIComponent(location)}&start=${page * 10}&sort_by=timestamp`,
-        );
+        let data: { data?: { count?: number; positions?: Position[] } };
+        try {
+          data = await http.json(
+            `https://apply.careers.microsoft.com/api/pcsx/search?domain=microsoft.com&query=${encodeURIComponent(query)}` +
+              `&location=${encodeURIComponent(location)}&start=${page * 10}&sort_by=timestamp`,
+          );
+        } catch (err) {
+          // Rate limited mid-run: keep what we have (this source is a newest-N window, so a partial result is safe).
+          if (/HTTP 429/.test((err as Error).message) && seen.size > 0) return [...seen.values()];
+          throw err;
+        }
         const positions = data?.data?.positions;
         if (!Array.isArray(positions)) throw new Error("microsoft: response has no data.positions array");
         for (const p of positions) {

@@ -3,12 +3,14 @@ import { canonicalUrl } from "./normalize.js";
 import type { Job, SourceHealth } from "./types.js";
 
 export type State = { jobs: Job[]; health: Record<string, SourceHealth>; alerted: string[] };
-export type SourceRun = { source: string; ok: boolean; jobs: Job[]; error?: string };
+/** `complete: false` marks a windowed listing (newest N only): absence from it says nothing about whether a job is still open. */
+export type SourceRun = { source: string; ok: boolean; jobs: Job[]; error?: string; complete?: boolean };
 
 const DAY = 86_400_000;
 const CLOSED_KEEP_DAYS = 7;
 const DROP_RATIO = 0.4; // fewer than 40% of the previous count (more than 60% fewer) counts as a failed fetch
 const MIN_PREV_FOR_DROP_CHECK = 10;
+const PARTIAL_EXPIRY_DAYS = 14; // jobs only windowed sources carried are dropped after this long unseen
 
 /**
  * Merges one pipeline run into the previous state (spec §6).
@@ -27,7 +29,7 @@ export function mergeRun(prev: State, runs: SourceRun[], now: Date): { jobs: Job
     const prevCount = prevActive.filter((j) => j.sources.includes(run.source)).length;
     let problem: string | null = null;
     if (!run.ok) problem = run.error ?? "fetch failed";
-    else if (prevCount >= MIN_PREV_FOR_DROP_CHECK && run.jobs.length < prevCount * DROP_RATIO) {
+    else if (run.complete !== false && prevCount >= MIN_PREV_FOR_DROP_CHECK && run.jobs.length < prevCount * DROP_RATIO) {
       problem = `suspicious drop: ${prevCount} -> ${run.jobs.length} jobs`;
     }
     if (problem === null) {
@@ -42,6 +44,7 @@ export function mergeRun(prev: State, runs: SourceRun[], now: Date): { jobs: Job
     }
   }
 
+  const completeHealthy = new Set(runs.filter((r) => r.complete !== false && !stale.has(r.source)).map((r) => r.source));
   const fresh = dedupe(runs.filter((r) => !stale.has(r.source)).flatMap((r) => r.jobs));
 
   // Identity continuity: match fresh jobs to previous ones by id/url first, then by company|title|city when the
@@ -76,13 +79,15 @@ export function mergeRun(prev: State, runs: SourceRun[], now: Date): { jobs: Job
     return {
       ...job, id: p.id, firstSeenAt: p.firstSeenAt, closedAt: null,
       linkStatus: sameUrl ? p.linkStatus : "unknown", linkCheckedAt: sameUrl ? p.linkCheckedAt : null,
+      resolvedUrl: sameUrl ? p.resolvedUrl : null,
     };
   });
 
   for (const p of prevActive) {
     if (matched.has(p.id)) continue;
     if (p.sources.some((s) => stale.has(s))) jobs.push(p); // not verifiable this run: carry over unchanged
-    else jobs.push({ ...p, closedAt: nowIso });
+    else if (p.sources.some((s) => completeHealthy.has(s))) jobs.push({ ...p, closedAt: nowIso }); // a full listing dropped it
+    else if (now.getTime() - new Date(p.lastSeenAt).getTime() <= PARTIAL_EXPIRY_DAYS * DAY) jobs.push(p); // only windowed sources: keep until it expires
   }
   for (const p of prevClosed) {
     if (matched.has(p.id)) continue;

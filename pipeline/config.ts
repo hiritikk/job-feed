@@ -8,7 +8,7 @@ const tier = z.union([z.literal(1), z.literal(2), z.literal(3)]);
 const companySchema = z
   .object({
     name: z.string().min(1),
-    ats: z.enum(["greenhouse", "lever", "ashby", "workday", "workable", "smartrecruiters"]),
+    ats: z.enum(["greenhouse", "lever", "ashby", "workday", "workable", "smartrecruiters", "custom"]),
     slug: z.string().min(1),
     tier,
     site: z.string().optional(),

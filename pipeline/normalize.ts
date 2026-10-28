@@ -18,6 +18,18 @@ export function canonicalUrl(url: string): string {
   return out;
 }
 
+/** Removes tracking parameters (utm_*, gh_src, ref, ...) but leaves everything else, including the path, untouched. */
+export function stripTracking(url: string): string {
+  let u: URL;
+  try {
+    u = new URL(url);
+  } catch {
+    return url;
+  }
+  for (const key of [...u.searchParams.keys()]) if (TRACKING.test(key)) u.searchParams.delete(key);
+  return u.toString();
+}
+
 export function stableId(source: string, sourceId: string, url: string): string {
   if (!url) return `${source}:${sourceId}`;
   return createHash("sha1").update(canonicalUrl(url)).digest("hex");

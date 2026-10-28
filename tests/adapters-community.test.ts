@@ -46,9 +46,17 @@ describe("parseSpeedyApply", () => {
     const jobs = parseSpeedyApply(md("speedyapply"), now);
     expect(jobs.length).toBeGreaterThanOrEqual(5);
     const stripe = jobs.find((j) => j.company === "Stripe")!;
-    expect(stripe).toMatchObject({ source: "speedyapply", title: "Software Engineer - New Grad", locations: ["Taiwan"], postedApprox: true });
+    expect(stripe).toMatchObject({ source: "speedyapply", title: "Software Engineer - New Grad", locations: ["Taiwan"], postedPrecision: "day" });
     expect(stripe.url).toBe("https://stripe.com/jobs/search?gh_jid=8202299");
     expect(stripe.postedAt).toBe("2026-10-23T12:00:00.000Z"); // "4d"
+  });
+});
+
+describe("parseSpeedyApply precision", () => {
+  test("ages in days are day precision; ages in hours or months are approximate", () => {
+    const row = (age: string) => `| <a href="https://x.com"><strong>X</strong></a> | SWE | Toronto, Canada | <a href="https://x.com/j/${age}"><img alt="Apply"/></a> | ${age} |`;
+    const jobs = parseSpeedyApply(["| Company | Position | Location | Posting | Age |", "|---|---|---|---|---|", row("4d"), row("5h"), row("2mo")].join("\n"), now);
+    expect(jobs.map((j) => j.postedPrecision)).toEqual(["day", "approx", "approx"]);
   });
 });
 

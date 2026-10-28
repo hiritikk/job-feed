@@ -13,7 +13,7 @@ function job(over: Partial<Job> & { loc?: string[] } = {}): Job {
   return {
     id: Math.random().toString(36).slice(2), company: "Stripe", title: "Software Engineer, New Grad 2027", url: "https://stripe.com/jobs/1",
     locations, countries: parsed.countries, cities: [], postedPrecision: "exact", remote: parsed.remote, remoteRegions: parsed.remoteRegions, postedAt: NOW, postedApprox: false,
-    firstSeenAt: NOW, lastSeenAt: NOW, closedAt: null, linkStatus: "unknown", linkCheckedAt: null, source: "greenhouse", sources: ["greenhouse"], roleType: "sde", level: "new-grad",
+    firstSeenAt: NOW, lastSeenAt: NOW, closedAt: null, linkStatus: "unknown", linkCheckedAt: null, resolvedUrl: null, source: "greenhouse", sources: ["greenhouse"], roleType: "sde", level: "new-grad",
     gradYear: 2027, workAuth: "unknown", tier: 1, snippet: "", ...rest,
   };
 }

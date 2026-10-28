@@ -31,7 +31,8 @@ export function parseSpeedyApply(markdown: string, now: Date): RawJob[] {
       url,
       locations: [location.replace(/\s*\+\d+$/, "")],
       postedAt: m ? new Date(now.getTime() - Number(m[1]) * unit).toISOString() : null,
-      postedApprox: true,
+      // "4d" is accurate to the day; hours and months are not
+      postedPrecision: m?.[2] === "d" ? "day" : "approx",
     });
   }
   return out;

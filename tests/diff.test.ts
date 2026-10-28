@@ -12,7 +12,7 @@ function job(n: number, over: Partial<Job> = {}): Job {
   return {
     id: stableId(source, String(n), url), company: "Acme", title: `Software Engineer ${n}`, url, locations: ["Toronto, ON"],
     countries: ["CA"], cities: ["Toronto"], remote: "unknown", remoteRegions: [], postedAt: iso(2), postedApprox: false, postedPrecision: "exact",
-    firstSeenAt: NOW.toISOString(), lastSeenAt: NOW.toISOString(), closedAt: null, linkStatus: "unknown", linkCheckedAt: null, source, sources: [source], roleType: "sde",
+    firstSeenAt: NOW.toISOString(), lastSeenAt: NOW.toISOString(), closedAt: null, linkStatus: "unknown", linkCheckedAt: null, resolvedUrl: null, source, sources: [source], roleType: "sde",
     level: "new-grad", gradYear: null, workAuth: "unknown", tier: 1, snippet: "", ...over,
   };
 }
@@ -128,5 +128,40 @@ describe("mergeRun", () => {
     const r = mergeRun(stateOf([checked], "simplify"), [okRun("simplify", [moved])], NOW);
     expect(r.jobs).toHaveLength(1);
     expect(r.jobs[0]).toMatchObject({ linkStatus: "unknown", linkCheckedAt: null });
+  });
+
+  test("a partial (windowed) source never closes jobs that merely left its window", () => {
+    const prev = stateOf([job(1, { source: "amazon", sources: ["amazon"] }), job(2, { source: "amazon", sources: ["amazon"] })], "amazon");
+    const r = mergeRun(prev, [{ source: "amazon", ok: true, complete: false, jobs: [job(2, { source: "amazon", sources: ["amazon"] })] }], NOW);
+    expect(r.jobs).toHaveLength(2);
+    expect(r.jobs.every((j) => j.closedAt === null)).toBe(true);
+  });
+
+  test("jobs only a partial source ever carried expire after 14 days without being seen", () => {
+    const stale = job(1, { source: "amazon", sources: ["amazon"], lastSeenAt: iso(15) });
+    const recent = job(2, { source: "amazon", sources: ["amazon"], lastSeenAt: iso(13) });
+    const r = mergeRun(stateOf([stale, recent], "amazon"), [{ source: "amazon", ok: true, complete: false, jobs: [] }], NOW);
+    expect(r.jobs.map((j) => j.title)).toEqual(["Software Engineer 2"]);
+  });
+
+  test("a job also carried by a complete source is still closed when that complete source drops it", () => {
+    const both = job(1, { sources: ["greenhouse", "amazon"] });
+    const r = mergeRun(stateOf([both]), [okRun("greenhouse", []), { source: "amazon", ok: true, complete: false, jobs: [] }], NOW);
+    expect(r.jobs[0].closedAt).toBe(NOW.toISOString());
+  });
+
+  test("a partial source with no jobs this run is not flagged as a suspicious drop", () => {
+    const many = Array.from({ length: 30 }, (_, i) => job(i + 1, { source: "amazon", sources: ["amazon"] }));
+    const r = mergeRun(stateOf(many, "amazon"), [{ source: "amazon", ok: true, complete: false, jobs: many.slice(0, 5) }], NOW);
+    expect(r.health[0].status).toBe("ok");
+    expect(r.jobs).toHaveLength(30);
+  });
+
+  test("resolvedUrl carries over while the url is unchanged and is dropped when it changed", () => {
+    const resolved = job(1, { source: "simplify", sources: ["simplify"], resolvedUrl: "https://boards.greenhouse.io/x/jobs/1", linkStatus: "ok", linkCheckedAt: iso(1) });
+    const same = mergeRun(stateOf([resolved], "simplify"), [okRun("simplify", [job(1, { source: "simplify", sources: ["simplify"] })])], NOW);
+    expect(same.jobs[0].resolvedUrl).toBe("https://boards.greenhouse.io/x/jobs/1");
+    const moved = mergeRun(stateOf([resolved], "simplify"), [okRun("simplify", [job(1, { source: "simplify", sources: ["simplify"], url: "https://boards.example.com/1-new" })])], NOW);
+    expect(moved.jobs[0].resolvedUrl).toBeNull();
   });
 });
