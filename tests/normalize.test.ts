@@ -33,3 +33,16 @@ describe("toSnippet", () => {
     expect(toSnippet("x".repeat(1000)).length).toBeLessThanOrEqual(400);
   });
 });
+
+import { toIso } from "../pipeline/normalize.js";
+describe("toIso", () => {
+  test("converts offsets and epoch ms to UTC ISO", () => {
+    expect(toIso("2026-09-03T13:30:34-04:00")).toBe("2026-09-03T17:30:34.000Z");
+    expect(toIso(0)).toBe("1970-01-01T00:00:00.000Z");
+  });
+  test("returns null for missing or garbage input", () => {
+    expect(toIso(undefined)).toBeNull();
+    expect(toIso("")).toBeNull();
+    expect(toIso("garbage")).toBeNull();
+  });
+});

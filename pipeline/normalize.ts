@@ -45,3 +45,10 @@ export function toSnippet(html: string, max = 400): string {
     .trim();
   return text.length <= max ? text : text.slice(0, max - 1).trimEnd() + "…";
 }
+
+/** ISO-8601 UTC string for a date-like value, or null when it is missing or unparseable. */
+export function toIso(value: string | number | null | undefined): string | null {
+  if (value === null || value === undefined || value === "") return null;
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? null : d.toISOString();
+}

@@ -86,6 +86,12 @@ All endpoints below were called on 2026-10-27 and returned HTTP 200 unless noted
 
 `companies.yml` is hand-curated (~300 companies at launch): big tech, top AI labs, well-funded startups, and strong Canadian employers. Each entry names its ATS, slug and tier. `scripts/validate-companies.ts` fails CI-visibly if a slug returns an error or zero jobs, so stale entries are caught.
 
+### 3.1b Big-tech career-site adapters (added 2026-10-27)
+
+Google, Amazon, Meta, Apple, Microsoft, Netflix, Uber and Oracle-hosted employers do not use Greenhouse/Lever/Ashby. Each runs its own careers site, which calls a JSON (or server-rendered) endpoint that is public but undocumented. We call the same endpoint the careers page itself uses, at a low rate (>= 1 s between requests, a few pages per run), for postings the company publishes for candidates. Endpoints verified on 2026-10-27: Amazon, Netflix (Eightfold), Oracle HCM and Google (HTML). Microsoft, Apple, Meta and Uber need their request shape taken from the browser's network tab; Tesla blocks non-browser clients and is not supported. A headless browser (Playwright, not Selenium: same idea, better CI support) is used only for adapters that cannot be reached over plain HTTP, runs on a slower schedule, and is optional. Undocumented endpoints can change without notice, so each is isolated as its own adapter with a health entry, and the weekly smoke test covers them.
+
+Not supported by design: LinkedIn, Indeed, Glassdoor (terms forbid scraping, they block datacenter IPs such as GitHub Actions, and logged-in scraping risks the user's account); Handshake, WaterlooWorks and other login-gated university boards. For those the site offers prefilled search link-outs, and the user should create each site's own saved-search email alerts.
+
 ### 3.2 Community new-grad lists
 
 - `SimplifyJobs/New-Grad-Positions`: `.github/scripts/listings.json` (about 19k entries, ~3k active; structured locations, `sponsorship`, `degrees`, `category`, `date_posted`). Noisy (includes non-engineering roles), so classification filters it.
