@@ -15,6 +15,9 @@ describe("defaultFilters + applyFilters", () => {
     const jobs = [makeJob({ title: "ok" }), makeJob({ title: "senior-ish", level: "other" }), makeJob({ title: "restricted", workAuth: "restricted" })];
     expect(titles(applyFilters(jobs, defaultFilters(), NOW))).toEqual(["ok"]);
   });
+  test("'no sponsorship' postings are kept (only citizenship and clearance limits are hidden)", () => {
+    expect(titles(applyFilters([makeJob({ title: "ns", workAuth: "no-sponsorship" })], defaultFilters(), NOW))).toEqual(["ns"]);
+  });
   test("closed and dead-link jobs are hidden unless includeClosed", () => {
     const jobs = [makeJob({ title: "open" }), makeJob({ title: "closed", closedAt: hoursAgo(2) }), makeJob({ title: "dead", linkStatus: "dead" })];
     expect(titles(applyFilters(jobs, defaultFilters(), NOW))).toEqual(["open"]);

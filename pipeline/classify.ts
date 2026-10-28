@@ -50,15 +50,20 @@ export function classifyGradYear(title: string, description = ""): 2026 | 2027 |
   return null;
 }
 
-const RESTRICTED = /(active|current|top[\s-]secret|ts\/sci|secret)\s+(security\s+)?clearance|u\.?s\.? citizen(ship)?\s*(is\s*)?(required|only)|must be a u\.?s\.? citizen|(will not|cannot|unable to|not able to|do not|does not|don't)\s+(offer|provide|sponsor)\w*[^.]{0,30}(visa|sponsorship|work authorization)|(does not|do not|don't)\s+sponsor|without (visa )?sponsorship/i;
+// Real limits: citizenship or clearance requirements. A job like this may be closed to the user even in Canada.
+const RESTRICTED = /(active|current|top[\s-]secret|ts\/sci|secret)\s+(security\s+)?clearance|u\.?s\.? citizen(ship)?\s*(is\s*)?(required|only)|must be a u\.?s\.? citizen/i;
+// "No visa sponsorship" is not a limit for someone already allowed to work in the country, so it is tracked separately.
+const NO_SPONSORSHIP = /(will not|cannot|can't|unable to|not able to|do not|does not|don't)\s+(offer|provide|sponsor)\w*[^.]{0,30}(visa|sponsorship|work authorization)|(does not|do not|don't)\s+sponsor|without (visa )?sponsorship|sponsorship\s+(is\s+)?not\s+(available|offered|provided)/i;
 const SPONSORS = /\b(we|will|can)\s+(offer\s+|provide\s+)?(visa\s+)?sponsor\w*|sponsorship\s+(is\s+)?(available|provided|offered)/i;
 
 export function classifyWorkAuth(text: string, sponsorshipHint?: string): WorkAuth {
   if (sponsorshipHint) {
-    if (/does not offer|citizenship is required|not offer/i.test(sponsorshipHint)) return "restricted";
+    if (/citizenship is required/i.test(sponsorshipHint)) return "restricted";
+    if (/does not offer|not offer/i.test(sponsorshipHint)) return RESTRICTED.test(text) ? "restricted" : "no-sponsorship";
     if (/^offers sponsorship/i.test(sponsorshipHint)) return "sponsors";
   }
   if (RESTRICTED.test(text)) return "restricted";
+  if (NO_SPONSORSHIP.test(text)) return "no-sponsorship";
   if (SPONSORS.test(text)) return "sponsors";
   return "unknown";
 }

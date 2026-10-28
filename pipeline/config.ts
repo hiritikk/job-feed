@@ -28,7 +28,7 @@ const alertRuleSchema = z.object({
   grad_years: z.array(z.number().int().nullable()),
   role_types: z.array(z.enum(["sde", "ml-ai", "backend", "fullstack", "infra", "data", "other"])),
   tiers: z.array(tier),
-  exclude_work_auth: z.array(z.enum(["none", "restricted", "sponsors", "unknown"])),
+  exclude_work_auth: z.array(z.enum(["none", "restricted", "no-sponsorship", "sponsors", "unknown"])),
   max_years: z.number().int().min(0).optional(),
   priority: z.record(z.string(), z.enum(["high", "default", "low"])),
 });

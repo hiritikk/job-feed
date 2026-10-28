@@ -66,15 +66,17 @@ describe("classifyWorkAuth", () => {
   test.each([
     ["Applicants must be a US citizen.", undefined, "restricted"],
     ["Active security clearance required", undefined, "restricted"],
-    ["We do not sponsor visas", undefined, "restricted"],
+    ["We do not sponsor visas", undefined, "no-sponsorship"],
+    ["Visa sponsorship is not available for this role", undefined, "no-sponsorship"],
+    ["No sponsorship. Applicants must be a US citizen.", undefined, "restricted"],
     ["We sponsor visas for eligible candidates", undefined, "sponsors"],
-    ["Great team", "Does Not Offer Sponsorship", "restricted"],
+    ["Great team", "Does Not Offer Sponsorship", "no-sponsorship"],
     ["Great team", "U.S. Citizenship is Required", "restricted"],
     ["Great team", "Offers Sponsorship", "sponsors"],
     ["Great team", "Other", "unknown"],
     ["Great team", undefined, "unknown"],
     ["We do not provide free lunch or offer remote work", undefined, "unknown"],
-    ["We cannot offer visa sponsorship at this time", undefined, "restricted"],
+    ["We cannot offer visa sponsorship at this time", undefined, "no-sponsorship"],
   ])("%s / %s -> %s", (text, hint, expected) => expect(classifyWorkAuth(text, hint)).toBe(expected));
 });
 

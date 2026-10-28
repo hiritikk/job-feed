@@ -2,7 +2,7 @@
 export type Country = "CA" | "US" | "GB" | "EU" | "OTHER";
 export type RoleType = "sde" | "ml-ai" | "backend" | "fullstack" | "infra" | "data" | "other";
 export type Level = "new-grad" | "early-career" | "other";
-export type WorkAuth = "none" | "restricted" | "sponsors" | "unknown";
+export type WorkAuth = "none" | "restricted" | "no-sponsorship" | "sponsors" | "unknown";
 export type RemoteMode = "remote" | "hybrid" | "onsite" | "unknown";
 export type Tier = 1 | 2 | 3;
 /** exact = timestamp from the source; day = date only; approx = relative/estimated ("Posted 7 Days Ago"); none = unknown. */

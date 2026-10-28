@@ -27,6 +27,7 @@ describe("matchesRule (default core rule)", () => {
   test("remote limited to an unrecognised region (APAC) does not match", () => expect(matchesRule(job({ loc: ["Remote - APAC"] }), rule)).toBe(false));
   test("gradYear 2026 does not match", () => expect(matchesRule(job({ gradYear: 2026 }), rule)).toBe(false));
   test("gradYear null matches", () => expect(matchesRule(job({ gradYear: null }), rule)).toBe(true));
+  test("'no sponsorship' postings still match: the user can work in Canada without sponsorship", () => expect(matchesRule(job({ workAuth: "no-sponsorship" }), rule)).toBe(true));
   test("work-auth restricted does not match", () => expect(matchesRule(job({ workAuth: "restricted" }), rule)).toBe(false));
   test("tier 3 does not match", () => expect(matchesRule(job({ tier: 3 }), rule)).toBe(false));
   test("level other does not match", () => expect(matchesRule(job({ level: "other" }), rule)).toBe(false));
