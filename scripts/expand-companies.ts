@@ -55,7 +55,7 @@ export function isThrottleError(message: string): boolean {
 }
 
 const yamlLine = (e: CompanyEntry, s: BoardScore): string =>
-  `- { name: ${JSON.stringify(e.name)}, ats: ${e.ats}, slug: ${e.slug}, tier: ${e.tier}${e.site ? `, site: ${JSON.stringify(e.site)}, wd: ${e.wd}` : ""} }  # relevant ${s.relevant}, canada ${s.canada}, entry-level ${s.earlyCareer}`;
+  `- { name: ${JSON.stringify(e.name)}, ats: ${e.ats}, slug: ${JSON.stringify(e.slug)}, tier: ${e.tier}${e.site ? `, site: ${JSON.stringify(e.site)}, wd: ${e.wd}` : ""} }  # relevant ${s.relevant}, canada ${s.canada}, entry-level ${s.earlyCareer}`;
 
 export type ProbeRecord = { ats: "greenhouse" | "lever" | "ashby" | "workday" | "bamboohr"; id: string; score?: BoardScore; error?: string };
 

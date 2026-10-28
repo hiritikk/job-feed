@@ -63,12 +63,20 @@ describe("renderAuto", () => {
     const yaml = renderAuto([rec("greenhouse", "a", 0, 0), rec("greenhouse", "b", 3, 0), rec("lever", "c", 2, 2), { ats: "ashby", id: "dead", error: "HTTP 404" } as ProbeRecord]);
     const lines = yaml.split("\n").filter((l) => l.startsWith("- "));
     expect(lines).toHaveLength(2);
-    expect(lines[0]).toContain("slug: c");
-    expect(lines[1]).toContain("slug: b");
+    expect(lines[0]).toContain(`slug: "c"`);
+    expect(lines[1]).toContain(`slug: "b"`);
     expect(lines[0]).toContain("# relevant 2, canada 2");
   });
+  test("slugs that look like numbers or booleans are quoted so YAML keeps them as text", async () => {
+    const { parse } = await import("yaml");
+    const yaml = renderAuto([rec("lever", "123", 1, 0), rec("ashby", "true", 1, 0), rec("workday", "acme|wd5|2", 1, 0)]);
+    const parsed = parse(yaml) as { slug: unknown; site?: unknown }[];
+    expect(parsed.map((e) => typeof e.slug)).toEqual(["string", "string", "string"]);
+    expect(parsed.map((e) => String(e.slug)).sort()).toEqual(["123", "acme", "true"]);
+    expect(parsed.find((e) => e.site !== undefined)!.site).toBe("2");
+  });
   test("workday rows keep their site and datacenter", () => {
-    expect(renderAuto([rec("workday", "acme|wd5|Careers", 1, 0)])).toContain('slug: acme, tier: 3, site: "Careers", wd: 5');
+    expect(renderAuto([rec("workday", "acme|wd5|Careers", 1, 0)])).toContain('slug: "acme", tier: 3, site: "Careers", wd: 5');
   });
   test("caps the list length", () => {
     const many = Array.from({ length: 50 }, (_, i) => rec("greenhouse", `b${i}`, 1, 0));
