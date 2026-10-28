@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { applyFilters, cityOptions, defaultFilters, filtersToSearch, isNewSince, searchToFilters, type Filters } from "./filters";
+import { activeFilterCount, applyFilters, cityOptions, defaultFilters, filtersToSearch, isNewSince, searchToFilters, type Filters } from "./filters";
 import { NOW, hoursAgo, makeJob } from "./testJob";
 
 const f = (over: Partial<Filters> = {}): Filters => ({ ...defaultFilters(), ...over });
@@ -133,4 +133,13 @@ describe("isNewSince", () => {
   test("no last visit means nothing is marked new", () => {
     expect(isNewSince(makeJob(), null)).toBe(false);
   });
+});
+
+describe("activeFilterCount", () => {
+  test("defaults count as zero", () => expect(activeFilterCount(defaultFilters())).toBe(0));
+  test("each changed group counts once, search text counts too", () => {
+    expect(activeFilterCount(f({ cities: ["Toronto", "Vancouver"] }))).toBe(1);
+    expect(activeFilterCount(f({ cities: ["Toronto"], postedWithinDays: 3, q: "ml", locations: ["CA", "US"] }))).toBe(4);
+  });
+  test("an explicitly emptied group counts as changed", () => expect(activeFilterCount(f({ locations: [] }))).toBe(1));
 });

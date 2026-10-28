@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { formatFound, formatPosted, linkLabel, shortUrlHost } from "./format";
+import { formatFound, formatPosted, formatWhen, linkLabel, shortUrlHost } from "./format";
 import { NOW, hoursAgo, makeJob } from "./testJob";
 
 describe("formatPosted", () => {
@@ -41,5 +41,22 @@ describe("links", () => {
   test("shortUrlHost shows the destination host without www", () => {
     expect(shortUrlHost("https://www.linkedin.com/jobs/view/1")).toBe("linkedin.com");
     expect(shortUrlHost("not a url")).toBe("");
+  });
+});
+
+describe("formatWhen (the one line shown on a row)", () => {
+  test("a dated job shows its posting date or age", () => {
+    expect(formatWhen(makeJob({ postedAt: hoursAgo(3) }), NOW)).toEqual({ text: "3h ago", note: null });
+    expect(formatWhen(makeJob({ postedPrecision: "day", postedAt: "2026-10-22T00:00:00.000Z" }), NOW)).toEqual({ text: "Oct 22", note: null });
+  });
+  test("an estimated date is marked with ~ and explained", () => {
+    const w = formatWhen(makeJob({ postedPrecision: "approx", postedApprox: true, postedAt: hoursAgo(24 * 7) }), NOW);
+    expect(w.text).toBe("~7d ago");
+    expect(w.note).toMatch(/estimated/i);
+  });
+  test("an undated job shows when we found it, never a made-up posting date", () => {
+    const w = formatWhen(makeJob({ postedPrecision: "none", postedApprox: true, firstSeenAt: hoursAgo(2) }), NOW);
+    expect(w.text).toBe("found 2h ago");
+    expect(w.note).toMatch(/no posting date/i);
   });
 });

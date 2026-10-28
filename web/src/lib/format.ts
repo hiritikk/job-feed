@@ -33,6 +33,12 @@ export function formatPosted(job: Job, now: Date): string {
 /** Our own first sighting: the one timestamp that is always exact. */
 export const formatFound = (job: Job, now: Date): string => `found ${relative(new Date(job.firstSeenAt), now)}`;
 
+/** The single date line shown on a row: the posting date when there is one, otherwise honestly when we found it. */
+export function formatWhen(job: Job, now: Date): { text: string; note: string | null } {
+  if (job.postedPrecision === "none") return { text: formatFound(job, now), note: "No posting date is published; this is when the feed first found it." };
+  return { text: formatPosted(job, now), note: job.postedPrecision === "approx" ? "Estimated from a relative age such as “7 days ago”." : null };
+}
+
 export function linkLabel(job: Job): string {
   if (job.linkStatus === "ok") return "verified";
   if (job.linkStatus === "dead") return "link broken";

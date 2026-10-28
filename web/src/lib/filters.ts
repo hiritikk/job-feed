@@ -80,6 +80,13 @@ export function cityOptions(jobs: Job[], chips: LocationKey[]): { city: string; 
 
 export const isNewSince = (job: Job, lastVisit: string | null): boolean => lastVisit !== null && job.firstSeenAt > lastVisit;
 
+/** How many filter groups differ from the defaults (shown on the Filters button). */
+export function activeFilterCount(f: Filters): number {
+  const d = defaultFilters();
+  const keys = ["locations", "cities", "roleTypes", "levels", "gradYears", "tiers", "sources", "postedWithinDays", "hideRestricted", "includeClosed", "sort", "q"] as const;
+  return keys.filter((k) => JSON.stringify(f[k]) !== JSON.stringify(d[k])).length;
+}
+
 // ---- URL state ---------------------------------------------------------------------------------------------------
 const same = (a: unknown, b: unknown): boolean => JSON.stringify(a) === JSON.stringify(b);
 

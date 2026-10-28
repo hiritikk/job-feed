@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { loadJobs, readLastVisit, writeLastVisit } from "./data";
+import { loadJobs, readLastVisit, readRailHidden, writeLastVisit, writeRailHidden } from "./data";
 import { makeJob } from "./testJob";
 
 const file = { generatedAt: "2026-10-27T12:00:00.000Z", sources: [], jobs: [makeJob()] };
@@ -46,5 +46,25 @@ describe("last visit storage", () => {
   });
   test("missing storage yields null", () => {
     expect(readLastVisit(undefined)).toBeNull();
+  });
+});
+
+describe("filter panel preference", () => {
+  const memory = () => {
+    const store = new Map<string, string>();
+    return { getItem: (k: string) => store.get(k) ?? null, setItem: (k: string, v: string) => void store.set(k, v) } as unknown as Storage;
+  };
+  test("defaults to shown, remembers hidden, remembers shown again", () => {
+    const s = memory();
+    expect(readRailHidden(s)).toBe(false);
+    writeRailHidden(true, s);
+    expect(readRailHidden(s)).toBe(true);
+    writeRailHidden(false, s);
+    expect(readRailHidden(s)).toBe(false);
+  });
+  test("blocked storage never throws and defaults to shown", () => {
+    const broken = { getItem: () => { throw new Error("denied"); }, setItem: () => { throw new Error("denied"); } } as unknown as Storage;
+    expect(readRailHidden(broken)).toBe(false);
+    expect(() => writeRailHidden(true, broken)).not.toThrow();
   });
 });

@@ -37,7 +37,7 @@ export function FilterRail({ jobs, filters, setFilters, sources, open, onClose, 
   const [allCities, setAllCities] = useState(false);
   const set = (patch: Partial<Filters>) => setFilters({ ...filters, ...patch });
   const cities = useMemo(() => cityOptions(jobs, filters.locations), [jobs, filters.locations]);
-  const shown = allCities ? cities.slice(0, 80) : cities.slice(0, 14);
+  const shown = allCities ? cities.slice(0, 80) : cities.slice(0, 8);
   const selectedHidden = filters.cities.filter((c) => !shown.some((s) => s.city === c));
 
   return (
@@ -67,9 +67,9 @@ export function FilterRail({ jobs, filters, setFilters, sources, open, onClose, 
             {count > 0 && <span className="count">{count}</span>}
           </Chip>
         ))}
-        {cities.length > 14 && (
+        {cities.length > 8 && (
           <button type="button" className="link" onClick={() => setAllCities(!allCities)}>
-            {allCities ? "Fewer cities" : `${Math.min(cities.length, 80) - 14} more cities`}
+            {allCities ? "Fewer cities" : `${Math.min(cities.length, 80) - 8} more cities`}
           </button>
         )}
       </Group>
@@ -82,6 +82,16 @@ export function FilterRail({ jobs, filters, setFilters, sources, open, onClose, 
         ))}
       </Group>
 
+      <Group title="Posted within">
+        {DAYS.map(([days, label]) => (
+          <Chip key={label} on={filters.postedWithinDays === days} onClick={() => set({ postedWithinDays: days })}>
+            {label}
+          </Chip>
+        ))}
+      </Group>
+
+      <details className="more-filters">
+        <summary>More filters</summary>
       <Group title="Class of" hint="Only postings that name a graduation year carry one">
         {([2026, 2027, 2028, "none"] as const).map((y) => (
           <Chip key={y} on={filters.gradYears.includes(y)} onClick={() => set({ gradYears: toggle(filters.gradYears, y) })}>
@@ -101,14 +111,6 @@ export function FilterRail({ jobs, filters, setFilters, sources, open, onClose, 
       <Group title="Company">
         {TIERS.map(([tier, label, title]) => (
           <Chip key={tier} on={filters.tiers.includes(tier)} title={title} onClick={() => set({ tiers: toggle(filters.tiers, tier) })}>
-            {label}
-          </Chip>
-        ))}
-      </Group>
-
-      <Group title="Posted within">
-        {DAYS.map(([days, label]) => (
-          <Chip key={label} on={filters.postedWithinDays === days} onClick={() => set({ postedWithinDays: days })}>
             {label}
           </Chip>
         ))}
@@ -153,6 +155,7 @@ export function FilterRail({ jobs, filters, setFilters, sources, open, onClose, 
           ))}
         </div>
       </section>
+      </details>
     </aside>
   );
 }
