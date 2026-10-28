@@ -104,6 +104,11 @@ describe("runPipeline", () => {
     expect(ctx.read().jobs.map((j) => j.title)).toEqual(["Software Engineer, New Grad 1"]);
   });
 
+  test("senior-titled roles are not published", async () => {
+    await ctx.run(t0, { greenhouse: async () => [raw(1), raw(2, { title: "Senior Software Engineer" }), raw(3, { title: "Staff Backend Engineer" })] });
+    expect(ctx.read().jobs.map((j) => j.title)).toEqual(["Software Engineer, New Grad 1"]);
+  });
+
   test("a dead link from a non-direct source is marked dead and never alerted", async () => {
     await ctx.run(t0, { jobright: async () => [raw(1, { source: "jobright", url: "https://jobright.ai/jobs/info/1" })] });
     ctx.setProbe(404);

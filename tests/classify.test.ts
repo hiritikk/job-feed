@@ -1,6 +1,6 @@
 import { describe, test, expect } from "vitest";
 import {
-  classify, classifyGradYear, classifyLevel, classifyRoleType, classifyWorkAuth, isInternship,
+  classify, classifyGradYear, classifyLevel, classifyRoleType, classifyWorkAuth, isInternship, isSenior,
 } from "../pipeline/classify.js";
 import type { RawJob } from "../pipeline/types.js";
 
@@ -70,6 +70,15 @@ describe("classifyWorkAuth", () => {
     ["We do not provide free lunch or offer remote work", undefined, "unknown"],
     ["We cannot offer visa sponsorship at this time", undefined, "restricted"],
   ])("%s / %s -> %s", (text, hint, expected) => expect(classifyWorkAuth(text, hint)).toBe(expected));
+});
+
+describe("isSenior", () => {
+  test.each([
+    ["Senior Software Engineer", true], ["Sr. Backend Developer", true], ["Staff Engineer", true], ["Principal Engineer", true],
+    ["Engineering Manager", true], ["Tech Lead, Payments", true], ["Director of Engineering", true], ["Head of Platform", true],
+    ["Software Engineer", false], ["Software Engineer II", false], ["New Grad Software Engineer", false], ["Associate Software Engineer", false],
+    ["Leader Programs Associate", false],
+  ])("%s -> %s", (title, expected) => expect(isSenior(title)).toBe(expected));
 });
 
 describe("isInternship", () => {

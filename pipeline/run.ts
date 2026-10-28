@@ -8,7 +8,7 @@ import { communityAdapters } from "./adapters/communityLists.js";
 import { fetchHnHiring } from "./adapters/hn.js";
 import { fetchAdzuna, fetchJooble } from "./adapters/keyed.js";
 import { matchesRule, planNotifications, sendNtfy } from "./alerts.js";
-import { classify } from "./classify.js";
+import { classify, isSenior } from "./classify.js";
 import { loadAlertRules, loadCompanies, loadSources, type AlertRule } from "./config.js";
 import { norm } from "./dedupe.js";
 import { mergeRun, type SourceRun, type State } from "./diff.js";
@@ -118,10 +118,10 @@ export async function runPipeline(opts: RunOptions): Promise<{ jobCount: number;
         const out = await task.run();
         const jobs = out.raw.flatMap((r) => {
           const job = classify(r, tierOf, now);
-          return job && job.roleType !== "other" ? [job] : [];
+          return job && job.roleType !== "other" && !isSenior(job.title) ? [job] : [];
         });
         const rejected = out.raw.length - jobs.length;
-        console.log(`${task.source}: ${out.raw.length} fetched, ${jobs.length} kept${rejected ? ` (${rejected} dropped: internships, non-engineering, bad links)` : ""}`);
+        console.log(`${task.source}: ${out.raw.length} fetched, ${jobs.length} kept${rejected ? ` (${rejected} dropped: internships, senior, non-engineering, bad links)` : ""}`);
         return { source: task.source, ok: out.ok ?? true, jobs: [...jobs, ...(out.carried ?? [])], error: out.error, complete: COMPLETE_SOURCES.has(task.source) };
       } catch (err) {
         console.warn(`${task.source}: FAILED ${(err as Error).message}`);

@@ -1,14 +1,331 @@
-# Provisional seed used to exercise the pipeline; Task 15 replaces it with the full curated, validated list.
-- { name: Stripe, ats: greenhouse, slug: stripe, tier: 1 }
-- { name: Palantir, ats: lever, slug: palantir, tier: 1 }
-- { name: OpenAI, ats: ashby, slug: openai, tier: 1 }
-- { name: Cohere, ats: ashby, slug: cohere, tier: 2 }
-- { name: Wealthsimple, ats: ashby, slug: wealthsimple, tier: 2 }
-- { name: NVIDIA, ats: workday, slug: nvidia, tier: 1, site: NVIDIAExternalCareerSite, wd: 5 }
-- { name: ServiceNow, ats: smartrecruiters, slug: ServiceNow, tier: 2 }
-- { name: Hugging Face, ats: workable, slug: huggingface, tier: 2 }
-- { name: Amazon, ats: custom, slug: amazon, tier: 1 }
-- { name: Google, ats: custom, slug: google, tier: 1 }
-- { name: Microsoft, ats: custom, slug: microsoft, tier: 1 }
-- { name: Netflix, ats: custom, slug: netflix, tier: 1 }
-- { name: Oracle, ats: custom, slug: oracle, tier: 1 }
+# Curated companies, tiers and ATS slugs. Every non-custom entry was verified against the live API on 2026-10-27 (npm run validate).
+# tier 1 = big tech and top AI labs, tier 2 = unicorns and strong Canadian employers, tier 3 = other tech employers.
+# ats: custom + a bespoke adapter (pipeline/adapters/bigtech) or, for 'tier only' rows, no supported public feed: those names
+# only give postings found via the community lists or aggregators their tier.
+
+# --- Workday ---
+- { name: "Adobe", ats: workday, slug: adobe, tier: 1, site: external_experienced, wd: 5 }  # 280 jobs
+- { name: "Analog Devices", ats: workday, slug: analogdevices, tier: 2, site: External, wd: 1 }  # 833 jobs
+- { name: "Autodesk", ats: workday, slug: autodesk, tier: 2, site: Ext, wd: 1 }  # 176 jobs
+- { name: "BMO", ats: workday, slug: bmo, tier: 2, site: External, wd: 3 }  # 989 jobs
+- { name: "Broadcom", ats: workday, slug: broadcom, tier: 2, site: External_Career, wd: 1 }  # 374 jobs
+- { name: "CAE", ats: workday, slug: cae, tier: 3, site: career, wd: 3 }  # 388 jobs
+- { name: "CIBC", ats: workday, slug: cibc, tier: 2, site: search, wd: 3 }  # 614 jobs
+- { name: "Capital One", ats: workday, slug: capitalone, tier: 1, site: Capital_One, wd: 12 }  # 2017 jobs
+- { name: "Ciena", ats: workday, slug: ciena, tier: 2, site: Careers, wd: 5 }  # 146 jobs
+- { name: "Cisco", ats: workday, slug: cisco, tier: 1, site: Cisco_Careers, wd: 5 }  # 1531 jobs
+- { name: "Citi", ats: workday, slug: citi, tier: 3, site: "2", wd: 5 }  # 2000 jobs
+- { name: "CrowdStrike", ats: workday, slug: crowdstrike, tier: 2, site: crowdstrikecareers, wd: 5 }  # 377 jobs
+- { name: "Disney", ats: workday, slug: disney, tier: 2, site: disneycareer, wd: 5 }  # 351 jobs
+- { name: "Etsy", ats: workday, slug: etsy, tier: 2, site: etsy_careers, wd: 5 }  # 74 jobs
+- { name: "Fidelity", ats: workday, slug: fmr, tier: 3, site: FidelityCareers, wd: 1 }  # 793 jobs
+- { name: "HP", ats: workday, slug: hp, tier: 2, site: ExternalCareerSite, wd: 5 }  # 865 jobs
+- { name: "Intel", ats: workday, slug: intel, tier: 1, site: External, wd: 1 }  # 791 jobs
+- { name: "Manulife", ats: workday, slug: manulife, tier: 2, site: MFCJH_Jobs, wd: 3 }  # 624 jobs
+- { name: "Mastercard", ats: workday, slug: mastercard, tier: 2, site: CorporateCareers, wd: 1 }  # 1146 jobs
+- { name: "Micron", ats: workday, slug: micron, tier: 2, site: External, wd: 1 }  # 3124 jobs
+- { name: "Morgan Stanley", ats: workday, slug: ms, tier: 3, site: External, wd: 5 }  # 1238 jobs
+- { name: "Motorola Solutions", ats: workday, slug: motorolasolutions, tier: 2, site: Careers, wd: 5 }  # 887 jobs
+- { name: "NVIDIA", ats: workday, slug: nvidia, tier: 1, site: NVIDIAExternalCareerSite, wd: 5 }  # 2000 jobs
+- { name: "PayPal", ats: workday, slug: paypal, tier: 2, site: jobs, wd: 1 }  # 327 jobs
+- { name: "Red Hat", ats: workday, slug: redhat, tier: 2, site: Jobs, wd: 5 }  # 152 jobs
+- { name: "Salesforce", ats: workday, slug: salesforce, tier: 1, site: External_Career_Site, wd: 12 }  # 1589 jobs
+- { name: "Sun Life", ats: workday, slug: sunlife, tier: 2, site: Experienced-Jobs, wd: 3 }  # 291 jobs
+- { name: "TD", ats: workday, slug: td, tier: 2, site: TD_Bank_Careers, wd: 3 }  # 1676 jobs
+- { name: "Thomson Reuters", ats: workday, slug: thomsonreuters, tier: 2, site: External_Career_Site, wd: 5 }  # 491 jobs
+- { name: "Visa", ats: workday, slug: visa, tier: 2, site: Visa, wd: 5 }  # 861 jobs
+- { name: "Workday", ats: workday, slug: workday, tier: 2, site: Workday, wd: 5 }  # 377 jobs
+- { name: "Zoom", ats: workday, slug: zoom, tier: 2, site: Zoom, wd: 5 }  # 90 jobs
+
+# --- Greenhouse / Lever / Ashby / Workable / SmartRecruiters ---
+- { name: "Airbnb", ats: greenhouse, slug: airbnb, tier: 1}  # 195 jobs
+- { name: "Anthropic", ats: greenhouse, slug: anthropic, tier: 1}  # 681 jobs
+- { name: "Block", ats: greenhouse, slug: block, tier: 1}  # 202 jobs
+- { name: "Cloudflare", ats: greenhouse, slug: cloudflare, tier: 1}  # 461 jobs
+- { name: "Cohere", ats: ashby, slug: cohere, tier: 1}  # 118 jobs
+- { name: "Coinbase", ats: greenhouse, slug: coinbase, tier: 1}  # 227 jobs
+- { name: "Anysphere", ats: ashby, slug: cursor, tier: 1}  # 122 jobs
+- { name: "Databricks", ats: greenhouse, slug: databricks, tier: 1}  # 895 jobs
+- { name: "Datadog", ats: greenhouse, slug: datadog, tier: 1}  # 424 jobs
+- { name: "Discord", ats: greenhouse, slug: discord, tier: 1}  # 46 jobs
+- { name: "Dropbox", ats: greenhouse, slug: dropbox, tier: 1}  # 22 jobs
+- { name: "Figma", ats: greenhouse, slug: figma, tier: 1}  # 142 jobs
+- { name: "Hugging Face", ats: workable, slug: huggingface, tier: 1}  # 6 jobs
+- { name: "Instacart", ats: greenhouse, slug: instacart, tier: 1}  # 94 jobs
+- { name: "Jane Street", ats: greenhouse, slug: janestreet, tier: 1}  # 220 jobs
+- { name: "Jump Trading", ats: greenhouse, slug: jumptrading, tier: 1}  # 96 jobs
+- { name: "Lyft", ats: greenhouse, slug: lyft, tier: 1}  # 178 jobs
+- { name: "MongoDB", ats: greenhouse, slug: mongodb, tier: 1}  # 363 jobs
+- { name: "Notion", ats: ashby, slug: notion, tier: 1}  # 139 jobs
+- { name: "Okta", ats: greenhouse, slug: okta, tier: 1}  # 387 jobs
+- { name: "OpenAI", ats: ashby, slug: openai, tier: 1}  # 804 jobs
+- { name: "Palantir", ats: lever, slug: palantir, tier: 1}  # 306 jobs
+- { name: "Perplexity", ats: ashby, slug: perplexity, tier: 1}  # 134 jobs
+- { name: "Pinterest", ats: greenhouse, slug: pinterest, tier: 1}  # 159 jobs
+- { name: "Plaid", ats: ashby, slug: plaid, tier: 1}  # 129 jobs
+- { name: "Ramp", ats: ashby, slug: ramp, tier: 1}  # 172 jobs
+- { name: "Reddit", ats: greenhouse, slug: reddit, tier: 1}  # 160 jobs
+- { name: "Robinhood", ats: greenhouse, slug: robinhood, tier: 1}  # 159 jobs
+- { name: "Roblox", ats: greenhouse, slug: roblox, tier: 1}  # 271 jobs
+- { name: "Scale AI", ats: greenhouse, slug: scaleai, tier: 1}  # 169 jobs
+- { name: "SpaceX", ats: greenhouse, slug: spacex, tier: 1}  # 2834 jobs
+- { name: "Stripe", ats: greenhouse, slug: stripe, tier: 1}  # 713 jobs
+- { name: "Twilio", ats: greenhouse, slug: twilio, tier: 1}  # 133 jobs
+- { name: "Waymo", ats: greenhouse, slug: waymo, tier: 1}  # 369 jobs
+- { name: "xAI", ats: greenhouse, slug: xai, tier: 1}  # 308 jobs
+- { name: "1Password", ats: ashby, slug: 1password, tier: 2}  # 88 jobs
+- { name: "Abridge", ats: ashby, slug: abridge, tier: 2}  # 38 jobs
+- { name: "Affirm", ats: greenhouse, slug: affirm, tier: 2}  # 240 jobs
+- { name: "Airbyte", ats: ashby, slug: airbyte, tier: 2}  # 13 jobs
+- { name: "Airtable", ats: greenhouse, slug: airtable, tier: 2}  # 4 jobs
+- { name: "Alchemy", ats: ashby, slug: alchemy, tier: 2}  # 22 jobs
+- { name: "Amplitude", ats: ashby, slug: amplitude, tier: 2}  # 40 jobs
+- { name: "Anchorage Digital", ats: lever, slug: anchorage, tier: 2}  # 22 jobs
+- { name: "Anyscale", ats: ashby, slug: anyscale, tier: 2}  # 22 jobs
+- { name: "Arista", ats: smartrecruiters, slug: Aristanetworks, tier: 2}  # 244 jobs
+- { name: "Asana", ats: greenhouse, slug: asana, tier: 2}  # 113 jobs
+- { name: "Benevity", ats: ashby, slug: benevity, tier: 2}  # 22 jobs
+- { name: "Brex", ats: greenhouse, slug: brex, tier: 2}  # 261 jobs
+- { name: "Calendly", ats: greenhouse, slug: calendly, tier: 2}  # 8 jobs
+- { name: "Canva", ats: smartrecruiters, slug: Canva, tier: 2}  # 77 jobs
+- { name: "Carta", ats: ashby, slug: carta, tier: 2}  # 76 jobs
+- { name: "Carvana", ats: greenhouse, slug: carvana, tier: 2}  # 1660 jobs
+- { name: "Cerebras", ats: ashby, slug: cerebras, tier: 2}  # 119 jobs
+- { name: "Character.AI", ats: ashby, slug: character, tier: 2}  # 13 jobs
+- { name: "Chime", ats: greenhouse, slug: chime, tier: 2}  # 72 jobs
+- { name: "Circle", ats: ashby, slug: circle, tier: 2}  # 14 jobs
+- { name: "ClickHouse", ats: ashby, slug: clickhouse, tier: 2}  # 207 jobs
+- { name: "Cockroach Labs", ats: greenhouse, slug: cockroachlabs, tier: 2}  # 15 jobs
+- { name: "CoreWeave", ats: greenhouse, slug: coreweave, tier: 2}  # 311 jobs
+- { name: "Coursera", ats: greenhouse, slug: coursera, tier: 2}  # 27 jobs
+- { name: "Crusoe", ats: ashby, slug: crusoe, tier: 2}  # 355 jobs
+- { name: "Decagon", ats: ashby, slug: decagon, tier: 2}  # 132 jobs
+- { name: "Dialpad", ats: greenhouse, slug: dialpad, tier: 2}  # 17 jobs
+- { name: "Drata", ats: ashby, slug: drata, tier: 2}  # 29 jobs
+- { name: "Dremio", ats: greenhouse, slug: dremio, tier: 2}  # 7 jobs
+- { name: "Duolingo", ats: greenhouse, slug: duolingo, tier: 2}  # 58 jobs
+- { name: "Elastic", ats: greenhouse, slug: elastic, tier: 2}  # 405 jobs
+- { name: "Faire", ats: greenhouse, slug: faire, tier: 2}  # 67 jobs
+- { name: "Fastly", ats: greenhouse, slug: fastly, tier: 2}  # 53 jobs
+- { name: "Fireblocks", ats: greenhouse, slug: fireblocks, tier: 2}  # 25 jobs
+- { name: "Fireworks AI", ats: ashby, slug: fireworks, tier: 2}  # 90 jobs
+- { name: "Fivetran", ats: greenhouse, slug: fivetran, tier: 2}  # 160 jobs
+- { name: "Flexport", ats: greenhouse, slug: flexport, tier: 2}  # 192 jobs
+- { name: "Float", ats: ashby, slug: float, tier: 2}  # 21 jobs
+- { name: "Gemini", ats: greenhouse, slug: gemini, tier: 2}  # 30 jobs
+- { name: "Geotab", ats: greenhouse, slug: geotab, tier: 2}  # 66 jobs
+- { name: "GitLab", ats: greenhouse, slug: gitlab, tier: 2}  # 237 jobs
+- { name: "Glean", ats: smartrecruiters, slug: Glean, tier: 2}  # 1 jobs
+- { name: "Grafana Labs", ats: greenhouse, slug: grafanalabs, tier: 2}  # 133 jobs
+- { name: "Gusto", ats: greenhouse, slug: gusto, tier: 2}  # 93 jobs
+- { name: "Harvey", ats: ashby, slug: harvey, tier: 2}  # 367 jobs
+- { name: "Hootsuite", ats: smartrecruiters, slug: Hootsuite, tier: 2}  # 8 jobs
+- { name: "Hopper", ats: ashby, slug: hopper, tier: 2}  # 18 jobs
+- { name: "Imply", ats: greenhouse, slug: imply, tier: 2}  # 5 jobs
+- { name: "Jobber", ats: ashby, slug: jobber, tier: 2}  # 41 jobs
+- { name: "Khan Academy", ats: greenhouse, slug: khanacademy, tier: 2}  # 5 jobs
+- { name: "Klaviyo", ats: greenhouse, slug: klaviyo, tier: 2}  # 159 jobs
+- { name: "Koho", ats: ashby, slug: koho, tier: 2}  # 9 jobs
+- { name: "Lambda", ats: ashby, slug: lambda, tier: 2}  # 96 jobs
+- { name: "LangChain", ats: ashby, slug: langchain, tier: 2}  # 101 jobs
+- { name: "Lattice", ats: greenhouse, slug: lattice, tier: 2}  # 9 jobs
+- { name: "LaunchDarkly", ats: greenhouse, slug: launchdarkly, tier: 2}  # 52 jobs
+- { name: "League", ats: greenhouse, slug: leagueinc, tier: 2}  # 5 jobs
+- { name: "Lightspeed", ats: ashby, slug: lightspeed, tier: 2}  # 5 jobs
+- { name: "Linear", ats: ashby, slug: linear, tier: 2}  # 32 jobs
+- { name: "Lucid Motors", ats: greenhouse, slug: lucidmotors, tier: 2}  # 443 jobs
+- { name: "Materialize", ats: ashby, slug: materialize, tier: 2}  # 4 jobs
+- { name: "Medium", ats: greenhouse, slug: medium, tier: 2}  # 2 jobs
+- { name: "Mercury", ats: greenhouse, slug: mercury, tier: 2}  # 76 jobs
+- { name: "Miovision", ats: ashby, slug: miovision, tier: 2}  # 20 jobs
+- { name: "Miro", ats: ashby, slug: miro, tier: 2}  # 12 jobs
+- { name: "Mixpanel", ats: greenhouse, slug: mixpanel, tier: 2}  # 44 jobs
+- { name: "Modal", ats: ashby, slug: modal, tier: 2}  # 43 jobs
+- { name: "Neo Financial", ats: ashby, slug: neofinancial, tier: 2}  # 63 jobs
+- { name: "Neon", ats: lever, slug: neon, tier: 2}  # 8 jobs
+- { name: "Netlify", ats: greenhouse, slug: netlify, tier: 2}  # 4 jobs
+- { name: "New Relic", ats: greenhouse, slug: newrelic, tier: 2}  # 50 jobs
+- { name: "Nextdoor", ats: greenhouse, slug: nextdoor, tier: 2}  # 23 jobs
+- { name: "Nuro", ats: greenhouse, slug: nuro, tier: 2}  # 97 jobs
+- { name: "Nuvei", ats: workable, slug: nuvei, tier: 2}  # 87 jobs
+- { name: "Oura", ats: greenhouse, slug: oura, tier: 2}  # 93 jobs
+- { name: "Oyster", ats: ashby, slug: oyster, tier: 2}  # 24 jobs
+- { name: "PagerDuty", ats: greenhouse, slug: pagerduty, tier: 2}  # 48 jobs
+- { name: "Peloton", ats: greenhouse, slug: peloton, tier: 2}  # 57 jobs
+- { name: "Pinecone", ats: ashby, slug: pinecone, tier: 2}  # 8 jobs
+- { name: "Planet Labs", ats: greenhouse, slug: planetlabs, tier: 2}  # 131 jobs
+- { name: "PlanetScale", ats: greenhouse, slug: planetscale, tier: 2}  # 11 jobs
+- { name: "Procurify", ats: ashby, slug: procurify, tier: 2}  # 10 jobs
+- { name: "Pure Storage", ats: greenhouse, slug: purestorage, tier: 2}  # 362 jobs
+- { name: "Quora", ats: ashby, slug: quora, tier: 2}  # 9 jobs
+- { name: "Redis", ats: ashby, slug: redis, tier: 2}  # 27 jobs
+- { name: "Relativity Space", ats: greenhouse, slug: relativity, tier: 2}  # 402 jobs
+- { name: "Remote", ats: greenhouse, slug: remote, tier: 2}  # 2 jobs
+- { name: "Replit", ats: ashby, slug: replit, tier: 2}  # 32 jobs
+- { name: "Ripple", ats: greenhouse, slug: ripple, tier: 2}  # 107 jobs
+- { name: "Rocket Lab", ats: greenhouse, slug: rocketlab, tier: 2}  # 555 jobs
+- { name: "Rubrik", ats: greenhouse, slug: rubrik, tier: 2}  # 153 jobs
+- { name: "Runway", ats: ashby, slug: runway, tier: 2}  # 3 jobs
+- { name: "Samsara", ats: greenhouse, slug: samsara, tier: 2}  # 320 jobs
+- { name: "Sanctuary AI", ats: ashby, slug: sanctuary, tier: 2}  # 7 jobs
+- { name: "Sentry", ats: ashby, slug: sentry, tier: 2}  # 42 jobs
+- { name: "Sierra", ats: ashby, slug: sierra, tier: 2}  # 214 jobs
+- { name: "SingleStore", ats: greenhouse, slug: singlestore, tier: 2}  # 41 jobs
+- { name: "Snyk", ats: ashby, slug: snyk, tier: 2}  # 35 jobs
+- { name: "SoFi", ats: greenhouse, slug: sofi, tier: 2}  # 62 jobs
+- { name: "Squarespace", ats: greenhouse, slug: squarespace, tier: 2}  # 27 jobs
+- { name: "Stability AI", ats: greenhouse, slug: stabilityai, tier: 2}  # 6 jobs
+- { name: "Starburst", ats: greenhouse, slug: starburst, tier: 2}  # 35 jobs
+- { name: "Strava", ats: ashby, slug: strava, tier: 2}  # 28 jobs
+- { name: "Supabase", ats: ashby, slug: supabase, tier: 2}  # 64 jobs
+- { name: "Tailscale", ats: greenhouse, slug: tailscale, tier: 2}  # 53 jobs
+- { name: "Temporal", ats: ashby, slug: temporal, tier: 2}  # 73 jobs
+- { name: "Tenstorrent", ats: greenhouse, slug: tenstorrent, tier: 2}  # 121 jobs
+- { name: "Thinkific", ats: ashby, slug: thinkific, tier: 2}  # 3 jobs
+- { name: "Toast", ats: greenhouse, slug: toast, tier: 2}  # 338 jobs
+- { name: "Together AI", ats: greenhouse, slug: togetherai, tier: 2}  # 87 jobs
+- { name: "Top Hat", ats: ashby, slug: top-hat, tier: 2}  # 6 jobs
+- { name: "Trulioo", ats: ashby, slug: trulioo, tier: 2}  # 27 jobs
+- { name: "Udemy", ats: greenhouse, slug: udemy, tier: 2}  # 3 jobs
+- { name: "Vanta", ats: ashby, slug: vanta, tier: 2}  # 79 jobs
+- { name: "Vercel", ats: greenhouse, slug: vercel, tier: 2}  # 93 jobs
+- { name: "Visier", ats: ashby, slug: visier, tier: 2}  # 3 jobs
+- { name: "Waabi", ats: lever, slug: waabi, tier: 2}  # 94 jobs
+- { name: "Wattpad", ats: lever, slug: wattpad, tier: 2}  # 16 jobs
+- { name: "Wayfair", ats: smartrecruiters, slug: Wayfair, tier: 2}  # 1 jobs
+- { name: "Wayve", ats: ashby, slug: wayve, tier: 2}  # 180 jobs
+- { name: "Wealthsimple", ats: ashby, slug: wealthsimple, tier: 2}  # 41 jobs
+- { name: "Weaviate", ats: ashby, slug: weaviate, tier: 2}  # 2 jobs
+- { name: "Webflow", ats: ashby, slug: webflow, tier: 2}  # 18 jobs
+- { name: "Whoop", ats: ashby, slug: whoop, tier: 2}  # 135 jobs
+- { name: "Zapier", ats: ashby, slug: zapier, tier: 2}  # 12 jobs
+- { name: "Zoox", ats: lever, slug: zoox, tier: 2}  # 228 jobs
+- { name: "Zscaler", ats: greenhouse, slug: zscaler, tier: 2}  # 357 jobs
+- { name: "Adyen", ats: greenhouse, slug: adyen, tier: 3}  # 246 jobs
+- { name: "Angi", ats: ashby, slug: angi, tier: 3}  # 18 jobs
+- { name: "BILL", ats: greenhouse, slug: billcom, tier: 3}  # 44 jobs
+- { name: "Bird", ats: greenhouse, slug: bird, tier: 3}  # 31 jobs
+- { name: "Blend", ats: greenhouse, slug: blend, tier: 3}  # 14 jobs
+- { name: "Bungie", ats: greenhouse, slug: bungie, tier: 3}  # 5 jobs
+- { name: "Clearco", ats: ashby, slug: clearco, tier: 3}  # 5 jobs
+- { name: "ClickUp", ats: ashby, slug: clickup, tier: 3}  # 50 jobs
+- { name: "Descript", ats: greenhouse, slug: descript, tier: 3}  # 9 jobs
+- { name: "Epic Games", ats: greenhouse, slug: epicgames, tier: 3}  # 144 jobs
+- { name: "Expensify", ats: ashby, slug: expensify, tier: 3}  # 2 jobs
+- { name: "Frank & Oak", ats: smartrecruiters, slug: Frankoak, tier: 3}  # 7 jobs
+- { name: "Gamma", ats: ashby, slug: gamma, tier: 3}  # 21 jobs
+- { name: "Gong", ats: smartrecruiters, slug: Gong, tier: 3}  # 7 jobs
+- { name: "Gopuff", ats: lever, slug: gopuff, tier: 3}  # 794 jobs
+- { name: "Maple", ats: ashby, slug: maple, tier: 3}  # 14 jobs
+- { name: "Mejuri", ats: greenhouse, slug: mejuri, tier: 3}  # 182 jobs
+- { name: "Monzo", ats: greenhouse, slug: monzo, tier: 3}  # 67 jobs
+- { name: "Mural", ats: ashby, slug: mural, tier: 3}  # 12 jobs
+- { name: "N26", ats: greenhouse, slug: n26, tier: 3}  # 35 jobs
+- { name: "Navan", ats: greenhouse, slug: tripactions, tier: 3}  # 222 jobs
+- { name: "Nubank", ats: ashby, slug: nubank, tier: 3}  # 97 jobs
+- { name: "Otter.ai", ats: greenhouse, slug: otter, tier: 3}  # 21 jobs
+- { name: "Outreach", ats: lever, slug: outreach, tier: 3}  # 21 jobs
+- { name: "Payoneer", ats: greenhouse, slug: payoneer, tier: 3}  # 106 jobs
+- { name: "Pivotal Labs", ats: lever, slug: pivotal, tier: 3}  # 26 jobs
+- { name: "Qualtrics", ats: greenhouse, slug: qualtrics, tier: 3}  # 86 jobs
+- { name: "Quip", ats: greenhouse, slug: quip, tier: 3}  # 5 jobs
+- { name: "Riot Games", ats: greenhouse, slug: riotgames, tier: 3}  # 184 jobs
+- { name: "Ritual", ats: greenhouse, slug: ritual, tier: 3}  # 15 jobs
+- { name: "Salesloft", ats: greenhouse, slug: salesloft, tier: 3}  # 35 jobs
+- { name: "SeatGeek", ats: greenhouse, slug: seatgeek, tier: 3}  # 39 jobs
+- { name: "Shakepay", ats: greenhouse, slug: shakepay, tier: 3}  # 9 jobs
+- { name: "Smartsheet", ats: greenhouse, slug: smartsheet, tier: 3}  # 86 jobs
+- { name: "Spotify", ats: lever, slug: spotify, tier: 3}  # 89 jobs
+- { name: "SurveyMonkey", ats: ashby, slug: surveymonkey, tier: 3}  # 19 jobs
+- { name: "Thumbtack", ats: ashby, slug: thumbtack, tier: 3}  # 47 jobs
+- { name: "Twitch", ats: greenhouse, slug: twitch, tier: 3}  # 62 jobs
+- { name: "Typeform", ats: greenhouse, slug: typeform, tier: 3}  # 10 jobs
+- { name: "Upstart", ats: greenhouse, slug: upstart, tier: 3}  # 88 jobs
+- { name: "Veeva", ats: lever, slug: veeva, tier: 3}  # 897 jobs
+- { name: "Wise", ats: smartrecruiters, slug: Wise, tier: 3}  # 411 jobs
+- { name: "Zoominfo", ats: greenhouse, slug: zoominfo, tier: 3}  # 99 jobs
+- { name: "Zuora", ats: greenhouse, slug: zuora, tier: 3}  # 32 jobs
+
+# --- Bespoke big-tech career-site adapters ---
+- { name: "Amazon", ats: custom, slug: amazon, tier: 1 }  # bespoke adapter
+- { name: "Google", ats: custom, slug: google, tier: 1 }  # bespoke adapter
+- { name: "Microsoft", ats: custom, slug: microsoft, tier: 1 }  # bespoke adapter
+- { name: "Netflix", ats: custom, slug: netflix, tier: 1 }  # bespoke adapter
+- { name: "Oracle", ats: custom, slug: oracle, tier: 1 }  # bespoke adapter
+
+# --- Tier only (no supported public feed; tier applied to postings found elsewhere) ---
+- { name: "Apple", ats: custom, slug: tier-only-apple, tier: 1 }
+- { name: "Meta", ats: custom, slug: tier-only-meta, tier: 1 }
+- { name: "Uber", ats: custom, slug: tier-only-uber, tier: 1 }
+- { name: "Tesla", ats: custom, slug: tier-only-tesla, tier: 1 }
+- { name: "Cursor", ats: custom, slug: tier-only-cursor, tier: 1 }
+- { name: "Citadel", ats: custom, slug: tier-only-citadel, tier: 1 }
+- { name: "Citadel Securities", ats: custom, slug: tier-only-citadel-securities, tier: 1 }
+- { name: "Two Sigma", ats: custom, slug: tier-only-two-sigma, tier: 1 }
+- { name: "Hudson River Trading", ats: custom, slug: tier-only-hudson-river-trading, tier: 1 }
+- { name: "DE Shaw", ats: custom, slug: tier-only-de-shaw, tier: 1 }
+- { name: "Optiver", ats: custom, slug: tier-only-optiver, tier: 1 }
+- { name: "IMC Trading", ats: custom, slug: tier-only-imc-trading, tier: 1 }
+- { name: "Susquehanna", ats: custom, slug: tier-only-susquehanna, tier: 1 }
+- { name: "Anduril", ats: custom, slug: tier-only-anduril, tier: 1 }
+- { name: "Mistral AI", ats: custom, slug: tier-only-mistral-ai, tier: 1 }
+- { name: "DoorDash", ats: custom, slug: tier-only-doordash, tier: 1 }
+- { name: "Qualcomm", ats: custom, slug: tier-only-qualcomm, tier: 1 }
+- { name: "AMD", ats: custom, slug: tier-only-amd, tier: 1 }
+- { name: "Dell", ats: custom, slug: tier-only-dell, tier: 2 }
+- { name: "Intuit", ats: custom, slug: tier-only-intuit, tier: 2 }
+- { name: "Rippling", ats: custom, slug: tier-only-rippling, tier: 1 }
+- { name: "Shopify", ats: custom, slug: tier-only-shopify, tier: 1 }
+- { name: "Snowflake", ats: custom, slug: tier-only-snowflake, tier: 1 }
+- { name: "Samsung", ats: custom, slug: tier-only-samsung, tier: 2 }
+- { name: "Sony", ats: custom, slug: tier-only-sony, tier: 3 }
+- { name: "Uber Canada", ats: custom, slug: tier-only-uber-canada, tier: 1 }
+- { name: "RBC", ats: custom, slug: tier-only-rbc, tier: 2 }
+- { name: "Royal Bank of Canada", ats: custom, slug: tier-only-royal-bank-of-canada, tier: 2 }
+- { name: "Scotiabank", ats: custom, slug: tier-only-scotiabank, tier: 2 }
+- { name: "HubSpot", ats: custom, slug: tier-only-hubspot, tier: 2 }
+- { name: "Zendesk", ats: custom, slug: tier-only-zendesk, tier: 2 }
+- { name: "Clio", ats: custom, slug: tier-only-clio, tier: 2 }
+- { name: "Ada", ats: custom, slug: tier-only-ada, tier: 2 }
+- { name: "Grammarly", ats: custom, slug: tier-only-grammarly, tier: 2 }
+- { name: "Postman", ats: custom, slug: tier-only-postman, tier: 2 }
+- { name: "Palo Alto Networks", ats: custom, slug: tier-only-palo-alto-networks, tier: 2 }
+- { name: "Confluent", ats: custom, slug: tier-only-confluent, tier: 1 }
+- { name: "HashiCorp", ats: custom, slug: tier-only-hashicorp, tier: 2 }
+- { name: "Retool", ats: custom, slug: tier-only-retool, tier: 2 }
+- { name: "Deel", ats: custom, slug: tier-only-deel, tier: 2 }
+- { name: "Loom", ats: custom, slug: tier-only-loom, tier: 2 }
+- { name: "Kraken", ats: custom, slug: tier-only-kraken, tier: 2 }
+- { name: "Chainalysis", ats: custom, slug: tier-only-chainalysis, tier: 2 }
+- { name: "Groq", ats: custom, slug: tier-only-groq, tier: 2 }
+- { name: "SambaNova", ats: custom, slug: tier-only-sambanova, tier: 2 }
+- { name: "Applied Intuition", ats: custom, slug: tier-only-applied-intuition, tier: 2 }
+- { name: "Aurora", ats: custom, slug: tier-only-aurora, tier: 2 }
+- { name: "Rivian", ats: custom, slug: tier-only-rivian, tier: 2 }
+- { name: "Zillow", ats: custom, slug: tier-only-zillow, tier: 2 }
+- { name: "Redfin", ats: custom, slug: tier-only-redfin, tier: 2 }
+- { name: "Chewy", ats: custom, slug: tier-only-chewy, tier: 2 }
+- { name: "Yelp", ats: custom, slug: tier-only-yelp, tier: 2 }
+- { name: "Akamai", ats: custom, slug: tier-only-akamai, tier: 2 }
+- { name: "Electronic Arts", ats: custom, slug: tier-only-electronic-arts, tier: 3 }
+- { name: "Ubisoft", ats: custom, slug: tier-only-ubisoft, tier: 3 }
+- { name: "Unity", ats: custom, slug: tier-only-unity, tier: 3 }
+- { name: "Slack", ats: custom, slug: tier-only-slack, tier: 3 }
+- { name: "Snap", ats: custom, slug: tier-only-snap, tier: 2 }
+- { name: "Booking.com", ats: custom, slug: tier-only-booking-com, tier: 2 }
+- { name: "Expedia", ats: custom, slug: tier-only-expedia, tier: 2 }
+- { name: "Telus", ats: custom, slug: tier-only-telus, tier: 3 }
+- { name: "Rogers", ats: custom, slug: tier-only-rogers, tier: 3 }
+- { name: "Bell", ats: custom, slug: tier-only-bell, tier: 3 }
+- { name: "Celestica", ats: custom, slug: tier-only-celestica, tier: 3 }
+- { name: "Open Text", ats: custom, slug: tier-only-open-text, tier: 2 }
+- { name: "Splunk", ats: custom, slug: tier-only-splunk, tier: 2 }
+- { name: "VMware", ats: custom, slug: tier-only-vmware, tier: 2 }
+- { name: "Ericsson", ats: custom, slug: tier-only-ericsson, tier: 3 }
+- { name: "Honeywell", ats: custom, slug: tier-only-honeywell, tier: 3 }
+- { name: "Lockheed Martin", ats: custom, slug: tier-only-lockheed-martin, tier: 3 }
+- { name: "General Motors", ats: custom, slug: tier-only-general-motors, tier: 3 }
+- { name: "Ford", ats: custom, slug: tier-only-ford, tier: 3 }
+- { name: "Goldman Sachs", ats: custom, slug: tier-only-goldman-sachs, tier: 2 }
+- { name: "JPMorgan", ats: custom, slug: tier-only-jpmorgan, tier: 2 }
+- { name: "JPMorgan Chase", ats: custom, slug: tier-only-jpmorgan-chase, tier: 2 }

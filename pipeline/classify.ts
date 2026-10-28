@@ -19,6 +19,9 @@ const SENIOR = /\b(senior|sr\.?|staff|principal|lead|manager|director|head of|vp
 const NEW_GRAD = /\b(new[\s-]?grad(uate)?s?|new college grad|university grad(uate)?s?|recent grad(uate)?s?|college grad(uate)?s?|campus|entry[\s-]?level|graduate (software|engineer|developer|program|scheme))\b|\b(sde|swe|sdet)\s*(1|i)\b|\bsoftware (development )?engineer\s*(1|i)\b|\bassociate\b.*\b(engineer|developer|sde|swe)\b/i;
 const EARLY = /\b(junior|jr\.?|early[\s-]?careers?)\b|\b(software|backend|frontend|full[\s-]?stack)?\s*(engineer|developer|sde|swe)\s*(2|ii)\b|\b(0|1)\s*(-|to)\s*2\s*years\b/i;
 
+/** Titles that mark a role as senior; these are dropped at ingest because they are never relevant to a new-grad search. */
+export const isSenior = (title: string): boolean => SENIOR.test(title);
+
 export function classifyLevel(title: string, description = ""): Level {
   if (SENIOR.test(title)) return "other";
   if (NEW_GRAD.test(title)) return "new-grad";
