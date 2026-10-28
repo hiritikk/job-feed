@@ -19,8 +19,8 @@ permissions:
   contents: read
 
 env:
-  VERCEL_ORG_ID: team_DZ3nTZAsBTDySuHzdQTES3yD
-  VERCEL_PROJECT_ID: prj_PJiB22OmyS884kYhuO9WeZ7xNFIX
+  VERCEL_ORG_ID: team_fiadlYg1uknEKRakiAxdwiUV
+  VERCEL_PROJECT_ID: prj_IjGgvhZ2o7xto4ZXfYNIFtgOV7ar
 
 jobs:
   deploy:
