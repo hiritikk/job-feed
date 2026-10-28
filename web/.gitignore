@@ -1,0 +1,4 @@
+node_modules
+dist
+public/sample-jobs.json
+.env*.local
