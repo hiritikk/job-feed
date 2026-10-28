@@ -1,0 +1,52 @@
+name: deploy-web
+
+# Redeploys the site to Vercel (through the Vercel CLI) whenever a commit to main changes web/.
+# One-time setup: create a token at https://vercel.com/account/tokens and store it as the repo secret VERCEL_TOKEN.
+# The ids below identify the project; they are not secrets.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "web/**"
+      - ".github/workflows/deploy-web.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-web
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  VERCEL_ORG_ID: team_DZ3nTZAsBTDySuHzdQTES3yD
+  VERCEL_PROJECT_ID: prj_PJiB22OmyS884kYhuO9WeZ7xNFIX
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Check the token is set
+        run: test -n "$VERCEL_TOKEN" || { echo "Secret VERCEL_TOKEN is missing. Create a token at vercel.com/account/tokens, then run: gh secret set VERCEL_TOKEN"; exit 1; }
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      - name: Pull project settings
+        run: npx --yes vercel@65 pull --yes --environment=production --token="$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      - name: Build
+        run: npx --yes vercel@65 build --prod --token="$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy
+        run: npx --yes vercel@65 deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
