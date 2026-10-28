@@ -46,3 +46,12 @@ describe("toIso", () => {
     expect(toIso("garbage")).toBeNull();
   });
 });
+
+describe("toIso timezone handling", () => {
+  test("a timestamp without a timezone designator is treated as UTC", () => {
+    expect(toIso("2026-10-22T18:40:19")).toBe("2026-10-22T18:40:19.000Z");
+  });
+  test("a timestamp with an explicit offset is respected", () => {
+    expect(toIso("2026-10-22T18:40:19+02:00")).toBe("2026-10-22T16:40:19.000Z");
+  });
+});

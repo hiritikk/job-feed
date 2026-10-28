@@ -1,0 +1,129 @@
+{
+  "jobs": [
+    {
+      "title": "Senior Vice President, ​Information & Communications Technologies​",
+      "excerpt": "About the Practice Area – Information & Communications Technologies (ICT) ICT Advisory helps global clients drive sustainable growth through strategic consulting, market intelligence, and technology-led business transformation.",
+      "companyName": "Frost & Sullivan",
+      "companySlug": "frost-sullivan",
+      "companyLogo": "",
+      "employmentType": "Full Time",
+      "minSalary": null,
+      "maxSalary": null,
+      "salaryPeriod": "annual",
+      "seniority": [
+        "Executive"
+      ],
+      "currency": null,
+      "locationRestrictions": [
+        "India"
+      ],
+      "timezoneRestrictions": [
+        5.5
+      ],
+      "categories": [
+        "Vice-President",
+        "Management-Consultant",
+        "Technology-Consultant",
+        "Telecommunications-Consultant",
+        "Strategy-Consultant",
+        "SVP-Of-Technology",
+        "Executive-VP-Of-Technology-Infrastructure",
+        "Senior-Technology-Executive"
+      ],
+      "parentCategories": [],
+      "description": "<p>About the Practice Area – Information &amp; Communications Technologies (ICT)</p><p>ICT Advisory helps global clients drive sustainable growth through strategic consulting, market intelligence, and technology-led business transformation. It serves technology vendors, service providers, government",
+      "pubDate": 1793152549,
+      "expiryDate": 1798336548,
+      "applicationLink": "https://himalayas.app/companies/frost-sullivan/jobs/senior-vice-president-information-communications-technologies?utm_source=api",
+      "guid": "https://himalayas.app/companies/frost-sullivan/jobs/senior-vice-president-information-communications-technologies"
+    },
+    {
+      "title": "Associate Manager Software Engineering",
+      "excerpt": "Job Description:Develop and maintain Java-based applications in support of PCI compliance and vulnerability prevention.",
+      "companyName": "DXC Technology",
+      "companySlug": "dxc-technology",
+      "companyLogo": "https://cdn-images.himalayas.app/oh4n9iq70c8swkop5sblyiplzkiz",
+      "employmentType": "Full Time",
+      "minSalary": 84400,
+      "maxSalary": 156800,
+      "salaryPeriod": "annual",
+      "seniority": [
+        "Manager"
+      ],
+      "currency": "USD",
+      "locationRestrictions": [
+        "United States"
+      ],
+      "timezoneRestrictions": [
+        -10,
+        -9,
+        -8,
+        -7,
+        -6,
+        -5,
+        14
+      ],
+      "categories": [
+        "Software-Engineering-Manager",
+        "Software-Engineer",
+        "Backend-Engineer",
+        "DevOps-Engineer",
+        "Cloud-Engineer",
+        "Manager-Software-Engineer"
+      ],
+      "parentCategories": [
+        "Developer"
+      ],
+      "description": "<h3>Job Description:</h3><p>Develop and maintain Java-based applications in support of PCI compliance and vulnerability prevention.</p><h3>Projects include:</h3><ul>\n<li>Expand the integration of Okta in Sabre for migration.</li>\n<li>Migrate applications from java 8 to 11 and 17.</li>\n<li>Implement ",
+      "pubDate": 1793152403,
+      "expiryDate": 1798336402,
+      "applicationLink": "https://himalayas.app/companies/dxc-technology/jobs/associate-manager-software-engineering?utm_source=api",
+      "guid": "https://himalayas.app/companies/dxc-technology/jobs/associate-manager-software-engineering"
+    },
+    {
+      "title": "Senior Engineer - Clarity",
+      "excerpt": "Consensus Cloud Solutions is a publicly traded, leading digital cloud fax and interoperability solutions organization in the United States and globally, focusing on connecting and empowering healthcare providers, payers, care teams, and technology innovators to unify multiple systems that wouldn’t otherwise talk to each other.",
+      "companyName": "Consensus Cloud Solutions, Inc.",
+      "companySlug": "consensus-cloud-solutions-inc",
+      "companyLogo": "https://cdn-images.himalayas.app/bt0f8yns3aqy8yeza7p52n60i52i",
+      "employmentType": "Full Time",
+      "minSalary": 140000,
+      "maxSalary": 197500,
+      "salaryPeriod": "annual",
+      "seniority": [
+        "Senior"
+      ],
+      "currency": "USD",
+      "locationRestrictions": [
+        "United States"
+      ],
+      "timezoneRestrictions": [
+        -10,
+        -9,
+        -8,
+        -7,
+        -6,
+        -5,
+        14
+      ],
+      "categories": [
+        "Software-Engineer",
+        "Full-Stack-Developer",
+        "Artificial-Intelligence-Engineer",
+        "Senior-Engineer",
+        "Senior-Engineering",
+        "Senior-Engineering-Jobs",
+        "Senior-Engineering-Roles"
+      ],
+      "parentCategories": [
+        "Developer"
+      ],
+      "description": "<div class=\"content-intro\">\n<p>Consensus Cloud Solutions is a publicly traded, leading digital cloud fax and interoperability solutions organization in the United States and globally, focusing on connecting and empowering healthcare providers, payers, care teams, and technology innovators to unify m",
+      "pubDate": 1793152378,
+      "expiryDate": 1798336377,
+      "applicationLink": "https://himalayas.app/companies/consensus-cloud-solutions-inc/jobs/senior-engineer-clarity?utm_source=api",
+      "guid": "https://himalayas.app/companies/consensus-cloud-solutions-inc/jobs/senior-engineer-clarity"
+    }
+  ],
+  "nextCursor": "MjAyNi0xMC0yOFQwMTo0MDowOS44OTIyMzJafDI0NzE2ODU"
+}

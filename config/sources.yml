@@ -5,7 +5,7 @@ remoteok: true
 jobicy: true
 himalayas: true
 arbeitnow: true
-themuse: true
+themuse: false   # unauthenticated API 403s from CloudFront under light use and its category filter was ignored on 2026-10-27
 hn: true
 adzuna: true
 jooble: true

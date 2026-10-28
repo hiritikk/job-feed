@@ -49,6 +49,8 @@ export function toSnippet(html: string, max = 400): string {
 /** ISO-8601 UTC string for a date-like value, or null when it is missing or unparseable. */
 export function toIso(value: string | number | null | undefined): string | null {
   if (value === null || value === undefined || value === "") return null;
-  const d = new Date(value);
+  // "2026-10-22T18:40:19" has no designator and JS would read it as local time; every source we use means UTC.
+  const text = typeof value === "string" && /^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(:\d\d(\.\d+)?)?$/.test(value) ? `${value.replace(" ", "T")}Z` : value;
+  const d = new Date(text);
   return Number.isNaN(d.getTime()) ? null : d.toISOString();
 }
