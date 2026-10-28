@@ -35,7 +35,11 @@ jobs:
         with:
           node-version: 24
       - name: Check the token is set
-        run: test -n "$VERCEL_TOKEN" || { echo "Secret VERCEL_TOKEN is missing. Create a token at vercel.com/account/tokens, then run: gh secret set VERCEL_TOKEN"; exit 1; }
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "Secret VERCEL_TOKEN is missing. Create a token at vercel.com/account/tokens, then run: gh secret set VERCEL_TOKEN"
+            exit 1
+          fi
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       - name: Pull project settings
