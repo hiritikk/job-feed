@@ -23,7 +23,7 @@ describe("fetchAmazon", () => {
     expect(jobs).toHaveLength(5);
     expect(jobs[0]).toMatchObject({
       source: "amazon", company: "Amazon", sourceId: data.jobs[0].id_icims, title: data.jobs[0].title,
-      url: `https://www.amazon.jobs${data.jobs[0].job_path}`, postedApprox: true,
+      url: `https://www.amazon.jobs${data.jobs[0].job_path}`, postedPrecision: "day",
     });
     expect(jobs[0].postedAt).toBe(new Date(`${data.jobs[0].posted_date} UTC`).toISOString());
     expect(jobs.find((j) => j.locations.join().includes("CAN"))).toBeUndefined(); // "CAN" is replaced by "Canada"
@@ -104,7 +104,7 @@ describe("fetchOracle", () => {
     expect(jobs[0]).toMatchObject({
       source: "oracle", company: "Oracle", sourceId: r.Id, title: r.Title, locations: [r.PrimaryLocation],
       url: `https://eeho.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_45001/job/${r.Id}`,
-      postedAt: "2026-10-28T00:00:00.000Z",
+      postedAt: "2026-10-28T00:00:00.000Z", postedPrecision: "day",
     });
   });
   test("requests the secondaryLocations expansion (without it Oracle omits requisitionList)", async () => {

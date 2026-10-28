@@ -1,6 +1,6 @@
-import { parseLocations } from "./location.js";
+import { parseCities, parseLocations } from "./location.js";
 import { stableId, toSnippet } from "./normalize.js";
-import type { Job, Level, RawJob, RoleType, Tier, WorkAuth } from "./types.js";
+import type { Job, Level, PostedPrecision, RawJob, RoleType, Tier, WorkAuth } from "./types.js";
 
 const INTERN = /\b(intern(ship)?s?|co-?ops?|apprentice(ship)?s?)\b/i;
 export const isInternship = (title: string): boolean => INTERN.test(title);
@@ -11,7 +11,7 @@ export function classifyRoleType(title: string): RoleType {
   if (/\b(site reliability|sre|devops|infrastructure|platform engineer|cloud engineer|systems engineer|production engineer)\b/i.test(title)) return "infra";
   if (/full[\s-]?stack/i.test(title)) return "fullstack";
   if (/back[\s-]?end|server[\s-]?side/i.test(title)) return "backend";
-  if (/\b(software|sde|swe|sdet|developer|programmer)\b|front[\s-]?end|\b(ios|android|mobile)\b engineer|web developer/i.test(title)) return "sde";
+  if (/\b(software|sde|swe|sdet|developer|programmer)\b|front[\s-]?end|\b(ios|android|mobile)\b engineer|web developer|member of technical staff|\b(security|qa|quality assurance|firmware|embedded|release|build|test automation)\s+engineer/i.test(title)) return "sde";
   return "other";
 }
 
@@ -50,26 +50,45 @@ export function classifyWorkAuth(text: string, sponsorshipHint?: string): WorkAu
   return "unknown";
 }
 
+/** Absolute https URL or null. http is upgraded; relative, empty and non-web schemes are rejected. */
+export function cleanUrl(url: string): string | null {
+  try {
+    const u = new URL(url);
+    if (u.protocol === "http:") u.protocol = "https:";
+    else if (u.protocol !== "https:") return null;
+    return u.toString();
+  } catch {
+    return null;
+  }
+}
+
 export function classify(raw: RawJob, tierOf: (company: string) => Tier, now: Date): Job | null {
   if (isInternship(raw.title)) return null;
+  const url = cleanUrl(raw.url);
+  if (!url) return null;
   const text = toSnippet(raw.descriptionHtml ?? "", 20000);
   const loc = parseLocations(raw.locations, raw.remoteHint);
   const parsed = raw.postedAt ? new Date(raw.postedAt) : null;
   const valid = parsed !== null && !Number.isNaN(parsed.getTime());
+  const precision: PostedPrecision = !valid ? "none" : raw.postedPrecision ?? (raw.postedApprox ? "approx" : "exact");
   return {
     id: stableId(raw.source, raw.sourceId, raw.url),
     company: raw.company,
     title: raw.title,
-    url: raw.url,
+    url,
     locations: raw.locations,
     countries: loc.countries,
+    cities: parseCities(raw.locations),
     remote: loc.remote,
     remoteRegions: loc.remoteRegions,
     postedAt: valid ? parsed.toISOString() : now.toISOString(),
-    postedApprox: raw.postedApprox ?? !valid,
+    postedApprox: precision === "approx" || precision === "none",
+    postedPrecision: precision,
     firstSeenAt: now.toISOString(),
     lastSeenAt: now.toISOString(),
     closedAt: null,
+    linkStatus: "unknown",
+    linkCheckedAt: null,
     source: raw.source,
     sources: [raw.source],
     roleType: classifyRoleType(raw.title),

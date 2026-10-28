@@ -7,7 +7,7 @@ const NOW = "2026-10-27T12:00:00.000Z";
 function job(over: Partial<Job> & Pick<Job, "source" | "url">): Job {
   return {
     id: stableId(over.source, "x", over.url), company: "Stripe", title: "Software Engineer, New Grad", locations: ["Toronto, ON"],
-    countries: ["CA"], remote: "unknown", remoteRegions: [], postedAt: "2026-10-20T00:00:00.000Z", postedApprox: false,
+    countries: ["CA"], cities: ["Toronto"], remote: "unknown", remoteRegions: [], postedAt: "2026-10-20T00:00:00.000Z", postedApprox: false, postedPrecision: "exact", linkStatus: "unknown", linkCheckedAt: null,
     firstSeenAt: NOW, lastSeenAt: NOW, closedAt: null, sources: [over.source], roleType: "sde", level: "new-grad",
     gradYear: null, workAuth: "unknown", tier: 1, snippet: "", ...over,
   };
@@ -42,14 +42,24 @@ describe("dedupe", () => {
     expect(out).toHaveLength(2);
   });
 
-  test("an aggregator copy with an earlier postedAt lends its date to the winner", () => {
+  test("the winner's exact date is kept even when an aggregator copy claims an earlier one", () => {
     const out = dedupe([
-      job({ source: "greenhouse", url: "https://stripe.com/jobs/1", postedAt: "2026-10-22T00:00:00.000Z" }),
-      job({ source: "jooble", url: "https://jooble.org/x", postedAt: "2026-10-18T00:00:00.000Z" }),
+      job({ source: "greenhouse", url: "https://stripe.com/jobs/1", postedAt: "2026-10-22T00:00:00.000Z", postedPrecision: "exact" }),
+      job({ source: "jooble", url: "https://jooble.org/x", postedAt: "2026-10-18T00:00:00.000Z", postedPrecision: "exact" }),
     ]);
     expect(out).toHaveLength(1);
-    expect(out[0].source).toBe("greenhouse");
-    expect(out[0].postedAt).toBe("2026-10-18T00:00:00.000Z");
+    expect(out[0].postedAt).toBe("2026-10-22T00:00:00.000Z");
+  });
+
+  test("when the winner's date is approximate, the best-precision date from another source is used", () => {
+    const out = dedupe([
+      job({ source: "workday", url: "https://nv.wd5.myworkdayjobs.com/x/job/1", postedAt: "2026-09-27T00:00:00.000Z", postedPrecision: "approx", postedApprox: true }),
+      job({ source: "simplify", url: "https://simplify.jobs/p/1", postedAt: "2026-10-01T09:30:00.000Z", postedPrecision: "exact" }),
+    ]);
+    expect(out[0].source).toBe("workday");
+    expect(out[0].postedAt).toBe("2026-10-01T09:30:00.000Z");
+    expect(out[0].postedPrecision).toBe("exact");
+    expect(out[0].postedApprox).toBe(false);
   });
 
   test("direct big-tech career sites outrank community lists and aggregators", () => {

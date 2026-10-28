@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { parseLocations } from "../pipeline/location.js";
+import { parseCities, parseLocations } from "../pipeline/location.js";
 
 const cases: [string, string[], boolean | undefined, { countries: string[]; remote: string; remoteRegions: string[] }][] = [
   ["Toronto, ON", ["Toronto, ON"], undefined, { countries: ["CA"], remote: "unknown", remoteRegions: [] }],
@@ -26,4 +26,24 @@ describe("parseLocations", () => {
   test("an unrecognised place is OTHER", () => {
     expect(parseLocations(["Singapore"]).countries).toEqual(["OTHER"]);
   });
+});
+
+
+describe("parseCities", () => {
+  test.each([
+    [["Toronto, ON"], ["Toronto"]],
+    [["Montréal, QC"], ["Montreal"]],
+    [["Vancouver, BC, Canada", "New York, NY"], ["Vancouver", "New York"]],
+    [["Remote in Canada"], []],
+    [["Remote"], []],
+    [["Canada"], []],
+    [["Greater Vancouver, British Columbia (Remote)"], ["Vancouver"]],
+    [["Hybrid - Waterloo"], ["Waterloo"]],
+    [["San Francisco, CA"], ["San Francisco"]],
+    [["Oakville, ON"], ["Oakville"]],
+    [["Tel Aviv, Israel +1"], ["Tel Aviv"]],
+    [["Toronto, ON", "Toronto, Ontario, Canada"], ["Toronto"]],
+    [["Greater Montreal Metropolitan Area (Hybrid)"], ["Montreal"]],
+    [["Ontario"], []],
+  ] as [string[], string[]][])("%j -> %j", (input, expected) => expect(parseCities(input)).toEqual(expected));
 });

@@ -88,7 +88,7 @@ export function parseJobright(markdown: string, now: Date): RawJob[] {
       url: t[2],
       locations: [location],
       postedAt,
-      postedApprox: true,
+      postedPrecision: "day",
       remoteHint: /remote/i.test(workModel ?? "") ? true : undefined,
     });
   }

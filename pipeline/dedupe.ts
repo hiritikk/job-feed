@@ -6,6 +6,7 @@ const DIRECT = new Set(["greenhouse", "lever", "ashby", "workday", "workable", "
 const COMMUNITY = new Set(["simplify", "vanshb03", "speedyapply", "hanzili", "jobright"]);
 const priority = (source: string): number => (DIRECT.has(source) ? 0 : COMMUNITY.has(source) ? 1 : 2);
 
+const PRECISION_RANK = { exact: 0, day: 1, approx: 2, none: 3 } as const;
 const SUFFIX = /\b(inc|incorporated|ltd|limited|llc|corp|corporation|co|company|gmbh|plc)\b/g;
 const norm = (s: string): string => s.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(SUFFIX, " ").replace(/\s+/g, " ").trim();
 const city = (j: Job): string => (j.locations[0] ?? "").split(",")[0].toLowerCase().trim();
@@ -48,12 +49,15 @@ export function dedupe(jobs: Job[]): Job[] {
   return [...groups.values()].map((members) => {
     const sorted = [...members].sort((a, b) => priority(a.source) - priority(b.source));
     const winner = sorted[0];
-    const earliest = members.reduce((best, j) => (j.postedAt < best.postedAt ? j : best), winner);
+    // The date comes from the best-precision source (ties go to the higher-priority source), never "whichever is earliest":
+    // an aggregator's repost date must not override the employer's own timestamp.
+    const best = sorted.reduce((b, j) => (PRECISION_RANK[j.postedPrecision] < PRECISION_RANK[b.postedPrecision] ? j : b), winner);
     return {
       ...winner,
       sources: [...new Set(sorted.flatMap((m) => m.sources))],
-      postedAt: earliest.postedAt,
-      postedApprox: earliest.postedApprox,
+      postedAt: best.postedAt,
+      postedApprox: best.postedApprox,
+      postedPrecision: best.postedPrecision,
       firstSeenAt: members.reduce((min, j) => (j.firstSeenAt < min ? j.firstSeenAt : min), winner.firstSeenAt),
     };
   });

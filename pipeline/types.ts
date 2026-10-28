@@ -4,6 +4,9 @@ export type Level = "new-grad" | "early-career" | "other";
 export type WorkAuth = "none" | "restricted" | "sponsors" | "unknown";
 export type RemoteMode = "remote" | "hybrid" | "onsite" | "unknown";
 export type Tier = 1 | 2 | 3;
+/** exact = timestamp from the source; day = date only; approx = relative/estimated ("Posted 7 Days Ago"); none = unknown. */
+export type PostedPrecision = "exact" | "day" | "approx" | "none";
+export type LinkStatus = "ok" | "dead" | "unknown";
 
 export type Job = {
   id: string;
@@ -12,13 +15,17 @@ export type Job = {
   url: string;
   locations: string[];
   countries: Country[];
+  cities: string[];
   remote: RemoteMode;
   remoteRegions: string[];
   postedAt: string;
   postedApprox: boolean;
+  postedPrecision: PostedPrecision;
   firstSeenAt: string;
   lastSeenAt: string;
   closedAt: string | null;
+  linkStatus: LinkStatus;
+  linkCheckedAt: string | null;
   source: string;
   sources: string[];
   roleType: RoleType;
@@ -38,6 +45,7 @@ export type RawJob = {
   locations: string[];
   postedAt: string | null;
   postedApprox?: boolean;
+  postedPrecision?: PostedPrecision;
   descriptionHtml?: string;
   remoteHint?: boolean;
   sponsorshipHint?: string;

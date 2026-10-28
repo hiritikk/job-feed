@@ -27,7 +27,7 @@ export async function fetchAmazon(http: Http, opts: BigTechOptions = {}): Promis
           const place = (j.normalized_location ?? j.location ?? "").replace(/\b([A-Z]{3})$/, (m) => COUNTRY[m] ?? m);
           seen.set(j.id_icims, {
             source: "amazon", sourceId: j.id_icims, company: "Amazon", title: j.title, url: `https://www.amazon.jobs${j.job_path}`,
-            locations: place ? [place] : [], postedAt: j.posted_date ? toIso(`${j.posted_date} UTC`) : null, postedApprox: true,
+            locations: place ? [place] : [], postedAt: j.posted_date ? toIso(`${j.posted_date} UTC`) : null, postedPrecision: "day",
             descriptionHtml: [j.description, j.basic_qualifications, j.preferred_qualifications].filter(Boolean).join(" "),
           });
         }

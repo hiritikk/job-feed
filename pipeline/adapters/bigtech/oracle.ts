@@ -22,7 +22,7 @@ export async function fetchOracle(http: Http, opts: { delayMs?: number; maxPages
         source: "oracle", sourceId: r.Id, company: "Oracle", title: r.Title,
         url: `${HOST}/hcmUI/CandidateExperience/en/sites/${SITE}/job/${r.Id}`,
         locations: r.PrimaryLocation ? [r.PrimaryLocation] : [], postedAt: toIso(r.PostedDate),
-        postedApprox: true, descriptionHtml: r.ShortDescriptionStr, remoteHint: /remote/i.test(r.WorkplaceType ?? "") ? true : undefined,
+        postedPrecision: "day", descriptionHtml: r.ShortDescriptionStr, remoteHint: /remote/i.test(r.WorkplaceType ?? "") ? true : undefined,
       });
     }
     if (list.length < LIMIT || (page + 1) * LIMIT >= (data.items?.[0]?.TotalJobsCount ?? 0)) break;

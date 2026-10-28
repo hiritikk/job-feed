@@ -56,3 +56,35 @@ export function parseLocations(
     remoteRegions: ORDER.filter((c) => regions.has(c)),
   };
 }
+
+const CITY_TABLE: [RegExp, string][] = [
+  [/\btoronto\b/i, "Toronto"], [/\bvancouver\b/i, "Vancouver"], [/\bmontr[eé]al\b/i, "Montreal"], [/\bottawa\b/i, "Ottawa"],
+  [/\bwaterloo\b/i, "Waterloo"], [/\bkitchener\b/i, "Kitchener"], [/\bcalgary\b/i, "Calgary"], [/\bedmonton\b/i, "Edmonton"],
+  [/\bmississauga\b/i, "Mississauga"], [/\bmarkham\b/i, "Markham"], [/\bhalifax\b/i, "Halifax"], [/\bwinnipeg\b/i, "Winnipeg"],
+  [/\bburnaby\b/i, "Burnaby"], [/\bqu[eé]bec city\b/i, "Quebec City"],
+  [/\bnew york\b|\bnyc\b/i, "New York"], [/\bsan francisco\b/i, "San Francisco"], [/\bseattle\b/i, "Seattle"], [/\baustin\b/i, "Austin"],
+  [/\bboston\b/i, "Boston"], [/\blos angeles\b/i, "Los Angeles"], [/\bchicago\b/i, "Chicago"], [/\bsan jose\b/i, "San Jose"],
+  [/\bmountain view\b/i, "Mountain View"], [/\bpalo alto\b/i, "Palo Alto"], [/\bsunnyvale\b/i, "Sunnyvale"], [/\bmenlo park\b/i, "Menlo Park"],
+  [/\bredmond\b/i, "Redmond"], [/\bcupertino\b/i, "Cupertino"], [/\bbellevue\b/i, "Bellevue"], [/\batlanta\b/i, "Atlanta"],
+  [/\bdenver\b/i, "Denver"], [/\bpittsburgh\b/i, "Pittsburgh"], [/\bsan diego\b/i, "San Diego"],
+  [/\blondon\b/i, "London"], [/\bmanchester\b/i, "Manchester"], [/\bedinburgh\b/i, "Edinburgh"], [/\bdublin\b/i, "Dublin"],
+  [/\bberlin\b/i, "Berlin"], [/\bmunich\b/i, "Munich"], [/\bparis\b/i, "Paris"], [/\bamsterdam\b/i, "Amsterdam"],
+  [/\bmadrid\b/i, "Madrid"], [/\bbarcelona\b/i, "Barcelona"], [/\bstockholm\b/i, "Stockholm"], [/\bzurich\b/i, "Zurich"],
+];
+const NOT_A_CITY = /remote|hybrid|anywhere|worldwide|\bcanada\b|united states|\busa?\b|\buk\b|europe|emea|apac|north america|ontario|british columbia|alberta|quebec|manitoba|saskatchewan|nova scotia|new brunswick|^greater\b/i;
+
+/** Canonical city names for the location filter (known cities first, then the first comma segment of unknown places). */
+export function parseCities(locations: string[]): string[] {
+  const out = new Set<string>();
+  for (const s of locations) {
+    const known = CITY_TABLE.filter(([re]) => re.test(s)).map(([, name]) => name);
+    if (known.length > 0) {
+      for (const k of known) out.add(k);
+      continue;
+    }
+    const cleaned = s.replace(/\(.*?\)/g, "").replace(/^\s*(hybrid|onsite|on-site|remote)\s*[-–—:]\s*/i, "").replace(/\s*\+\d+\s*$/, "").trim();
+    const first = cleaned.split(",")[0].trim();
+    if (first && first.length <= 30 && !NOT_A_CITY.test(first)) out.add(first);
+  }
+  return [...out];
+}

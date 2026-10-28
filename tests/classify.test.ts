@@ -14,6 +14,11 @@ describe("classifyRoleType", () => {
     ["Site Reliability Engineer", "infra"],
     ["Data Engineer", "data"],
     ["Frontend Engineer", "sde"],
+    ["Member of Technical Staff, Inference", "sde"],
+    ["Security Engineer, New Grad", "sde"],
+    ["QA Engineer", "sde"],
+    ["Embedded Firmware Engineer", "sde"],
+    ["Mechanical Engineer", "other"],
     ["Product Designer", "other"],
     ["Account Executive", "other"],
   ])("%s -> %s", (title, expected) => expect(classifyRoleType(title)).toBe(expected));
@@ -105,6 +110,29 @@ describe("classify", () => {
     expect(job.postedAt).toBe(now.toISOString());
     expect(job.postedApprox).toBe(true);
     expect(job.tier).toBe(3);
+  });
+  test("sets cities, precision and link fields", () => {
+    const job = classify(raw, () => 1, now)!;
+    expect(job.cities).toEqual(["Toronto"]);
+    expect(job.postedPrecision).toBe("exact");
+    expect(job.linkStatus).toBe("unknown");
+    expect(job.linkCheckedAt).toBeNull();
+  });
+  test("an explicit postedPrecision from the adapter is kept; approx and none set postedApprox", () => {
+    expect(classify({ ...raw, postedPrecision: "day" }, () => 1, now)!).toMatchObject({ postedPrecision: "day", postedApprox: false });
+    expect(classify({ ...raw, postedPrecision: "approx" }, () => 1, now)!).toMatchObject({ postedPrecision: "approx", postedApprox: true });
+    expect(classify({ ...raw, postedAt: null }, () => 1, now)!).toMatchObject({ postedPrecision: "none", postedApprox: true });
+  });
+  test("legacy postedApprox=true maps to precision approx", () => {
+    expect(classify({ ...raw, postedApprox: true }, () => 1, now)!.postedPrecision).toBe("approx");
+  });
+  test("relative or non-https urls are rejected", () => {
+    expect(classify({ ...raw, url: "/jobs/1" }, () => 1, now)).toBeNull();
+    expect(classify({ ...raw, url: "javascript:alert(1)" }, () => 1, now)).toBeNull();
+    expect(classify({ ...raw, url: "" }, () => 1, now)).toBeNull();
+  });
+  test("http urls are upgraded to https", () => {
+    expect(classify({ ...raw, url: "http://stripe.com/jobs/1" }, () => 1, now)!.url).toBe("https://stripe.com/jobs/1");
   });
   test("an unparseable postedAt falls back to now", () => {
     expect(classify({ ...raw, postedAt: "garbage" }, () => 3, now)!.postedAt).toBe(now.toISOString());

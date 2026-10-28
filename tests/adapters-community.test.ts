@@ -69,7 +69,7 @@ describe("parseJobright", () => {
   test("parses rows, carries company across ↳ rows, infers the year from 'Oct 27'", () => {
     const jobs = parseJobright(md("jobright"), now);
     expect(jobs).toHaveLength(4);
-    expect(jobs[0]).toMatchObject({ source: "jobright", company: "Strategy", title: "Associate Cloud Support Engineer", postedApprox: true });
+    expect(jobs[0]).toMatchObject({ source: "jobright", company: "Strategy", title: "Associate Cloud Support Engineer", postedPrecision: "day" });
     expect(jobs[0].postedAt).toBe("2026-10-27T00:00:00.000Z");
     expect(jobs[3].company).toBe("Amazon");
     expect(jobs[3].remoteHint).toBe(true);
