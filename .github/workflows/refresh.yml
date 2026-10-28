@@ -1,0 +1,59 @@
+name: refresh
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+
+      - name: Load previous data
+        run: |
+          mkdir -p data
+          set +e
+          git ls-remote --exit-code --heads origin data > /dev/null
+          rc=$?
+          set -e
+          if [ "$rc" -eq 0 ]; then
+            # the branch exists, so a failed fetch must fail the run (otherwise we would re-seed and forget alerts)
+            git fetch --depth 1 origin data
+            git show FETCH_HEAD:jobs.json > data/jobs.json
+            git show FETCH_HEAD:state.json > data/state.json
+          elif [ "$rc" -eq 2 ]; then
+            echo "No data branch yet: this is the first run."
+          else
+            echo "Could not reach the remote (git ls-remote exit $rc)"; exit 1
+          fi
+
+      - name: Fetch, classify and alert
+        run: npm run pipeline
+        env:
+          DATA_DIR: data
+          SITE_URL: ${{ vars.SITE_URL }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+          JOOBLE_KEY: ${{ secrets.JOOBLE_KEY }}
+
+      - name: Publish to the data branch
+        run: bash scripts/publish-data.sh
+        env:
+          DATA_DIR: data
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

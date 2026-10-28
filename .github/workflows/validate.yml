@@ -1,0 +1,27 @@
+name: validate
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Check every company board still answers
+        run: npm run validate
+      - name: Smoke test one live request per source (warnings only)
+        if: always()
+        continue-on-error: true
+        run: npx tsx scripts/smoke.ts
