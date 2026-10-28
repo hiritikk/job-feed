@@ -52,11 +52,12 @@ export function writeLastVisit(iso: string, storage: Storage | undefined = brows
 
 const RAIL_KEY = "job-feed:filters-hidden";
 
+/** The filter panel starts hidden; it is shown only when the visitor has chosen to show it. */
 export function readRailHidden(storage: Storage | undefined = browserStorage()): boolean {
   try {
-    return storage?.getItem(RAIL_KEY) === "1";
+    return storage?.getItem(RAIL_KEY) !== "0";
   } catch {
-    return false;
+    return true;
   }
 }
 
@@ -64,6 +65,6 @@ export function writeRailHidden(hidden: boolean, storage: Storage | undefined = 
   try {
     storage?.setItem(RAIL_KEY, hidden ? "1" : "0");
   } catch {
-    // blocked storage: the panel simply starts open next time
+    // blocked storage: the panel simply starts hidden next time
   }
 }

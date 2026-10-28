@@ -76,6 +76,12 @@ describe("FilterRail", () => {
     expect(out).toContain("Vancouver");
     expect(out).not.toContain("Seattle"); // US is not selected
   });
+  test("shows only the six most common cities until asked for more", () => {
+    const many = Array.from({ length: 12 }, (_, i) => makeJob({ cities: [`City${String(i).padStart(2, "0")}`] }));
+    const out = html(<FilterRail jobs={many} filters={defaultFilters()} setFilters={noop} sources={[]} open={false} onClose={noop} matchCount={12} />);
+    expect((out.match(/City\d\d/g) ?? []).length).toBe(6);
+    expect(out).toContain("6 more cities");
+  });
   test("selecting the US adds its cities", () => {
     expect(render({ locations: ["CA", "US"] })).toContain("Seattle");
   });

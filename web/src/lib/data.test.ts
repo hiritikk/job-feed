@@ -54,17 +54,18 @@ describe("filter panel preference", () => {
     const store = new Map<string, string>();
     return { getItem: (k: string) => store.get(k) ?? null, setItem: (k: string, v: string) => void store.set(k, v) } as unknown as Storage;
   };
-  test("defaults to shown, remembers hidden, remembers shown again", () => {
+  test("is hidden by default, remembers shown, remembers hidden again", () => {
     const s = memory();
-    expect(readRailHidden(s)).toBe(false);
-    writeRailHidden(true, s);
     expect(readRailHidden(s)).toBe(true);
     writeRailHidden(false, s);
     expect(readRailHidden(s)).toBe(false);
+    writeRailHidden(true, s);
+    expect(readRailHidden(s)).toBe(true);
   });
-  test("blocked storage never throws and defaults to shown", () => {
+  test("blocked or missing storage never throws and stays hidden", () => {
     const broken = { getItem: () => { throw new Error("denied"); }, setItem: () => { throw new Error("denied"); } } as unknown as Storage;
-    expect(readRailHidden(broken)).toBe(false);
-    expect(() => writeRailHidden(true, broken)).not.toThrow();
+    expect(readRailHidden(broken)).toBe(true);
+    expect(readRailHidden(undefined)).toBe(true);
+    expect(() => writeRailHidden(false, broken)).not.toThrow();
   });
 });

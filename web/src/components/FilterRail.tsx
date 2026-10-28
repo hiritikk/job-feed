@@ -37,7 +37,7 @@ export function FilterRail({ jobs, filters, setFilters, sources, open, onClose, 
   const [allCities, setAllCities] = useState(false);
   const set = (patch: Partial<Filters>) => setFilters({ ...filters, ...patch });
   const cities = useMemo(() => cityOptions(jobs, filters.locations), [jobs, filters.locations]);
-  const shown = allCities ? cities.slice(0, 80) : cities.slice(0, 8);
+  const shown = allCities ? cities.slice(0, 80) : cities.slice(0, 6);
   const selectedHidden = filters.cities.filter((c) => !shown.some((s) => s.city === c));
 
   return (
@@ -60,16 +60,16 @@ export function FilterRail({ jobs, filters, setFilters, sources, open, onClose, 
         ))}
       </Group>
 
-      <Group title="City" hint={filters.locations.length ? "Cities in the places selected above" : "Most common cities"}>
+      <Group title="City">
         {[...selectedHidden.map((city) => ({ city, count: 0 })), ...shown].map(({ city, count }) => (
           <Chip key={city} on={filters.cities.includes(city)} onClick={() => set({ cities: toggle(filters.cities, city) })}>
             {city}
             {count > 0 && <span className="count">{count}</span>}
           </Chip>
         ))}
-        {cities.length > 8 && (
+        {cities.length > 6 && (
           <button type="button" className="link" onClick={() => setAllCities(!allCities)}>
-            {allCities ? "Fewer cities" : `${Math.min(cities.length, 80) - 8} more cities`}
+            {allCities ? "Fewer cities" : `${Math.min(cities.length, 80) - 6} more cities`}
           </button>
         )}
       </Group>
@@ -92,7 +92,7 @@ export function FilterRail({ jobs, filters, setFilters, sources, open, onClose, 
 
       <details className="more-filters">
         <summary>More filters</summary>
-      <Group title="Class of" hint="Only postings that name a graduation year carry one">
+      <Group title="Class of">
         {([2026, 2027, 2028, "none"] as const).map((y) => (
           <Chip key={y} on={filters.gradYears.includes(y)} onClick={() => set({ gradYears: toggle(filters.gradYears, y) })}>
             {y === "none" ? "No year stated" : y}
