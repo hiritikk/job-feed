@@ -16,6 +16,7 @@ function countryMatches(job: Job, rule: AlertRule): boolean {
 export function matchesRule(job: Job, rule: AlertRule): boolean {
   return (
     job.closedAt === null &&
+    job.linkStatus !== "dead" &&
     countryMatches(job, rule) &&
     rule.levels.includes(job.level) &&
     rule.grad_years.includes(job.gradYear) &&

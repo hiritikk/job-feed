@@ -8,7 +8,7 @@ export type HttpOptions = {
   fetchImpl?: typeof fetch;
 };
 
-class Semaphore {
+export class Semaphore {
   private waiting: (() => void)[] = [];
   private active = 0;
   constructor(private readonly max: number) {}

@@ -12,8 +12,8 @@ function job(over: Partial<Job> & { loc?: string[] } = {}): Job {
   const { loc: _loc, ...rest } = over;
   return {
     id: Math.random().toString(36).slice(2), company: "Stripe", title: "Software Engineer, New Grad 2027", url: "https://stripe.com/jobs/1",
-    locations, countries: parsed.countries, remote: parsed.remote, remoteRegions: parsed.remoteRegions, postedAt: NOW, postedApprox: false,
-    firstSeenAt: NOW, lastSeenAt: NOW, closedAt: null, source: "greenhouse", sources: ["greenhouse"], roleType: "sde", level: "new-grad",
+    locations, countries: parsed.countries, cities: [], postedPrecision: "exact", remote: parsed.remote, remoteRegions: parsed.remoteRegions, postedAt: NOW, postedApprox: false,
+    firstSeenAt: NOW, lastSeenAt: NOW, closedAt: null, linkStatus: "unknown", linkCheckedAt: null, source: "greenhouse", sources: ["greenhouse"], roleType: "sde", level: "new-grad",
     gradYear: 2027, workAuth: "unknown", tier: 1, snippet: "", ...rest,
   };
 }
@@ -31,6 +31,8 @@ describe("matchesRule (default core rule)", () => {
   test("tier 3 does not match", () => expect(matchesRule(job({ tier: 3 }), rule)).toBe(false));
   test("level other does not match", () => expect(matchesRule(job({ level: "other" }), rule)).toBe(false));
   test("role type other does not match", () => expect(matchesRule(job({ roleType: "other" }), rule)).toBe(false));
+  test("a job whose link is dead does not match", () => expect(matchesRule(job({ linkStatus: "dead" }), rule)).toBe(false));
+  test("a job whose link status is unknown still matches", () => expect(matchesRule(job({ linkStatus: "unknown" }), rule)).toBe(true));
   test("a closed job does not match", () => expect(matchesRule(job({ closedAt: NOW }), rule)).toBe(false));
 });
 

@@ -72,7 +72,11 @@ export function mergeRun(prev: State, runs: SourceRun[], now: Date): { jobs: Job
       newJobs.push(job);
       return job;
     }
-    return { ...job, id: p.id, firstSeenAt: p.firstSeenAt, closedAt: null };
+    const sameUrl = canonicalUrl(p.url) === canonicalUrl(job.url);
+    return {
+      ...job, id: p.id, firstSeenAt: p.firstSeenAt, closedAt: null,
+      linkStatus: sameUrl ? p.linkStatus : "unknown", linkCheckedAt: sameUrl ? p.linkCheckedAt : null,
+    };
   });
 
   for (const p of prevActive) {

@@ -11,8 +11,8 @@ function job(n: number, over: Partial<Job> = {}): Job {
   const source = over.source ?? "greenhouse";
   return {
     id: stableId(source, String(n), url), company: "Acme", title: `Software Engineer ${n}`, url, locations: ["Toronto, ON"],
-    countries: ["CA"], remote: "unknown", remoteRegions: [], postedAt: iso(2), postedApprox: false,
-    firstSeenAt: NOW.toISOString(), lastSeenAt: NOW.toISOString(), closedAt: null, source, sources: [source], roleType: "sde",
+    countries: ["CA"], cities: ["Toronto"], remote: "unknown", remoteRegions: [], postedAt: iso(2), postedApprox: false, postedPrecision: "exact",
+    firstSeenAt: NOW.toISOString(), lastSeenAt: NOW.toISOString(), closedAt: null, linkStatus: "unknown", linkCheckedAt: null, source, sources: [source], roleType: "sde",
     level: "new-grad", gradYear: null, workAuth: "unknown", tier: 1, snippet: "", ...over,
   };
 }
@@ -114,5 +114,19 @@ describe("mergeRun", () => {
     expect(r.newJobs).toHaveLength(0);
     expect(r.jobs[0].id).toBe(prev.id);
     expect(r.jobs[0].firstSeenAt).toBe(iso(4));
+  });
+
+  test("link check results carry over while the url is unchanged", () => {
+    const checked = job(1, { linkStatus: "dead", linkCheckedAt: iso(1) });
+    const r = mergeRun(stateOf([checked]), [okRun("greenhouse", [job(1)])], NOW);
+    expect(r.jobs[0]).toMatchObject({ linkStatus: "dead", linkCheckedAt: iso(1) });
+  });
+
+  test("link check results are reset when the url changed", () => {
+    const checked = job(1, { source: "simplify", sources: ["simplify"], linkStatus: "dead", linkCheckedAt: iso(1) });
+    const moved = job(1, { source: "simplify", sources: ["simplify"], url: "https://boards.example.com/1-new" });
+    const r = mergeRun(stateOf([checked], "simplify"), [okRun("simplify", [moved])], NOW);
+    expect(r.jobs).toHaveLength(1);
+    expect(r.jobs[0]).toMatchObject({ linkStatus: "unknown", linkCheckedAt: null });
   });
 });
