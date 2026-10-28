@@ -42,7 +42,10 @@ export function parseLocations(
     if (isRemote) for (const c of found) regions.add(c);
     if (found.length === 0) {
       const rest = s.replace(/\b(remote|hybrid|on-?site|anywhere|worldwide)\b/gi, "").replace(/[\s\-–—,()/|]+/g, "");
-      if (rest) countries.add("OTHER");
+      if (rest) {
+        countries.add("OTHER");
+        if (isRemote) regions.add("OTHER"); // a named but unrecognised region ("Remote - APAC") is not "region unspecified"
+      }
     }
   }
 

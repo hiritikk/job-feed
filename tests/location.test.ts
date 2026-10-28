@@ -20,6 +20,9 @@ describe("parseLocations", () => {
   test.each(cases)("%s", (_name, input, hint, expected) => {
     expect(parseLocations(input, hint)).toEqual(expected);
   });
+  test("a remote role limited to an unrecognised region is not 'region unspecified'", () => {
+    expect(parseLocations(["Remote - APAC"])).toEqual({ countries: ["OTHER"], remote: "remote", remoteRegions: ["OTHER"] });
+  });
   test("an unrecognised place is OTHER", () => {
     expect(parseLocations(["Singapore"]).countries).toEqual(["OTHER"]);
   });
