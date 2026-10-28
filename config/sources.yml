@@ -1,0 +1,11 @@
+# Enable/disable data sources. Keyed sources (adzuna, jooble) also need secrets and are skipped without them.
+simplify: true
+remotive: true
+remoteok: true
+jobicy: true
+himalayas: true
+arbeitnow: true
+themuse: true
+hn: true
+adzuna: true
+jooble: true
