@@ -25,6 +25,11 @@ describe("fetchGreenhouse", () => {
     });
     expect(typeof jobs[0].descriptionHtml).toBe("string");
   });
+  test("content can be switched off to probe a board cheaply", async () => {
+    const http = httpReturning(gh);
+    await fetchGreenhouse(entry("Stripe", "greenhouse", "stripe"), http, { content: false });
+    expect(http.urls[0]).toBe("https://boards-api.greenhouse.io/v1/boards/stripe/jobs");
+  });
   test("a job without location yields []", async () => {
     const mutated = { jobs: [{ ...gh.jobs[0], location: null }] };
     expect((await fetchGreenhouse(entry("Stripe", "greenhouse", "stripe"), httpReturning(mutated)))[0].locations).toEqual([]);

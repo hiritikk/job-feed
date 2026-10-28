@@ -6,8 +6,9 @@ type GhJob = {
   first_published?: string; updated_at?: string; content?: string;
 };
 
-export async function fetchGreenhouse(entry: CompanyEntry, http: Http): Promise<RawJob[]> {
-  const data = await http.json<{ jobs?: GhJob[] }>(`https://boards-api.greenhouse.io/v1/boards/${entry.slug}/jobs?content=true`);
+export async function fetchGreenhouse(entry: CompanyEntry, http: Http, opts: { content?: boolean } = {}): Promise<RawJob[]> {
+  const query = opts.content === false ? "" : "?content=true";
+  const data = await http.json<{ jobs?: GhJob[] }>(`https://boards-api.greenhouse.io/v1/boards/${entry.slug}/jobs${query}`);
   if (!data || !Array.isArray(data.jobs)) throw new Error(`greenhouse ${entry.slug}: response has no jobs array`);
   return data.jobs.map((j) => ({
     source: "greenhouse",

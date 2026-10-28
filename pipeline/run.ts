@@ -26,6 +26,8 @@ export type RunOptions = {
   rules: AlertRule[];
   siteUrl: string;
   sources: Record<string, boolean>;
+  /** Minor (tier 3) boards are split into this many groups and one group is refreshed per run; default scales with their number. */
+  shards?: number;
   /** Tests: replaces every built-in adapter. */
   adapterOverrides?: Record<string, () => Promise<RawJob[]>>;
 };
@@ -35,8 +37,12 @@ const DAY = 24 * HOUR;
 const ALERT_WINDOW_HOURS = 24; // a missed alert is retried for this long
 const ALERT_MAX_POSTING_AGE_DAYS = 7; // older postings that merely appeared in our data are not "new" jobs
 const FAMILY_FAILURE_LIMIT = 0.5;
+const MINOR_BOARDS_PER_RUN = 600;
+const RUN_SLOT_MS = 30 * 60_000;
+
+const shardOf = (slug: string, shards: number): number => [...slug].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7) % shards;
 // Full listings: a job missing from one of these is really gone. Everything else returns only the newest N postings.
-const COMPLETE_SOURCES = new Set(["greenhouse", "lever", "ashby", "workable", "simplify", "vanshb03", "speedyapply", "hanzili", "jobright"]);
+const COMPLETE_SOURCES = new Set(["greenhouse", "lever", "ashby", "workable", "bamboohr", "recruitee", "rippling", "simplify", "vanshb03", "speedyapply", "hanzili", "jobright"]);
 
 type Task = { source: string; run: () => Promise<{ raw: RawJob[]; carried?: Job[]; ok?: boolean; error?: string }> };
 
@@ -60,10 +66,11 @@ async function pool<T>(items: T[], size: number, fn: (item: T) => Promise<void>)
   await Promise.all(Array.from({ length: Math.min(size, items.length) }, async () => { while (next < items.length) await fn(items[next++]); }));
 }
 
-function buildTasks(opts: RunOptions, prev: State): Task[] {
+function buildTasks(opts: RunOptions, prev: State, firstRun: boolean): Task[] {
   if (opts.adapterOverrides) return Object.entries(opts.adapterOverrides).map(([source, run]) => ({ source, run: async () => ({ raw: await run() }) }));
   const { http, env, sources } = opts;
   const tasks: Task[] = [];
+  const shards = Math.max(1, opts.shards ?? Math.ceil(opts.companies.filter((c) => c.tier === 3).length / MINOR_BOARDS_PER_RUN));
 
   for (const family of Object.keys(ATS_FETCHERS) as (keyof typeof ATS_FETCHERS)[]) {
     const entries = opts.companies.filter((c) => c.ats === family);
@@ -74,18 +81,22 @@ function buildTasks(opts: RunOptions, prev: State): Task[] {
         const raw: RawJob[] = [];
         const carried: Job[] = [];
         const failed: string[] = [];
-        await pool(entries, 8, async (entry) => {
+        const keep = (entry: CompanyEntry) => prev.jobs.filter((j) => !j.closedAt && j.source === family && norm(j.company) === norm(entry.name));
+        const slot = Math.floor(opts.now.getTime() / RUN_SLOT_MS);
+        const due = entries.filter((e) => firstRun || e.tier <= 2 || shardOf(e.slug, shards) === slot % shards);
+        for (const entry of entries) if (!due.includes(entry)) carried.push(...keep(entry)); // not this run's turn: keep what we know
+        await pool(due, 8, async (entry) => {
           try {
             raw.push(...(await ATS_FETCHERS[family](entry, http)));
           } catch (err) {
             failed.push(`${entry.name} (${(err as Error).message})`);
             // keep what we already knew about this company so one flaky board can't close its jobs
-            carried.push(...prev.jobs.filter((j) => !j.closedAt && j.source === family && norm(j.company) === norm(entry.name)));
+            carried.push(...keep(entry));
           }
         });
-        if (failed.length > 0) console.warn(`${family}: ${failed.length}/${entries.length} companies failed: ${failed.slice(0, 5).join("; ")}`);
-        const tooMany = failed.length > entries.length * FAMILY_FAILURE_LIMIT;
-        return { raw, carried, ok: !tooMany, error: tooMany ? `${failed.length}/${entries.length} companies failed` : undefined };
+        if (failed.length > 0) console.warn(`${family}: ${failed.length}/${due.length} companies failed: ${failed.slice(0, 5).join("; ")}`);
+        const tooMany = failed.length > due.length * FAMILY_FAILURE_LIMIT;
+        return { raw, carried, ok: !tooMany, error: tooMany ? `${failed.length}/${due.length} companies failed` : undefined };
       },
     });
   }
@@ -113,7 +124,7 @@ export async function runPipeline(opts: RunOptions): Promise<{ jobCount: number;
   const tierOf = (company: string): Tier => tiers.get(norm(company)) ?? 3;
 
   const runs: SourceRun[] = await Promise.all(
-    buildTasks(opts, prev).map(async (task): Promise<SourceRun> => {
+    buildTasks(opts, prev, firstRun).map(async (task): Promise<SourceRun> => {
       try {
         const out = await task.run();
         const jobs = out.raw.flatMap((r) => {

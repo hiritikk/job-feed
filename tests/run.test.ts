@@ -154,4 +154,42 @@ describe("runPipeline", () => {
     expect(file.jobs.every((j) => j.closedAt === null)).toBe(true);
     expect(file.sources.find((s) => s.source === "greenhouse")!.status).toBe("ok");
   });
+
+  test("minor boards are refreshed in rotating shards; skipped boards keep their jobs and stay open", async () => {
+    const dataDir = mkdtempSync(join(tmpdir(), "run-shard-"));
+    const fetched: string[] = [];
+    const http: Http = {
+      json: async (url: string) => {
+        const slug = /boards\/([^/]+)\/jobs/.exec(url)?.[1] ?? "";
+        fetched.push(slug);
+        return { jobs: [{ id: 1, title: `Software Engineer, New Grad ${slug}`, absolute_url: `https://boards.greenhouse.io/${slug}/jobs/1`, location: { name: "Toronto, ON" }, first_published: "2026-10-27T08:00:00Z", content: "" }] } as never;
+      },
+      text: async () => "",
+    };
+    const entries: CompanyEntry[] = [
+      { name: "Big", ats: "greenhouse", slug: "big", tier: 1 },
+      ...["m1", "m2", "m3", "m4"].map((slug): CompanyEntry => ({ name: slug, ats: "greenhouse", slug, tier: 3 })),
+    ];
+    const probe: Probe = async (url) => ({ status: 200, finalUrl: url });
+    const go = (now: Date) => runPipeline({ dataDir, now, http, probe, env: {}, companies: entries, rules, siteUrl: "https://s.app", sources: {}, shards: 2 });
+
+    await go(new Date("2026-10-27T12:00:00.000Z"));                       // first run fetches everything so nothing is missing
+    expect(fetched.sort()).toEqual(["big", "m1", "m2", "m3", "m4"]);
+    fetched.length = 0;
+    await go(new Date("2026-10-27T12:30:00.000Z"));
+    const firstShard = [...fetched];
+    fetched.length = 0;
+    await go(new Date("2026-10-27T13:00:00.000Z"));
+    const secondShard = [...fetched];
+
+    expect(firstShard).toContain("big");                                   // tier 1-2 boards are fetched every run
+    expect(secondShard).toContain("big");
+    const minors = (l: string[]) => l.filter((s) => s !== "big").sort();
+    expect(minors(firstShard).length).toBeGreaterThan(0);
+    expect(minors(firstShard).length).toBeLessThan(4);                     // only part of the minor boards per run
+    expect([...minors(firstShard), ...minors(secondShard)].sort()).toEqual(["m1", "m2", "m3", "m4"]); // together they cover all of them
+    const file = JSON.parse(readFileSync(join(dataDir, "jobs.json"), "utf8")) as JobsFile;
+    expect(file.jobs).toHaveLength(5);
+    expect(file.jobs.every((j) => j.closedAt === null)).toBe(true);        // skipped boards are not closed
+  });
 });

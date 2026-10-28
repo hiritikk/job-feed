@@ -68,7 +68,7 @@ export type Http = {
 
 export type CompanyEntry = {
   name: string;
-  ats: "greenhouse" | "lever" | "ashby" | "workday" | "workable" | "smartrecruiters" | "custom";
+  ats: "greenhouse" | "lever" | "ashby" | "workday" | "workable" | "smartrecruiters" | "bamboohr" | "recruitee" | "rippling" | "custom";
   slug: string;
   tier: Tier;
   site?: string;

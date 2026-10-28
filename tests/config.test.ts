@@ -43,6 +43,29 @@ describe("loadCompanies", () => {
   });
 });
 
+describe("companies.auto.yml merging", () => {
+  const dir = () => mkdtempSync(join(tmpdir(), "cfgauto-"));
+  test("auto-discovered boards are appended after the curated ones", () => {
+    const d = dir();
+    writeFileSync(join(d, "companies.yml"), "- { name: Stripe, ats: greenhouse, slug: stripe, tier: 1 }\n");
+    writeFileSync(join(d, "companies.auto.yml"), "- { name: Acme, ats: lever, slug: acme, tier: 3 }\n");
+    expect(loadCompanies(join(d, "companies.yml")).map((c) => c.name)).toEqual(["Stripe", "Acme"]);
+  });
+  test("a board in both files keeps the curated entry (and its tier)", () => {
+    const d = dir();
+    writeFileSync(join(d, "companies.yml"), "- { name: Stripe, ats: greenhouse, slug: stripe, tier: 1 }\n");
+    writeFileSync(join(d, "companies.auto.yml"), "- { name: Stripe Inc, ats: greenhouse, slug: stripe, tier: 3 }\n");
+    const all = loadCompanies(join(d, "companies.yml"));
+    expect(all).toHaveLength(1);
+    expect(all[0]).toMatchObject({ name: "Stripe", tier: 1 });
+  });
+  test("a missing auto file is fine", () => {
+    const d = dir();
+    writeFileSync(join(d, "companies.yml"), "- { name: Stripe, ats: greenhouse, slug: stripe, tier: 1 }\n");
+    expect(loadCompanies(join(d, "companies.yml"))).toHaveLength(1);
+  });
+});
+
 describe("loadSources", () => {
   test("default config/sources.yml enables simplify", () => {
     expect(loadSources().simplify).toBe(true);

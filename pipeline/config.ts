@@ -1,4 +1,5 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { parse } from "yaml";
 import { z } from "zod";
 import type { CompanyEntry, Country, Job } from "./types.js";
@@ -8,7 +9,7 @@ const tier = z.union([z.literal(1), z.literal(2), z.literal(3)]);
 const companySchema = z
   .object({
     name: z.string().min(1),
-    ats: z.enum(["greenhouse", "lever", "ashby", "workday", "workable", "smartrecruiters", "custom"]),
+    ats: z.enum(["greenhouse", "lever", "ashby", "workday", "workable", "smartrecruiters", "bamboohr", "recruitee", "rippling", "custom"]),
     slug: z.string().min(1),
     tier,
     site: z.string().optional(),
@@ -45,7 +46,7 @@ export type AlertRule = {
 
 const readYaml = (path: string): unknown => parse(readFileSync(path, "utf8"));
 
-export function loadCompanies(path = "config/companies.yml"): CompanyEntry[] {
+function parseCompanies(path: string): CompanyEntry[] {
   const entries = z.array(companySchema).parse(readYaml(path) ?? []) as CompanyEntry[];
   const seen = new Set<string>();
   for (const e of entries) {
@@ -54,6 +55,16 @@ export function loadCompanies(path = "config/companies.yml"): CompanyEntry[] {
     seen.add(key);
   }
   return entries;
+}
+
+/** Curated companies, followed by auto-discovered boards from the sibling companies.auto.yml (curated entries win). */
+export function loadCompanies(path = "config/companies.yml"): CompanyEntry[] {
+  const curated = parseCompanies(path);
+  const autoPath = join(dirname(path), "companies.auto.yml");
+  if (!existsSync(autoPath)) return curated;
+  const have = new Set(curated.map((c) => `${c.ats}:${c.slug.toLowerCase()}`));
+  const auto = parseCompanies(autoPath).filter((c) => !have.has(`${c.ats}:${c.slug.toLowerCase()}`));
+  return [...curated, ...auto];
 }
 
 export function loadAlertRules(path = "config/alerts.yml"): AlertRule[] {

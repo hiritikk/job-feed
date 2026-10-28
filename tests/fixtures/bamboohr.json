@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "totalCount": 3
+  },
+  "result": [
+    {
+      "id": "83",
+      "jobOpeningName": "Senior Technical Designer ",
+      "departmentId": "18676",
+      "departmentLabel": "Technical Design and Asset Art",
+      "employmentStatusLabel": "Full-Time",
+      "employmentType": null,
+      "location": {
+        "city": "Warrington",
+        "state": "Cheshire"
+      },
+      "atsLocation": {
+        "country": null,
+        "state": null,
+        "province": null,
+        "city": null
+      },
+      "isRemote": null,
+      "locationType": "0"
+    },
+    {
+      "id": "95",
+      "jobOpeningName": "Mid-Level VFX Artist ",
+      "departmentId": "18664",
+      "departmentLabel": "Art",
+      "employmentStatusLabel": "Fixed Term",
+      "employmentType": null,
+      "location": {
+        "city": "Warrington",
+        "state": "Cheshire"
+      },
+      "atsLocation": {
+        "country": null,
+        "state": null,
+        "province": null,
+        "city": null
+      },
+      "isRemote": null,
+      "locationType": "0"
+    },
+    {
+      "id": "96",
+      "jobOpeningName": "Senior VFX Artist ",
+      "departmentId": "18664",
+      "departmentLabel": "Art",
+      "employmentStatusLabel": "Fixed Term",
+      "employmentType": null,
+      "location": {
+        "city": "Warrington",
+        "state": "Cheshire"
+      },
+      "atsLocation": {
+        "country": null,
+        "state": null,
+        "province": null,
+        "city": null
+      },
+      "isRemote": null,
+      "locationType": "0"
+    }
+  ]
+}
