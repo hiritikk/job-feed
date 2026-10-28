@@ -12,6 +12,7 @@ jooble: true
 # Big-tech career sites (own JSON endpoints, honest User-Agent, >= 1 s between requests)
 amazon: true
 google: true
+meta: true
 microsoft: true
 netflix: true
 oracle: true

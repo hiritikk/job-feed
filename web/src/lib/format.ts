@@ -3,7 +3,7 @@ import type { Job } from "./types";
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const HOUR = 3_600_000;
 const DAY = 24 * HOUR;
-const DIRECT = new Set(["greenhouse", "lever", "ashby", "workday", "workable", "smartrecruiters", "bamboohr", "recruitee", "rippling", "amazon", "google", "microsoft", "netflix", "oracle"]);
+const DIRECT = new Set(["greenhouse", "lever", "ashby", "workday", "workable", "smartrecruiters", "bamboohr", "recruitee", "rippling", "amazon", "google", "meta", "microsoft", "netflix", "oracle"]);
 
 const monthDay = (d: Date): string => `${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}`;
 const utcDay = (d: Date): number => Math.floor(d.getTime() / DAY);

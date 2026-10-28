@@ -255,7 +255,7 @@
 
 # --- Tier only (no supported public feed; tier applied to postings found elsewhere) ---
 - { name: "Apple", ats: custom, slug: tier-only-apple, tier: 1 }
-- { name: "Meta", ats: custom, slug: tier-only-meta, tier: 1 }
+- { name: "Meta", ats: custom, slug: meta, tier: 1 }  # bespoke adapter: sitemap + structured data
 - { name: "Uber", ats: custom, slug: tier-only-uber, tier: 1 }
 - { name: "Tesla", ats: custom, slug: tier-only-tesla, tier: 1 }
 - { name: "Cursor", ats: custom, slug: tier-only-cursor, tier: 1 }

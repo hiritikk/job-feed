@@ -7,6 +7,7 @@ import { appendFileSync, existsSync, readFileSync, writeFileSync } from "node:fs
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { fetchAshby } from "../pipeline/adapters/ashby.js";
+import { fetchBambooHr } from "../pipeline/adapters/bamboohr.js";
 import { fetchGreenhouse } from "../pipeline/adapters/greenhouse.js";
 import { fetchLever } from "../pipeline/adapters/lever.js";
 import { fetchWorkday } from "../pipeline/adapters/workday.js";
@@ -35,7 +36,7 @@ export function scoreBoard(raws: RawJob[], now: Date): BoardScore {
 
 const titleCase = (slug: string): string => slug.replace(/[-_]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
-export function boardEntry(ats: "greenhouse" | "lever" | "ashby" | "workday", id: string, companyName?: string): CompanyEntry {
+export function boardEntry(ats: "greenhouse" | "lever" | "ashby" | "workday" | "bamboohr", id: string, companyName?: string): CompanyEntry {
   if (ats === "workday") {
     const [tenant, wd, site] = id.split("|");
     return { name: companyName ?? tenant, ats, slug: tenant, tier: 3, site, wd: Number(wd.replace(/\D/g, "")) };
@@ -61,8 +62,8 @@ async function main(): Promise<void> {
   const done = new Set<string>();
   if (existsSync(resultsPath)) for (const line of readFileSync(resultsPath, "utf8").split("\n").filter(Boolean)) done.add(JSON.parse(line).key);
 
-  const work: { ats: "greenhouse" | "lever" | "ashby" | "workday"; id: string }[] = [];
-  for (const ats of ["greenhouse", "lever", "ashby", "workday"] as const) {
+  const work: { ats: "greenhouse" | "lever" | "ashby" | "workday" | "bamboohr"; id: string }[] = [];
+  for (const ats of ["greenhouse", "lever", "ashby", "workday", "bamboohr"] as const) {
     const pool = parsePool(JSON.parse(readFileSync(join(poolDir, `${ats}.json`), "utf8")) as string[], ats === "workday");
     for (const id of pool) {
       const e = boardEntry(ats, id);
@@ -84,6 +85,7 @@ async function main(): Promise<void> {
           ats === "greenhouse" ? await fetchGreenhouse(entry, http, { content: false })
           : ats === "lever" ? await fetchLever(entry, http)
           : ats === "ashby" ? await fetchAshby(entry, http)
+          : ats === "bamboohr" ? await fetchBambooHr(entry, http)
           : await fetchWorkday(entry, http, { queries: ["software engineer"], maxPages: 1, now });
         record = { key: `${ats}:${id.toLowerCase()}`, ats, id, score: scoreBoard(raws, now) };
       } catch (err) {

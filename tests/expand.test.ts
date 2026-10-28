@@ -38,6 +38,9 @@ describe("boardEntry", () => {
   test("uses the company name from the board when there is one", () => {
     expect(boardEntry("greenhouse", "x1", "Acme Inc")).toMatchObject({ name: "Acme Inc" });
   });
+  test("builds a bamboohr entry", () => {
+    expect(boardEntry("bamboohr", "acme-labs")).toEqual({ name: "Acme Labs", ats: "bamboohr", slug: "acme-labs", tier: 3 });
+  });
   test("parses workday pool rows tenant|wdN|site", () => {
     expect(boardEntry("workday", "2020companies|wd1|external_careers")).toEqual({
       name: "2020companies", ats: "workday", slug: "2020companies", tier: 3, site: "external_careers", wd: 1,

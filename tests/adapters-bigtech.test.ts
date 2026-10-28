@@ -5,6 +5,8 @@ import { fetchNetflix } from "../pipeline/adapters/bigtech/netflix.js";
 import { fetchMicrosoft } from "../pipeline/adapters/bigtech/microsoft.js";
 import { fetchGoogle } from "../pipeline/adapters/bigtech/google.js";
 import { fetchOracle } from "../pipeline/adapters/bigtech/oracle.js";
+import { fetchMeta } from "../pipeline/adapters/bigtech/meta.js";
+import type { RawJob } from "../pipeline/types.js";
 import { bigTechAdapters } from "../pipeline/adapters/bigtech/index.js";
 import type { Http } from "../pipeline/types.js";
 
@@ -131,8 +133,54 @@ describe("fetchOracle", () => {
   });
 });
 
+describe("fetchMeta (sitemap + JobPosting structured data)", () => {
+  const sitemap = readFileSync("tests/fixtures/meta-sitemap.xml", "utf8");
+  const page = readFileSync("tests/fixtures/meta-job.html", "utf8");
+  const ids = [...sitemap.matchAll(/job_details\/(\d+)\//g)].map((m) => m[1]);
+  const serve = () => {
+    const urls: string[] = [];
+    const http: Http = { json: async () => ({}) as never, text: async (u: string) => (urls.push(u), u.endsWith("sitemap.xml") ? sitemap : page) };
+    return { http, urls };
+  };
+  test("reads the sitemap, then each unseen job page, and maps the structured data", async () => {
+    const { http, urls } = serve();
+    const jobs = await fetchMeta(http, { delayMs: 0, maxNew: 10 });
+    expect(urls[0]).toBe("https://www.metacareers.com/jobsearch/sitemap.xml");
+    expect(urls).toHaveLength(1 + ids.length);
+    expect(jobs).toHaveLength(ids.length);
+    expect(jobs[0]).toMatchObject({
+      source: "meta", company: "Meta", title: "ASIC Verification Engineer, Networking", sourceId: ids[0],
+      url: `https://www.metacareers.com/profile/job_details/${ids[0]}/`, locations: ["Sunnyvale, CA, US"], postedAt: "2026-10-27T23:20:27.000Z",
+    });
+  });
+  test("known jobs are not refetched but are re-emitted from the previous run, so they stay confirmed", async () => {
+    const { http, urls } = serve();
+    const known = new Map<string, RawJob>([[ids[0], { source: "meta", sourceId: ids[0], company: "Meta", title: "Old title", url: `https://www.metacareers.com/profile/job_details/${ids[0]}/`, locations: ["Menlo Park, CA, US"], postedAt: "2026-10-01T00:00:00.000Z" }]]);
+    const jobs = await fetchMeta(http, { delayMs: 0, maxNew: 10, known });
+    expect(urls).toHaveLength(ids.length); // sitemap + all but the known one
+    expect(jobs).toHaveLength(ids.length);
+    expect(jobs.find((j) => j.sourceId === ids[0])!.title).toBe("Old title");
+  });
+  test("known jobs that left the sitemap are not re-emitted", async () => {
+    const { http } = serve();
+    const gone: RawJob = { source: "meta", sourceId: "999", company: "Meta", title: "Gone", url: "https://www.metacareers.com/profile/job_details/999/", locations: [], postedAt: null };
+    const jobs = await fetchMeta(http, { delayMs: 0, maxNew: 10, known: new Map([["999", gone]]) });
+    expect(jobs.some((j) => j.sourceId === "999")).toBe(false);
+  });
+  test("at most maxNew new pages are fetched per run", async () => {
+    const { http, urls } = serve();
+    await fetchMeta(http, { delayMs: 0, maxNew: 2 });
+    expect(urls).toHaveLength(1 + 2);
+  });
+  test("a page without structured data is skipped, an empty sitemap throws", async () => {
+    const http: Http = { json: async () => ({}) as never, text: async (u: string) => (u.endsWith("sitemap.xml") ? sitemap : "<html>blocked</html>") };
+    expect(await fetchMeta(http, { delayMs: 0, maxNew: 10 })).toEqual([]);
+    await expect(fetchMeta({ json: async () => ({}) as never, text: async () => "<html>nope</html>" }, { delayMs: 0 })).rejects.toThrow(/sitemap/);
+  });
+});
+
 describe("bigTechAdapters", () => {
   test("exposes one adapter per big-tech source", () => {
-    expect(Object.keys(bigTechAdapters(fixed({}))).sort()).toEqual(["amazon", "google", "microsoft", "netflix", "oracle"]);
+    expect(Object.keys(bigTechAdapters(fixed({}))).sort()).toEqual(["amazon", "google", "meta", "microsoft", "netflix", "oracle"]);
   });
 });

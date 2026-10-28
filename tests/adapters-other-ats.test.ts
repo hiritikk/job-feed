@@ -122,6 +122,23 @@ describe("fetchSmartRecruiters", () => {
       locations: ["Vancouver, British Columbia, Canada"], remoteHint: true,
     });
   });
+  test("asks for Canadian postings explicitly, then the worldwide list, and merges them without duplicates", async () => {
+    const urls: string[] = [];
+    const posting = (id: string, name: string) => ({ ...sr.content[0], id, name });
+    const http: Http = {
+      json: async (url: string) => {
+        urls.push(url);
+        return (url.includes("country=ca")
+          ? { totalFound: 2, content: [posting("1", "Canada role"), posting("2", "Shared role")] }
+          : { totalFound: 2, content: [posting("2", "Shared role"), posting("3", "World role")] }) as never;
+      },
+      text: async () => "",
+    };
+    const jobs = await fetchSmartRecruiters(entry, http);
+    expect(urls[0]).toContain("country=ca");
+    expect(urls.some((u) => !u.includes("country="))).toBe(true);
+    expect(jobs.map((j) => j.sourceId).sort()).toEqual(["1", "2", "3"]);
+  });
   test("totalFound 0 returns []", async () => {
     const http: Http = { json: async () => ({ offset: 0, limit: 5, totalFound: 0, content: [] }) as never, text: async () => "" };
     expect(await fetchSmartRecruiters(entry, http)).toEqual([]);

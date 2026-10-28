@@ -112,7 +112,14 @@ function buildTasks(opts: RunOptions, prev: State, firstRun: boolean): Task[] {
   add("hn", () => fetchHnHiring(http));
   if (env.ADZUNA_APP_ID && env.ADZUNA_APP_KEY) add("adzuna", () => fetchAdzuna(http, env));
   if (env.JOOBLE_KEY) add("jooble", () => fetchJooble(http, env));
-  for (const [name, fn] of Object.entries(bigTechAdapters(http))) add(name, fn);
+  const knownMeta = new Map<string, RawJob>();
+  for (const j of prev.jobs) {
+    const id = j.source === "meta" ? /job_details\/(\d+)/.exec(j.url)?.[1] : undefined;
+    if (id && !j.closedAt) {
+      knownMeta.set(id, { source: "meta", sourceId: id, company: j.company, title: j.title, url: j.url, locations: j.locations, postedAt: j.postedAt, postedPrecision: j.postedPrecision, descriptionHtml: j.snippet, remoteHint: j.remote === "remote" ? true : undefined });
+    }
+  }
+  for (const [name, fn] of Object.entries(bigTechAdapters(http, knownMeta))) add(name, fn);
   return tasks;
 }
 
