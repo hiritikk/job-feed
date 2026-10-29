@@ -20,10 +20,10 @@ const ratio = (a: string, b: string): number => {
 };
 
 // Text on background pairs used in the UI. Body and secondary text must clear 7:1 (WCAG AAA); small, tertiary text and colours 4.5:1 (AA).
-const STRONG: [string, string][] = [["ink", "paper"], ["ink", "surface"], ["ink-soft", "paper"], ["ink-soft", "surface"]];
+const STRONG: [string, string][] = [["ink", "paper"], ["ink", "surface"], ["ink-soft", "paper"], ["ink-soft", "surface"], ["ink", "today-wash"], ["ink-soft", "today-wash"]];
 const AA: [string, string][] = [
   ["ink-faint", "paper"], ["ink-faint", "surface"], ["accent", "paper"], ["accent", "surface"], ["accent-ink", "accent"],
-  ["accent", "accent-wash"], ["warn", "warn-wash"], ["ok", "surface"], ["bad", "surface"], ["ink", "chip"],
+  ["accent", "accent-wash"], ["warn", "warn-wash"], ["done", "done-wash"], ["ok", "surface"], ["bad", "surface"], ["ink", "chip"],
 ];
 
 describe.each([["light", light], ["dark", dark]] as const)("%s theme contrast", (_name, theme) => {

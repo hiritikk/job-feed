@@ -30,6 +30,17 @@ export function formatPosted(job: Job, now: Date): string {
   return now.getTime() - at.getTime() > 14 * DAY ? monthDay(at) : relative(at, now);
 }
 
+/** True when the posting date itself says "today" (the same test the date label uses). Undated jobs never count: our own find time is not a posting date. */
+export function isPostedToday(job: Job, now: Date): boolean {
+  if (job.postedPrecision === "none") return false;
+  const at = new Date(job.postedAt);
+  if (job.postedPrecision === "day") return utcDay(now) - utcDay(at) <= 0;
+  return now.getTime() - at.getTime() < DAY;
+}
+
+/** "Oct 27": the day the visitor marked a job applied, in their own time zone. */
+export const formatApplied = (iso: string): string => new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+
 /** Our own first sighting: the one timestamp that is always exact. */
 export const formatFound = (job: Job, now: Date): string => `found ${relative(new Date(job.firstSeenAt), now)}`;
 

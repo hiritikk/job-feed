@@ -4,7 +4,7 @@ import { JobDrawer } from "./components/JobDrawer";
 import { JobRow } from "./components/JobRow";
 import { PrecisionMark } from "./components/Marks";
 import { SourcePanel } from "./components/SourcePanel";
-import { DATA_URL, loadJobs, readLastVisit, readRailHidden, writeLastVisit, writeRailHidden } from "./lib/data";
+import { DATA_URL, loadJobs, readApplied, readLastVisit, readRailHidden, toggleApplied, writeApplied, writeLastVisit, writeRailHidden } from "./lib/data";
 import { activeFilterCount, applyFilters, defaultFilters, filtersToSearch, isNewSince, searchToFilters, type Filters } from "./lib/filters";
 import type { Job, JobsFile } from "./lib/types";
 
@@ -30,6 +30,7 @@ export function App() {
   const [railOpen, setRailOpen] = useState(false);
   const [railHidden, setRailHidden] = useState(() => readRailHidden());
   const lastVisit = useMemo(() => readLastVisit(), []);
+  const [applied, setApplied] = useState(() => readApplied());
   const now = useNow();
 
   const fetchJobs = useCallback(async () => {
@@ -61,10 +62,17 @@ export function App() {
   }, [filters]);
 
   const jobs = load.status === "ready" ? load.file.jobs : [];
-  const matches = useMemo(() => applyFilters(jobs, filters, now), [jobs, filters, now]);
+  const matches = useMemo(() => applyFilters(jobs, filters, now, applied), [jobs, filters, now, applied]);
   const sources = useMemo(() => [...new Set(jobs.flatMap((j) => j.sources))].sort(), [jobs]);
   const newCount = useMemo(() => matches.filter((j) => isNewSince(j, lastVisit)).length, [matches, lastVisit]);
   const closeDrawer = useCallback(() => setOpen(null), []);
+  const onToggleApplied = useCallback((job: Job) => {
+    setApplied((prev) => {
+      const next = toggleApplied(prev, job.id, new Date().toISOString());
+      writeApplied(next);
+      return next;
+    });
+  }, []);
   const active = activeFilterCount(filters);
   const toggleFilters = () => {
     // wide screens: hide or show the side panel (remembered); narrow screens: open it as a full-screen sheet
@@ -121,7 +129,7 @@ export function App() {
             <>
               <ol className="rows">
                 {matches.slice(0, limit).map((job) => (
-                  <JobRow key={job.id} job={job} now={now} isNew={isNewSince(job, lastVisit)} onOpen={setOpen} />
+                  <JobRow key={job.id} job={job} now={now} isNew={isNewSince(job, lastVisit)} applied={applied[job.id] ?? null} onOpen={setOpen} onToggleApplied={onToggleApplied} />
                 ))}
               </ol>
               {matches.length > limit && (
@@ -151,7 +159,7 @@ export function App() {
           <SourcePanel sources={load.file.sources} now={now} />
         </footer>
       )}
-      {open && <JobDrawer job={open} now={now} onClose={closeDrawer} />}
+      {open && <JobDrawer job={open} now={now} applied={applied[open.id] ?? null} onClose={closeDrawer} onToggleApplied={onToggleApplied} />}
     </div>
   );
 }

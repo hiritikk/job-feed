@@ -107,7 +107,7 @@ describe("URL state", () => {
   test("defaults serialize to an empty search", () => expect(filtersToSearch(defaultFilters())).toBe(""));
   test("a non-default filter set round-trips", () => {
     const custom = f({ locations: ["CA", "US"], cities: ["Toronto", "Montreal"], roleTypes: ["ml-ai", "backend"], levels: ["new-grad"], gradYears: [2027, "none"],
-      tiers: [1, 2], sources: ["amazon"], postedWithinDays: 7, hideRestricted: false, includeClosed: true, sort: "found", q: "ai infra" });
+      tiers: [1, 2], sources: ["amazon"], postedWithinDays: 7, hideRestricted: false, includeClosed: true, hideApplied: true, sort: "found", q: "ai infra" });
     expect(searchToFilters(filtersToSearch(custom))).toEqual(custom);
   });
   test("an explicitly empty list round-trips (e.g. 'everywhere')", () => {
@@ -145,4 +145,21 @@ describe("activeFilterCount", () => {
     expect(activeFilterCount(f({ cities: ["Toronto"], postedWithinDays: 3, q: "ml", locations: ["CA", "US"] }))).toBe(4);
   });
   test("an explicitly emptied group counts as changed", () => expect(activeFilterCount(f({ locations: [] }))).toBe(1));
+});
+
+describe("hide applied", () => {
+  const a = makeJob({ id: "a" });
+  const b = makeJob({ id: "b" });
+  test("is off by default: applied jobs stay visible", () => {
+    expect(defaultFilters().hideApplied).toBe(false);
+    expect(applyFilters([a, b], defaultFilters(), NOW, { a: "2026-10-27T10:00:00.000Z" }).map((j) => j.id).sort()).toEqual(["a", "b"]);
+  });
+  test("when on, jobs marked applied drop out", () => {
+    expect(applyFilters([a, b], f({ hideApplied: true }), NOW, { a: "2026-10-27T10:00:00.000Z" }).map((j) => j.id)).toEqual(["b"]);
+  });
+  test("round-trips through the URL and counts as an active filter", () => {
+    expect(filtersToSearch(f({ hideApplied: true }))).toBe("?applied=hide");
+    expect(searchToFilters("?applied=hide").hideApplied).toBe(true);
+    expect(activeFilterCount(f({ hideApplied: true }))).toBe(1);
+  });
 });

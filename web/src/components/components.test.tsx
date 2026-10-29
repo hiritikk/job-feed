@@ -12,7 +12,7 @@ const html = (el: React.ReactElement) => renderToStaticMarkup(el);
 
 describe("JobRow", () => {
   test("shows company, title, one date line and an Apply link that opens safely", () => {
-    const out = html(<JobRow job={makeJob({ company: "Shopify", title: "Software Engineer I", postedAt: hoursAgo(3) })} now={NOW} isNew={false} onOpen={noop} />);
+    const out = html(<JobRow job={makeJob({ company: "Shopify", title: "Software Engineer I", postedAt: hoursAgo(3) })} now={NOW} isNew={false} onOpen={noop} applied={null} onToggleApplied={noop} />);
     expect(out).toContain("Shopify");
     expect(out).toContain("Software Engineer I");
     expect(out).toContain("3h ago");
@@ -20,26 +20,26 @@ describe("JobRow", () => {
     expect(out).toContain('target="_blank"');
   });
   test("keeps the row quiet: no found-time, no precision bars, no role tag, no trust text for a normal job", () => {
-    const out = html(<JobRow job={makeJob({ linkStatus: "ok" })} now={NOW} isNew={false} onOpen={noop} />);
+    const out = html(<JobRow job={makeJob({ linkStatus: "ok" })} now={NOW} isNew={false} onOpen={noop} applied={null} onToggleApplied={noop} />);
     expect(out).not.toContain("found");
     expect(out).not.toContain("precision");
     expect(out).not.toContain("verified");
     expect(out).not.toContain(">Software<");
   });
   test("the Apply link uses the resolved destination when a shortlink was resolved", () => {
-    const out = html(<JobRow job={makeJob({ url: "https://go.vansh.nyc/B2", resolvedUrl: "https://boards.greenhouse.io/databricks/jobs/1" })} now={NOW} isNew={false} onOpen={noop} />);
+    const out = html(<JobRow job={makeJob({ url: "https://go.vansh.nyc/B2", resolvedUrl: "https://boards.greenhouse.io/databricks/jobs/1" })} now={NOW} isNew={false} onOpen={noop} applied={null} onToggleApplied={noop} />);
     expect(out).toContain('href="https://boards.greenhouse.io/databricks/jobs/1"');
     expect(out).not.toContain("go.vansh.nyc");
   });
   test("a date-only job shows the date; an estimated one shows ~; an undated one shows when it was found", () => {
-    expect(html(<JobRow job={makeJob({ postedPrecision: "day", postedAt: "2026-10-22T00:00:00.000Z" })} now={NOW} isNew={false} onOpen={noop} />)).toContain("Oct 22");
-    expect(html(<JobRow job={makeJob({ postedPrecision: "approx", postedApprox: true, postedAt: hoursAgo(24 * 7) })} now={NOW} isNew={false} onOpen={noop} />)).toContain("~7d ago");
-    const undated = html(<JobRow job={makeJob({ postedPrecision: "none", postedApprox: true, firstSeenAt: hoursAgo(2) })} now={NOW} isNew={false} onOpen={noop} />);
+    expect(html(<JobRow job={makeJob({ postedPrecision: "day", postedAt: "2026-10-22T00:00:00.000Z" })} now={NOW} isNew={false} onOpen={noop} applied={null} onToggleApplied={noop} />)).toContain("Oct 22");
+    expect(html(<JobRow job={makeJob({ postedPrecision: "approx", postedApprox: true, postedAt: hoursAgo(24 * 7) })} now={NOW} isNew={false} onOpen={noop} applied={null} onToggleApplied={noop} />)).toContain("~7d ago");
+    const undated = html(<JobRow job={makeJob({ postedPrecision: "none", postedApprox: true, firstSeenAt: hoursAgo(2) })} now={NOW} isNew={false} onOpen={noop} applied={null} onToggleApplied={noop} />);
     expect(undated).toContain("found 2h ago");
     expect(undated).not.toContain("date unknown");
   });
   test("flags only what matters: new, remote, class year and work-authorization limits", () => {
-    const out = html(<JobRow job={makeJob({ gradYear: 2027, remote: "remote", remoteRegions: ["CA"], cities: ["Toronto", "Vancouver"], workAuth: "restricted" })} now={NOW} isNew={true} onOpen={noop} />);
+    const out = html(<JobRow job={makeJob({ gradYear: 2027, remote: "remote", remoteRegions: ["CA"], cities: ["Toronto", "Vancouver"], workAuth: "restricted" })} now={NOW} isNew={true} onOpen={noop} applied={null} onToggleApplied={noop} />);
     expect(out).toContain("New");
     expect(out).toContain("New grad 2027");
     expect(out).toContain("Remote in Canada");
@@ -47,17 +47,43 @@ describe("JobRow", () => {
     expect(out).toContain("Work authorization limits");
   });
   test("a broken link is flagged on the row", () => {
-    expect(html(<JobRow job={makeJob({ linkStatus: "dead" })} now={NOW} isNew={false} onOpen={noop} />)).toContain("link broken");
+    expect(html(<JobRow job={makeJob({ linkStatus: "dead" })} now={NOW} isNew={false} onOpen={noop} applied={null} onToggleApplied={noop} />)).toContain("link broken");
+  });
+});
+
+describe("applied + today highlight", () => {
+  const row = (job = makeJob(), applied: string | null = null) => html(<JobRow job={job} now={NOW} isNew={false} onOpen={noop} applied={applied} onToggleApplied={noop} />);
+  test("a job posted today gets the yellow 'today' class; an older one does not", () => {
+    expect(row(makeJob({ postedAt: hoursAgo(3) }))).toMatch(/class="row[^"]*\btoday\b/);
+    expect(row(makeJob({ postedAt: hoursAgo(30) }))).not.toMatch(/class="row[^"]*\btoday\b/);
+  });
+  test("an unapplied row offers 'Mark applied' (not pressed) and has no Applied tag", () => {
+    const out = row();
+    expect(out).toMatch(/aria-pressed="false"[^>]*>Mark applied/);
+    expect(out).not.toContain("Applied Oct");
+  });
+  test("an applied row shows the date, a pressed button, and the applied class", () => {
+    const out = row(makeJob(), "2026-10-27T10:00:00.000Z");
+    expect(out).toContain("Applied Oct 27");
+    expect(out).toMatch(/aria-pressed="true"[^>]*>Applied/);
+    expect(out).toMatch(/class="row[^"]*\bapplied\b/);
+  });
+  test("the drawer has the same toggle", () => {
+    expect(html(<JobDrawer job={makeJob()} now={NOW} onClose={noop} applied={null} onToggleApplied={noop} />)).toMatch(/aria-pressed="false"[^>]*>Mark applied/);
+    expect(html(<JobDrawer job={makeJob()} now={NOW} onClose={noop} applied="2026-10-27T10:00:00.000Z" onToggleApplied={noop} />)).toMatch(/aria-pressed="true"[^>]*>Applied/);
+  });
+  test("the filter panel has a 'Hide jobs I've applied to' checkbox", () => {
+    expect(html(<FilterRail jobs={[]} filters={defaultFilters()} setFilters={noop} sources={[]} open={false} onClose={noop} matchCount={0} />)).toContain("Hide jobs I&#x27;ve applied to");
   });
 });
 
 describe("JobDrawer", () => {
   test("shows link verification in the drawer, where the detail belongs", () => {
-    expect(html(<JobDrawer job={makeJob({ linkStatus: "ok", linkCheckedAt: hoursAgo(1) })} now={NOW} onClose={noop} />)).toContain("verified");
-    expect(html(<JobDrawer job={makeJob({ source: "jobright", linkStatus: "unknown" })} now={NOW} onClose={noop} />)).toContain("unverified");
+    expect(html(<JobDrawer job={makeJob({ linkStatus: "ok", linkCheckedAt: hoursAgo(1) })} now={NOW} onClose={noop} applied={null} onToggleApplied={noop} />)).toContain("verified");
+    expect(html(<JobDrawer job={makeJob({ source: "jobright", linkStatus: "unknown" })} now={NOW} onClose={noop} applied={null} onToggleApplied={noop} />)).toContain("unverified");
   });
   test("explains date precision and shows an exact found time and link destination", () => {
-    const out = html(<JobDrawer job={makeJob({ url: "https://www.amazon.jobs/en/jobs/1", linkStatus: "ok", linkCheckedAt: hoursAgo(1), sources: ["amazon", "simplify"] })} now={NOW} onClose={noop} />);
+    const out = html(<JobDrawer job={makeJob({ url: "https://www.amazon.jobs/en/jobs/1", linkStatus: "ok", linkCheckedAt: hoursAgo(1), sources: ["amazon", "simplify"] })} now={NOW} onClose={noop} applied={null} onToggleApplied={noop} />);
     expect(out).toContain("Exact posting time from the source");
     expect(out).toContain("Apply on amazon.jobs");
     expect(out).toContain("always exact");

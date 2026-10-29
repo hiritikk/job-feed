@@ -13,6 +13,7 @@ export type Filters = {
   postedWithinDays: 1 | 3 | 7 | 30 | null;
   hideRestricted: boolean;
   includeClosed: boolean;
+  hideApplied: boolean;
   sort: SortKey;
   q: string;
 };
@@ -25,7 +26,7 @@ const DAY_MS = 86_400_000;
 
 export const defaultFilters = (): Filters => ({
   locations: ["CA", "REMOTE"], cities: [], roleTypes: [...ROLE_TYPES], levels: ["new-grad", "early-career"], gradYears: [],
-  tiers: [1, 2, 3], sources: [], postedWithinDays: null, hideRestricted: true, includeClosed: false, sort: "posted", q: "",
+  tiers: [1, 2, 3], sources: [], postedWithinDays: null, hideRestricted: true, includeClosed: false, hideApplied: false, sort: "posted", q: "",
 });
 
 /** The date a job should be ordered and aged by: the posting date when we know it, otherwise when we first found it. */
@@ -43,11 +44,12 @@ function matchesLocation(job: Job, chips: LocationKey[]): boolean {
   return false;
 }
 
-export function applyFilters(jobs: Job[], f: Filters, now: Date): Job[] {
+export function applyFilters(jobs: Job[], f: Filters, now: Date, applied: Record<string, string> = {}): Job[] {
   const words = f.q.toLowerCase().split(/\s+/).filter(Boolean);
   const cutoff = f.postedWithinDays === null ? null : now.getTime() - f.postedWithinDays * DAY_MS;
   const out = jobs.filter((job) => {
     if (!f.includeClosed && (job.closedAt !== null || job.linkStatus === "dead")) return false;
+    if (f.hideApplied && job.id in applied) return false;
     if (f.hideRestricted && job.workAuth === "restricted") return false;
     if (f.roleTypes.length > 0 && !f.roleTypes.includes(job.roleType)) return false;
     if (f.levels.length > 0 && !f.levels.includes(job.level)) return false;
@@ -83,7 +85,7 @@ export const isNewSince = (job: Job, lastVisit: string | null): boolean => lastV
 /** How many filter groups differ from the defaults (shown on the Filters button). */
 export function activeFilterCount(f: Filters): number {
   const d = defaultFilters();
-  const keys = ["locations", "cities", "roleTypes", "levels", "gradYears", "tiers", "sources", "postedWithinDays", "hideRestricted", "includeClosed", "sort", "q"] as const;
+  const keys = ["locations", "cities", "roleTypes", "levels", "gradYears", "tiers", "sources", "postedWithinDays", "hideRestricted", "includeClosed", "hideApplied", "sort", "q"] as const;
   return keys.filter((k) => JSON.stringify(f[k]) !== JSON.stringify(d[k])).length;
 }
 
@@ -104,6 +106,7 @@ export function filtersToSearch(f: Filters): string {
   if (f.postedWithinDays !== null) p.set("days", String(f.postedWithinDays));
   if (!f.hideRestricted) p.set("restricted", "0");
   if (f.includeClosed) p.set("closed", "1");
+  if (f.hideApplied) p.set("applied", "hide");
   if (f.sort !== "posted") p.set("sort", f.sort);
   if (f.q) p.set("q", f.q);
   const s = p.toString();
@@ -132,6 +135,7 @@ export function searchToFilters(search: string): Filters {
   f.postedWithinDays = (DAYS as readonly number[]).includes(days) ? (days as Filters["postedWithinDays"]) : null;
   f.hideRestricted = p.get("restricted") !== "0";
   f.includeClosed = p.get("closed") === "1";
+  f.hideApplied = p.get("applied") === "hide";
   f.sort = p.get("sort") === "found" ? "found" : "posted";
   f.q = p.get("q") ?? "";
   return f;

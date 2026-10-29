@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { formatFound, formatPosted, shortUrlHost } from "../lib/format";
+import { formatApplied, formatFound, formatPosted, shortUrlHost } from "../lib/format";
 import type { Job } from "../lib/types";
 import { PrecisionMark, TrustMark, precisionText } from "./Marks";
 import { applyUrl } from "./JobRow";
@@ -7,7 +7,7 @@ import { applyUrl } from "./JobRow";
 const exactTime = (iso: string): string => new Date(iso).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
 const dateOnly = (iso: string): string => new Date(iso).toLocaleDateString(undefined, { dateStyle: "medium", timeZone: "UTC" });
 
-export function JobDrawer({ job, now, onClose }: { job: Job; now: Date; onClose: () => void }) {
+export function JobDrawer({ job, now, applied, onClose, onToggleApplied }: { job: Job; now: Date; applied: string | null; onClose: () => void; onToggleApplied: (job: Job) => void }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     closeRef.current?.focus();
@@ -33,6 +33,10 @@ export function JobDrawer({ job, now, onClose }: { job: Job; now: Date; onClose:
         <a className="apply big" href={url} target="_blank" rel="noopener noreferrer">
           Apply on {shortUrlHost(url) || "the employer's site"}
         </a>
+        <button type="button" className="mark-applied big" onClick={() => onToggleApplied(job)} aria-pressed={applied !== null}>
+          {applied ? "Applied" : "Mark applied"}
+        </button>
+        {applied && <small className="applied-on">You marked this applied on {formatApplied(applied)}. Click again to undo.</small>}
 
         <dl className="facts-list">
           <dt>Posted</dt>

@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { formatFound, formatPosted, formatWhen, linkLabel, shortUrlHost } from "./format";
+import { formatFound, formatPosted, formatWhen, isPostedToday, linkLabel, shortUrlHost } from "./format";
 import { NOW, hoursAgo, makeJob } from "./testJob";
 
 describe("formatPosted", () => {
@@ -58,5 +58,23 @@ describe("formatWhen (the one line shown on a row)", () => {
     const w = formatWhen(makeJob({ postedPrecision: "none", postedApprox: true, firstSeenAt: hoursAgo(2) }), NOW);
     expect(w.text).toBe("found 2h ago");
     expect(w.note).toMatch(/no posting date/i);
+  });
+});
+
+describe("isPostedToday (the yellow highlight)", () => {
+  test("an exact timestamp from the last 24 hours is today; older is not", () => {
+    expect(isPostedToday(makeJob({ postedAt: hoursAgo(5) }), NOW)).toBe(true);
+    expect(isPostedToday(makeJob({ postedAt: hoursAgo(30) }), NOW)).toBe(false);
+  });
+  test("a date-only posting counts when its date is today (UTC)", () => {
+    expect(isPostedToday(makeJob({ postedPrecision: "day", postedAt: "2026-10-27T00:00:00.000Z" }), NOW)).toBe(true);
+    expect(isPostedToday(makeJob({ postedPrecision: "day", postedAt: "2026-10-26T00:00:00.000Z" }), NOW)).toBe(false);
+  });
+  test("an estimated age counts only when it reads '~today'", () => {
+    expect(isPostedToday(makeJob({ postedPrecision: "approx", postedApprox: true, postedAt: hoursAgo(5) }), NOW)).toBe(true);
+    expect(isPostedToday(makeJob({ postedPrecision: "approx", postedApprox: true, postedAt: hoursAgo(48) }), NOW)).toBe(false);
+  });
+  test("an undated job is never highlighted: the feed's own find time is not a posting date", () => {
+    expect(isPostedToday(makeJob({ postedPrecision: "none", postedApprox: true, firstSeenAt: hoursAgo(1) }), NOW)).toBe(false);
   });
 });

@@ -131,6 +131,10 @@ export function FilterRail({ jobs, filters, setFilters, sources, open, onClose, 
           <input type="checkbox" checked={filters.includeClosed} onChange={(e) => set({ includeClosed: e.target.checked })} />
           Include closed and broken links
         </label>
+        <label className="check">
+          <input type="checkbox" checked={filters.hideApplied} onChange={(e) => set({ hideApplied: e.target.checked })} />
+          Hide jobs I've applied to
+        </label>
       </fieldset>
 
       <details className="group">

@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { loadJobs, readLastVisit, readRailHidden, writeLastVisit, writeRailHidden } from "./data";
+import { loadJobs, readApplied, readLastVisit, readRailHidden, toggleApplied, writeApplied, writeLastVisit, writeRailHidden } from "./data";
 import { makeJob } from "./testJob";
 
 const file = { generatedAt: "2026-10-27T12:00:00.000Z", sources: [], jobs: [makeJob()] };
@@ -67,5 +67,40 @@ describe("filter panel preference", () => {
     expect(readRailHidden(broken)).toBe(true);
     expect(readRailHidden(undefined)).toBe(true);
     expect(() => writeRailHidden(false, broken)).not.toThrow();
+  });
+});
+
+describe("applied jobs", () => {
+  const memory = () => {
+    const store = new Map<string, string>();
+    return { getItem: (k: string) => store.get(k) ?? null, setItem: (k: string, v: string) => void store.set(k, v) } as unknown as Storage;
+  };
+  const broken = { getItem: () => { throw new Error("denied"); }, setItem: () => { throw new Error("denied"); } } as unknown as Storage;
+  test("starts empty and round-trips through storage", () => {
+    const s = memory();
+    expect(readApplied(s)).toEqual({});
+    writeApplied({ a: "2026-10-27T12:00:00.000Z" }, s);
+    expect(readApplied(s)).toEqual({ a: "2026-10-27T12:00:00.000Z" });
+  });
+  test("toggling marks a job with the time, and toggling again clears it, without touching the input", () => {
+    const start = { a: "2026-10-26T00:00:00.000Z" };
+    const marked = toggleApplied(start, "b", "2026-10-27T12:00:00.000Z");
+    expect(marked).toEqual({ a: "2026-10-26T00:00:00.000Z", b: "2026-10-27T12:00:00.000Z" });
+    expect(toggleApplied(marked, "b", "later")).toEqual(start);
+    expect(start).toEqual({ a: "2026-10-26T00:00:00.000Z" });
+  });
+  test("corrupt or non-object stored data reads as empty; non-string entries are dropped", () => {
+    const s = memory();
+    s.setItem("job-feed:applied", "not json");
+    expect(readApplied(s)).toEqual({});
+    s.setItem("job-feed:applied", "[1,2]");
+    expect(readApplied(s)).toEqual({});
+    s.setItem("job-feed:applied", JSON.stringify({ a: "2026-10-27T12:00:00.000Z", b: 5 }));
+    expect(readApplied(s)).toEqual({ a: "2026-10-27T12:00:00.000Z" });
+  });
+  test("blocked or missing storage never throws", () => {
+    expect(readApplied(broken)).toEqual({});
+    expect(readApplied(undefined)).toEqual({});
+    expect(() => writeApplied({ a: "x" }, broken)).not.toThrow();
   });
 });

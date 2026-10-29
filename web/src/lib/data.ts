@@ -68,3 +68,33 @@ export function writeRailHidden(hidden: boolean, storage: Storage | undefined = 
     // blocked storage: the panel simply starts hidden next time
   }
 }
+
+const APPLIED_KEY = "job-feed:applied";
+
+/** Jobs the visitor marked as applied: job id -> ISO time of the mark. Kept in this browser only. */
+export type Applied = Record<string, string>;
+
+export function readApplied(storage: Storage | undefined = browserStorage()): Applied {
+  try {
+    const raw = storage?.getItem(APPLIED_KEY);
+    const parsed: unknown = raw ? JSON.parse(raw) : {};
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {};
+    return Object.fromEntries(Object.entries(parsed).filter(([, v]) => typeof v === "string"));
+  } catch {
+    return {};
+  }
+}
+
+export function writeApplied(applied: Applied, storage: Storage | undefined = browserStorage()): void {
+  try {
+    storage?.setItem(APPLIED_KEY, JSON.stringify(applied));
+  } catch {
+    // blocked storage: the mark lasts until the page is closed
+  }
+}
+
+/** Marks a job applied (stamping `at`), or clears the mark when it was already set. */
+export function toggleApplied(applied: Applied, id: string, at: string): Applied {
+  const { [id]: was, ...rest } = applied;
+  return was === undefined ? { ...applied, [id]: at } : rest;
+}
