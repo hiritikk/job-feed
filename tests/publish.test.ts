@@ -24,7 +24,8 @@ describe("publish-data.sh", () => {
 
     expect(git(remote, "rev-list", "--count", "data")).toBe("1");
     expect(git(remote, "show", "data:jobs.json")).toBe('{"v":2}');
-    expect(git(remote, "ls-tree", "--name-only", "data").split("\n").sort()).toEqual(["jobs.json", "state.json"]);
+    expect(git(remote, "ls-tree", "--name-only", "data").split("\n").sort()).toEqual(["jobs.json", "state.json", "vercel.json"]);
+    expect(JSON.parse(git(remote, "show", "data:vercel.json"))).toEqual({ git: { deploymentEnabled: false } }); // Vercel must not try to build this branch
   });
 
   test("fails loudly when jobs.json is missing, publishing nothing", () => {
