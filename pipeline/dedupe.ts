@@ -3,7 +3,7 @@ import type { Job } from "./types.js";
 
 // Lower number wins: direct employer sources > community lists > aggregators.
 const DIRECT = new Set(["greenhouse", "lever", "ashby", "workday", "workable", "smartrecruiters", "bamboohr", "recruitee", "rippling", "amazon", "google", "meta", "microsoft", "netflix", "oracle"]);
-const COMMUNITY = new Set(["simplify", "vanshb03", "speedyapply", "hanzili", "jobright"]);
+const COMMUNITY = new Set(["simplify", "vanshb03", "speedyapply", "speedyapply_ai", "hanzili", "jobright", "ambicuity", "applyguy"]);
 export const isDirectSource = (source: string): boolean => DIRECT.has(source);
 const priority = (source: string): number => (DIRECT.has(source) ? 0 : COMMUNITY.has(source) ? 1 : 2);
 

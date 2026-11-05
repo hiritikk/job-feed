@@ -1,7 +1,7 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { cityOptions, defaultFilters, type Filters, type LocationKey } from "../lib/filters";
 import type { Job, Level, RoleType, Tier } from "../lib/types";
-import { linkOuts } from "../lib/linkouts";
+import { linkOuts, MORE_BOARDS } from "../lib/linkouts";
 
 type Props = { jobs: Job[]; filters: Filters; setFilters: (f: Filters) => void; sources: string[]; open: boolean; onClose: () => void; matchCount: number };
 
@@ -159,6 +159,23 @@ export function FilterRail({ jobs, filters, setFilters, sources, open, onClose, 
           ))}
         </div>
       </section>
+
+      <details className="group linkouts">
+        <summary>More boards to browse</summary>
+        <p className="hint">Boards and lists this feed does not read: they block scripts, sell their data, forbid re-listing, or list only internships.</p>
+        {MORE_BOARDS.map((g) => (
+          <div key={g.group}>
+            <h4>{g.group}</h4>
+            <div className="chips">
+              {g.links.map((l) => (
+                <a key={l.name} className="chip" href={l.url} target="_blank" rel="noopener noreferrer">
+                  {l.name}
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </details>
       </details>
     </aside>
   );
