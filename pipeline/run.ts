@@ -42,7 +42,7 @@ const RUN_SLOT_MS = 30 * 60_000;
 
 const shardOf = (slug: string, shards: number): number => [...slug].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7) % shards;
 // Full listings: a job missing from one of these is really gone. Everything else returns only the newest N postings.
-const COMPLETE_SOURCES = new Set(["greenhouse", "lever", "ashby", "workable", "bamboohr", "recruitee", "rippling", "simplify", "vanshb03", "speedyapply", "hanzili", "jobright"]);
+const COMPLETE_SOURCES = new Set(["greenhouse", "lever", "ashby", "workable", "bamboohr", "recruitee", "rippling", "simplify", "vanshb03", "speedyapply", "speedyapply_ai", "hanzili", "jobright", "ambicuity", "applyguy"]);
 
 type Task = { source: string; run: () => Promise<{ raw: RawJob[]; carried?: Job[]; ok?: boolean; error?: string }> };
 

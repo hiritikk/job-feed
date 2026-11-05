@@ -121,6 +121,11 @@ describe("FilterRail", () => {
     expect(out).toContain("linkedin.com/jobs/search");
     expect(out).toContain("Job Bank");
   });
+  test("lists the extra boards, Canadian ones included", () => {
+    const out = render();
+    expect(out).toContain("More boards to browse");
+    expect(out).toContain("www1.communitech.ca/jobs");
+  });
 });
 
 describe("SourcePanel", () => {
