@@ -8,6 +8,9 @@ export type Tier = 1 | 2 | 3;
 export type PostedPrecision = "exact" | "day" | "approx" | "none";
 export type LinkStatus = "ok" | "dead" | "unknown";
 
+/** JEV's judgement of a posting against the private profile: 0 to 1, a reason it cannot work (or null), and short notes about the posting. */
+export type Fit = { score: number; skip: string | null; reasons: string[] };
+
 export type Job = {
   id: string;
   company: string;
@@ -38,6 +41,8 @@ export type Job = {
   workAuth: WorkAuth;
   tier: Tier;
   snippet: string;
+  /** Absent until the posting has been rated (and always absent when fit ratings are off). */
+  fit?: Fit;
 };
 
 export type RawJob = {

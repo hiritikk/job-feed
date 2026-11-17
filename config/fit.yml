@@ -1,0 +1,5 @@
+# Who the fit ratings are for when no FIT_PROFILE secret is set. With only this, JEV checks whether you can apply
+# (level, graduation window, work authorization) and does not judge skills. Nothing here is private.
+graduation: April 2027
+authorizedCountries: [CA]   # where you can work without sponsorship
+citizenships: []            # only matters for roles that require citizenship, e.g. [US]

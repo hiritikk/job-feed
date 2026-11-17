@@ -112,6 +112,7 @@ a { color: var(--accent); }
 .title:hover .role { text-decoration: underline; text-underline-offset: 3px; }
 .facts { display: flex; flex-wrap: wrap; gap: 0.15rem 1rem; align-items: center; margin-top: 0.35rem; color: var(--ink-soft); font-size: 0.95rem; }
 .level { color: var(--ink); font-weight: 600; }
+.fit { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
 .flag { padding: 0 0.45rem; border-radius: 4px; font-size: 0.85rem; font-weight: 650; }
 .flag.new { background: var(--new); color: #2a1d00; }
 .flag.done { background: var(--done-wash); color: var(--done); }

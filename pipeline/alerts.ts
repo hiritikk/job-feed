@@ -23,9 +23,13 @@ export function matchesRule(job: Job, rule: AlertRule): boolean {
     rule.role_types.includes(job.roleType) &&
     rule.tiers.includes(job.tier) &&
     !rule.exclude_work_auth.includes(job.workAuth) &&
-    (rule.max_years === undefined || job.yearsRequired === undefined || job.yearsRequired === null || job.yearsRequired <= rule.max_years)
+    (rule.max_years === undefined || job.yearsRequired === undefined || job.yearsRequired === null || job.yearsRequired <= rule.max_years) &&
+    (rule.min_fit === undefined || (job.fit !== undefined && job.fit.skip === null && job.fit.score >= rule.min_fit))
   );
 }
+
+/** " · fit 82%" for a rated posting, or the reason JEV thinks it cannot work; empty when unrated. */
+const fitNote = (job: Job): string => (!job.fit ? "" : job.fit.skip ? ` · check: ${job.fit.skip}` : ` · fit ${Math.round(job.fit.score * 100)}%`);
 
 function priorityFor(job: Job, rule: AlertRule): NtfyMessage["priority"] {
   return PRIORITY[rule.priority[String(job.tier)] ?? "default"];
@@ -45,7 +49,7 @@ export function planNotifications(newJobs: Job[], rules: AlertRule[], siteUrl: s
       alertedIds,
       messages: [{
         title: `${matched.length} new job matches`,
-        message: top.map(({ job }) => `${job.company}: ${job.title} (${job.locations[0] ?? "?"})`).join("\n"),
+        message: top.map(({ job }) => `${job.company}: ${job.title} (${job.locations[0] ?? "?"})${fitNote(job)}`).join("\n"),
         click: siteUrl, priority, ids: alertedIds,
       }],
     };
@@ -55,7 +59,7 @@ export function planNotifications(newJobs: Job[], rules: AlertRule[], siteUrl: s
     alertedIds,
     messages: matched.map(({ job, rule }) => ({
       title: `${job.company}: ${job.title}`,
-      message: `${job.locations.slice(0, 2).join("; ") || "location n/a"} · tier ${job.tier} · ${job.level}${job.gradYear ? ` ${job.gradYear}` : ""}`,
+      message: `${job.locations.slice(0, 2).join("; ") || "location n/a"} · tier ${job.tier} · ${job.level}${job.gradYear ? ` ${job.gradYear}` : ""}${fitNote(job)}`,
       click: job.url, priority: priorityFor(job, rule), ids: [job.id],
     })),
   };

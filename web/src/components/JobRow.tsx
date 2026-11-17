@@ -1,4 +1,4 @@
-import { formatApplied, formatWhen, isPostedToday } from "../lib/format";
+import { fitLabel, formatApplied, formatWhen, isPostedToday } from "../lib/format";
 import type { Job } from "../lib/types";
 
 const LEVEL_TEXT = { "new-grad": "New grad", "early-career": "Early career" } as const;
@@ -13,6 +13,7 @@ export function JobRow({ job, now, isNew, applied, onOpen, onToggleApplied }: { 
   const level = job.level === "other" ? null : LEVEL_TEXT[job.level] + (job.gradYear ? ` ${job.gradYear}` : "");
   const remote = job.remote === "remote" ? `Remote${job.remoteRegions.length ? ` in ${job.remoteRegions.map((r) => REGION_TEXT[r] ?? r).join(", ")}` : ""}` : job.remote === "hybrid" ? "Hybrid" : null;
   const dead = job.linkStatus === "dead";
+  const fit = fitLabel(job);
   return (
     <li className={`row tier${job.tier}${dead || job.closedAt ? " gone" : ""}${isNew ? " fresh" : ""}${isPostedToday(job, now) ? " today" : ""}${applied ? " applied" : ""}`}>
       <div className={job.postedPrecision === "none" || job.postedPrecision === "approx" ? "when soft" : "when"} title={when.note ?? undefined}>
@@ -29,6 +30,8 @@ export function JobRow({ job, now, isNew, applied, onOpen, onToggleApplied }: { 
           <span>{where}</span>
           {remote && <span>{remote}</span>}
           {level && <span className="level">{level}</span>}
+          {fit && <span className="fit" title={job.fit!.reasons.join("; ")}>{fit}</span>}
+          {job.fit?.skip && <span className="flag warn" title="An automated reading of the posting; check it yourself">Check: {job.fit.skip}</span>}
           {job.workAuth === "restricted" && <span className="flag warn" title="The posting mentions citizenship, clearance or no visa sponsorship">Work authorization limits</span>}
           {dead && <span className="flag bad">link broken</span>}
           {job.closedAt && <span className="flag warn">Closed</span>}

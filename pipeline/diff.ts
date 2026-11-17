@@ -80,6 +80,7 @@ export function mergeRun(prev: State, runs: SourceRun[], now: Date): { jobs: Job
       ...job, id: p.id, firstSeenAt: p.firstSeenAt, closedAt: null,
       linkStatus: sameUrl ? p.linkStatus : "unknown", linkCheckedAt: sameUrl ? p.linkCheckedAt : null,
       resolvedUrl: sameUrl ? p.resolvedUrl : null,
+      ...(p.fit ? { fit: p.fit } : {}), // a rating is made once and kept
     };
   });
 

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { formatApplied, formatFound, formatPosted, shortUrlHost } from "../lib/format";
+import { fitLabel, formatApplied, formatFound, formatPosted, shortUrlHost } from "../lib/format";
 import type { Job } from "../lib/types";
 import { PrecisionMark, TrustMark, precisionText } from "./Marks";
 import { applyUrl } from "./JobRow";
@@ -62,6 +62,15 @@ export function JobDrawer({ job, now, applied, onClose, onToggleApplied }: { job
             {job.roleType}, {job.level}
             {job.gradYear ? `, class of ${job.gradYear}` : ""}, tier {job.tier}
           </dd>
+          {job.fit && (
+            <>
+              <dt>Fit</dt>
+              <dd>
+                {fitLabel(job) ?? `Check: ${job.fit.skip}`}
+                <small>{[...job.fit.reasons, "an automated reading of the posting, not a fact from the employer"].join("; ")}</small>
+              </dd>
+            </>
+          )}
           <dt>Seen on</dt>
           <dd>{job.sources.join(", ")}</dd>
         </dl>

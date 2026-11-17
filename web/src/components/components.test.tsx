@@ -77,6 +77,27 @@ describe("applied + today highlight", () => {
   });
 });
 
+describe("fit rating", () => {
+  const row = (job: ReturnType<typeof makeJob>) => html(<JobRow job={job} now={NOW} isNew={false} onOpen={noop} applied={null} onToggleApplied={noop} />);
+  const drawer = (job: ReturnType<typeof makeJob>) => html(<JobDrawer job={job} now={NOW} onClose={noop} applied={null} onToggleApplied={noop} />);
+  test("a rated posting shows its fit on the row and the reasons in the drawer", () => {
+    const job = makeJob({ fit: { score: 0.82, skip: null, reasons: ["stack match: strong", "new-grad level"] } });
+    expect(row(job)).toContain("82% fit");
+    expect(drawer(job)).toContain("stack match: strong; new-grad level");
+    expect(drawer(job)).toContain("automated reading");
+  });
+  test("a posting that was ruled out shows what to check instead of a score", () => {
+    const job = makeJob({ fit: { score: 0.6, skip: "US role, no sponsorship", reasons: [] } });
+    expect(row(job)).toContain("Check: US role, no sponsorship");
+    expect(row(job)).not.toContain("% fit");
+    expect(drawer(job)).toContain("Check: US role, no sponsorship");
+  });
+  test("an unrated posting shows nothing about fit", () => {
+    expect(row(makeJob())).not.toMatch(/fit|Check:/);
+    expect(drawer(makeJob())).not.toContain("Fit");
+  });
+});
+
 describe("JobDrawer", () => {
   test("shows link verification in the drawer, where the detail belongs", () => {
     expect(html(<JobDrawer job={makeJob({ linkStatus: "ok", linkCheckedAt: hoursAgo(1) })} now={NOW} onClose={noop} applied={null} onToggleApplied={noop} />)).toContain("verified");

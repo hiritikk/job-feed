@@ -18,6 +18,20 @@ GitHub Actions (every 30 min)           Vercel (static site in web/)
 - Links are absolute https URLs with tracking removed. Links from lists and aggregators are opened and checked (404/410 or a redirect to a generic page hides the job).
 - Boards that forbid automated reading (LinkedIn, Indeed, Glassdoor, Wellfound, Job Bank) are not fetched; the site links to their searches. Pages that only serve real browsers (Tesla) are not supported, and the pipeline always identifies itself honestly.
 
+## Fit ratings (optional)
+
+With an OpenRouter key, each new posting is also read by [JEV](https://openrouter.ai/typesafe/jev-1.13), a small decision model, to judge whether you can apply: real level, graduation window, advanced-degree and work-authorization requirements. The client and questions are adapted from [qbeka/jev-job-search](https://github.com/qbeka/jev-job-search) (MIT).
+
+- `config/fit.yml` says who it rates for (graduation date, where you can work). `pipeline/jev.ts` is the client; `pipeline/fit.ts` holds the questions, the score and the per-run limits (400 ratings, $0.25).
+- Each rated job gets `fit: { score, skip, reasons }`. The site shows it, sorts by it ("Best fit"), and alerts include it.
+- Ratings only add alerts: the keyword rules ignore them, and the `high-fit` rule in `config/alerts.yml` alerts on clear new-grad roles the keywords pass over.
+- Only postings found in the last 14 days are rated, once each. Without the key, or when JEV is unreachable, the run behaves exactly as before.
+- Optional: a `FIT_PROFILE` secret (shape: `config/profile.example.json`) adds a skills match to the score. The scores and reasons are published in `jobs.json`, which is public.
+
+```
+gh secret set OPENROUTER_API_KEY     # paste the key when asked
+```
+
 ## Commands
 
 ```
@@ -31,7 +45,7 @@ npm --prefix web run dev    # local site (put a jobs.json in web/public and set 
 ## Going live
 
 1. Create a public GitHub repo and push `main` (the site reads the `data` branch through raw.githubusercontent.com, which needs a public repo).
-2. Repo secrets: `NTFY_TOPIC` (a long random string, e.g. `jobs-<12 hex chars>`), optional `ADZUNA_APP_ID`, `ADZUNA_APP_KEY`, `JOOBLE_KEY`. Repo variable: `SITE_URL`.
+2. Repo secrets: `NTFY_TOPIC` (a long random string, e.g. `jobs-<12 hex chars>`), optional `ADZUNA_APP_ID`, `ADZUNA_APP_KEY`, `JOOBLE_KEY`, and `OPENROUTER_API_KEY` for fit ratings. Repo variable: `SITE_URL`.
 3. Run the `refresh` workflow once. The first run publishes silently; later runs alert on new matches.
 4. Deploy `web/` to Vercel (framework: Vite). In the ntfy iPhone app, subscribe to your topic.
 

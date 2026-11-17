@@ -6,6 +6,8 @@ import { runPipeline } from "../pipeline/run.js";
 import { loadAlertRules } from "../pipeline/config.js";
 import type { CompanyEntry, Http, JobsFile, RawJob } from "../pipeline/types.js";
 import type { Probe } from "../pipeline/linkcheck.js";
+import type { Answers, Jev } from "../pipeline/jev.js";
+import type { Profile } from "../pipeline/fit.js";
 
 const rules = loadAlertRules();
 const companies: CompanyEntry[] = [{ name: "Acme", ats: "custom", slug: "acme", tier: 1 }];
@@ -33,10 +35,11 @@ function setup() {
   };
   let probeStatus = 200;
   const probe: Probe = async (url) => ({ status: probeStatus, finalUrl: url });
+  let rating: { jev: Jev; profile: Profile } | null = null;
   const run = (now: Date, adapters: Record<string, () => Promise<RawJob[]>>, env: Record<string, string | undefined> = { NTFY_TOPIC: "t" }) =>
-    runPipeline({ dataDir, now, http, probe, env, companies, rules, siteUrl: "https://jobs.example.app", sources: {}, adapterOverrides: adapters });
+    runPipeline({ dataDir, now, http, probe, env, companies, rules, siteUrl: "https://jobs.example.app", sources: {}, adapterOverrides: adapters, jev: rating?.jev, profile: rating?.profile });
   const read = (): JobsFile => JSON.parse(readFileSync(join(dataDir, "jobs.json"), "utf8"));
-  return { dataDir, ntfy, run, read, failNtfy: (v: boolean) => (ntfyFails = v), setProbe: (s: number) => (probeStatus = s) };
+  return { dataDir, ntfy, run, read, rateWith: (jev: Jev) => (rating = { jev, profile: { summary: "s", skills: ["ts"], graduation: "April 2027", citizenships: ["CA"], authorizedCountries: ["CA"] } }), failNtfy: (v: boolean) => (ntfyFails = v), setProbe: (s: number) => (probeStatus = s) };
 }
 
 describe("runPipeline", () => {
@@ -191,5 +194,67 @@ describe("runPipeline", () => {
     const file = JSON.parse(readFileSync(join(dataDir, "jobs.json"), "utf8")) as JobsFile;
     expect(file.jobs).toHaveLength(5);
     expect(file.jobs.every((j) => j.closedAt === null)).toBe(true);        // skipped boards are not closed
+  });
+
+  describe("fit ratings", () => {
+    const strong = (stack = 3): Answers => ({
+      is_software_role: { type: "noul", noul: 0.98 }, level: { type: "choice", choice: "new_grad", confidence: 0.9 },
+      needs_advanced_degree: { type: "noul", noul: 0 }, graduation_excluded: { type: "noul", noul: 0 }, work_auth: { type: "choice", choice: "canada_ok", confidence: 0.8 },
+      stack_match: { type: "score", score: stack, confidence: 0.7 }, experience_match: { type: "score", score: stack, confidence: 0.7 }, callback_likelihood: { type: "score", score: stack, confidence: 0.7 },
+    });
+    const jevOf = (decide: Jev["decide"]): Jev => ({ decide, usage: { calls: 0, costUsd: 0 } });
+    // a smaller company with a plain title: no keyword rule alerts on it
+    const small = (n: number, over: Partial<RawJob> = {}) => raw(n, { company: "Tiny Co", title: `Software Developer ${n}`, url: `https://boards.greenhouse.io/tiny/jobs/${n}`, descriptionHtml: `<p>Full posting text ${n}</p>`, ...over });
+
+    test("without a key and profile nothing is rated and no job carries a fit", async () => {
+      await ctx.run(t0, { greenhouse: async () => [small(1)] });
+      expect(ctx.read().jobs[0].fit).toBeUndefined();
+    });
+
+    test("a new posting is rated once from its full text, and the rating survives later runs", async () => {
+      const seen: string[] = [];
+      ctx.rateWith(jevOf(async (state) => { seen.push((state.job as { description: string }).description); return strong(); }));
+      await ctx.run(t0, { greenhouse: async () => [small(1)] });
+      expect(ctx.read().jobs[0].fit).toEqual({ score: 0.78, skip: null, reasons: ["stack match: strong", "new-grad level", "no work-authorization barrier stated"] });
+      await ctx.run(later(30), { greenhouse: async () => [small(1)] });
+      expect(seen).toEqual(["Full posting text 1"]);
+      expect(ctx.read().jobs[0].fit?.score).toBe(0.78);
+    });
+
+    test("a high-fit posting at a smaller company alerts, though no keyword rule matches it", async () => {
+      ctx.rateWith(jevOf(async () => strong()));
+      await ctx.run(t0, { greenhouse: async () => [small(1)] });
+      await ctx.run(later(30), { greenhouse: async () => [small(1), small(2)] });
+      expect(ctx.ntfy).toHaveLength(1);
+      expect(ctx.ntfy[0].title).toBe("Tiny Co: Software Developer 2");
+      expect(ctx.ntfy[0].message).toContain("fit 78%");
+    });
+
+    test("a low-fit posting at a smaller company does not alert", async () => {
+      ctx.rateWith(jevOf(async () => strong(1)));
+      await ctx.run(t0, { greenhouse: async () => [small(1)] });
+      await ctx.run(later(30), { greenhouse: async () => [small(1), small(2)] });
+      expect(ctx.ntfy).toHaveLength(0);
+    });
+
+    test("when JEV is down the run still publishes and keyword alerts still fire", async () => {
+      ctx.rateWith(jevOf(async () => { throw new Error("HTTP 503"); }));
+      await ctx.run(t0, { greenhouse: async () => [raw(1)] });
+      const res = await ctx.run(later(30), { greenhouse: async () => [raw(1), raw(2)] });
+      expect(res.jobCount).toBe(2);
+      expect(ctx.ntfy).toHaveLength(1);
+      expect(ctx.read().jobs.every((j) => j.fit === undefined)).toBe(true);
+    });
+
+    test("a posting JEV could not rate in one run is rated, and alerted, in the next", async () => {
+      let down = true;
+      ctx.rateWith(jevOf(async () => { if (down) throw new Error("HTTP 503"); return strong(); }));
+      await ctx.run(t0, { greenhouse: async () => [small(1)] });
+      await ctx.run(later(30), { greenhouse: async () => [small(1), small(2)] });
+      expect(ctx.ntfy).toHaveLength(0);
+      down = false;
+      await ctx.run(later(60), { greenhouse: async () => [small(1), small(2)] });
+      expect(ctx.ntfy.map((m) => m.title)).toEqual(["Tiny Co: Software Developer 2"]);
+    });
   });
 });
