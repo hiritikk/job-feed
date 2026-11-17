@@ -9,7 +9,7 @@ export type PostedPrecision = "exact" | "day" | "approx" | "none";
 export type LinkStatus = "ok" | "dead" | "unknown";
 
 /** JEV's judgement of a posting against the private profile: 0 to 1, a reason it cannot work (or null), and short notes about the posting. */
-export type Fit = { score: number; skip: string | null; reasons: string[] };
+export type Fit = { score: number; skip: string | null; reasons: string[]; /** JEV read it as a new-grad or early-career role whose graduation window does not exclude you. */ newGrad?: boolean };
 
 export type Job = {
   id: string;

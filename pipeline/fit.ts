@@ -152,7 +152,7 @@ export function scoreFit(answers: Answers, profile: Pick<Profile, "citizenships"
   if (auth.choice === "canada_ok" || auth.choice === "remote_global") reasons.push("no work-authorization barrier stated");
   if (gradExcluded) reasons.push("asks for a different graduation date");
   if (auth.choice === "us_sponsors" && !usAuthorized) reasons.push("US role, sponsorship offered");
-  return { score, skip, reasons };
+  return { score, skip, reasons, newGrad: level.choice === "new_grad" && !gradExcluded };
 }
 
 const DAY = 86_400_000;

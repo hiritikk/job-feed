@@ -24,7 +24,7 @@ With an OpenRouter key, each new posting is also read by [JEV](https://openroute
 
 - `config/fit.yml` says who it rates for (graduation date, where you can work). `pipeline/jev.ts` is the client; `pipeline/fit.ts` holds the questions, the score and the per-run limits (400 ratings, $0.25).
 - Each rated job gets `fit: { score, skip, reasons }`. The site shows it, sorts by it ("Best fit"), and alerts include it.
-- Ratings only add alerts: the keyword rules ignore them, and the `high-fit` rule in `config/alerts.yml` alerts on clear new-grad roles the keywords pass over.
+- Ratings only add alerts: the keyword rules ignore them, and the `high-fit` rule in `config/alerts.yml` (score 0.65 or more) alerts on clear new-grad roles the keywords pass over.
 - Only postings found in the last 14 days are rated, once each. Without the key, or when JEV is unreachable, the run behaves exactly as before.
 - Optional: a `FIT_PROFILE` secret (shape: `config/profile.example.json`) adds a skills match to the score. The scores and reasons are published in `jobs.json`, which is public.
 
@@ -51,6 +51,6 @@ npm --prefix web run dev    # local site (put a jobs.json in web/public and set 
 
 ## Known gaps
 
-- Apple, Meta and Uber have no verified public endpoint yet, so they only appear through the community lists (their dates and links are less reliable).
+- Uber and Tesla refuse automated readers (Uber answers 406 and its robots.txt disallows its API; Tesla answers 403), so they only appear through the community lists (their dates and links are less reliable). Apple is read directly from its search page; only the newest pages of its United States listings are read each run.
 - Microsoft's search returns only the newest page per query (page 2 is blocked for scripts).
 - Workday boards expose only relative dates ("Posted 7 Days Ago"); those dates are shown as day precision or estimated.
