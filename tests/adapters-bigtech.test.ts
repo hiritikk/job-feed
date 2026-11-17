@@ -1,6 +1,7 @@
 import { describe, test, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { fetchAmazon } from "../pipeline/adapters/bigtech/amazon.js";
+import { fetchApple, parseAppleSearch } from "../pipeline/adapters/bigtech/apple.js";
 import { fetchNetflix } from "../pipeline/adapters/bigtech/netflix.js";
 import { fetchMicrosoft } from "../pipeline/adapters/bigtech/microsoft.js";
 import { fetchGoogle } from "../pipeline/adapters/bigtech/google.js";
@@ -17,6 +18,38 @@ const fixed = (body: unknown): Http & { urls: string[] } => {
 };
 const google = readFileSync("tests/fixtures/google.html", "utf8");
 const opts = { delayMs: 0, queries: ["software engineer"], locations: ["Canada"], maxPages: 1 };
+
+describe("fetchApple", () => {
+  const page = readFileSync("tests/fixtures/apple.html", "utf8");
+  const one = { delayMs: 0, locations: ["united-states-USA"], maxPages: 3 };
+  test("reads the results embedded in the search page", () => {
+    const search = parseAppleSearch(page);
+    expect(search.totalRecords).toBe(4);
+    expect(search.searchResults?.[0]).toMatchObject({ positionId: "200695044" });
+  });
+  test("maps postings with an exact timestamp and a details link, and merges one posting listed under two locations", async () => {
+    const jobs = await fetchApple(fixed(page), one);
+    expect(jobs.map((j) => j.sourceId)).toEqual(["200695044", "200695322", "200695246"]);
+    expect(jobs[0]).toMatchObject({ source: "apple", company: "Apple", locations: ["Austin, United States of America", "Sunnyvale, United States of America"] });
+    expect(jobs[0].url).toMatch(/^https:\/\/jobs\.apple\.com\/en-ca\/details\/200695044\/[a-z0-9-]+$/);
+    expect(jobs[0].postedAt).toMatch(/^2026-11-16T22:51:\d\d\.\d{3}Z$/);
+    expect(jobs[0].postedPrecision).toBeUndefined(); // exact
+    expect(jobs[0].descriptionHtml?.length).toBeGreaterThan(50);
+  });
+  test("asks for the newest postings first and stops when a page is not full", async () => {
+    const http = fixed(page);
+    await fetchApple(http, one);
+    expect(http.urls).toEqual(["https://jobs.apple.com/en-ca/search?location=united-states-USA&search=software%20engineer&sort=newest&page=1"]);
+  });
+  test("reads Canada and the United States by default", async () => {
+    const http = fixed(page);
+    await fetchApple(http, { delayMs: 0 });
+    expect(http.urls.map((u) => /location=([^&]+)/.exec(u)?.[1])).toEqual(["canada-CANC", "united-states-USA"]);
+  });
+  test("fails loudly when the page no longer embeds the data, so the source shows as failed instead of empty", async () => {
+    await expect(fetchApple(fixed("<html><body>Careers</body></html>"), one)).rejects.toThrow(/no embedded search data/);
+  });
+});
 
 describe("fetchAmazon", () => {
   const data = fx("amazon");
@@ -181,6 +214,6 @@ describe("fetchMeta (sitemap + JobPosting structured data)", () => {
 
 describe("bigTechAdapters", () => {
   test("exposes one adapter per big-tech source", () => {
-    expect(Object.keys(bigTechAdapters(fixed({}))).sort()).toEqual(["amazon", "google", "meta", "microsoft", "netflix", "oracle"]);
+    expect(Object.keys(bigTechAdapters(fixed({}))).sort()).toEqual(["amazon", "apple", "google", "meta", "microsoft", "netflix", "oracle"]);
   });
 });

@@ -1,6 +1,7 @@
 import type { Http, RawJob } from "../../types.js";
 import { fetchMeta } from "./meta.js";
 import { fetchAmazon } from "./amazon.js";
+import { fetchApple } from "./apple.js";
 import { fetchGoogle } from "./google.js";
 import { fetchMicrosoft } from "./microsoft.js";
 import { fetchNetflix } from "./netflix.js";
@@ -11,6 +12,7 @@ import { fetchOracle } from "./oracle.js";
 export function bigTechAdapters(http: Http, knownMeta?: Map<string, RawJob>): Record<string, () => Promise<RawJob[]>> {
   return {
     amazon: () => fetchAmazon(http),
+    apple: () => fetchApple(http),
     google: () => fetchGoogle(http),
     meta: () => fetchMeta(http, { known: knownMeta }),
     microsoft: () => fetchMicrosoft(http),

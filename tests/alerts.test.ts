@@ -142,8 +142,8 @@ describe("fit ratings in alerts", () => {
   const small = (fit?: Job["fit"]) => job({ tier: 3, level: "other", gradYear: null, title: "Software Developer", ...(fit ? { fit } : {}) });
   test("the high-fit rule matches a smaller company's posting only once it is rated at or above the threshold", () => {
     expect(matchesRule(small(), fitRule)).toBe(false);
-    expect(matchesRule(small({ score: 0.74, skip: null, reasons: [] }), fitRule)).toBe(false);
-    expect(matchesRule(small({ score: 0.75, skip: null, reasons: [] }), fitRule)).toBe(true);
+    expect(matchesRule(small({ score: fitRule.min_fit! - 0.01, skip: null, reasons: [] }), fitRule)).toBe(false);
+    expect(matchesRule(small({ score: fitRule.min_fit!, skip: null, reasons: [] }), fitRule)).toBe(true);
   });
   test("a posting JEV ruled out never matches the high-fit rule, whatever its score", () => {
     expect(matchesRule(small({ score: 0.9, skip: "asks for professional experience", reasons: [] }), fitRule)).toBe(false);
