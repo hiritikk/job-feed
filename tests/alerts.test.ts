@@ -142,11 +142,13 @@ describe("fit ratings in alerts", () => {
   const small = (fit?: Job["fit"]) => job({ tier: 3, level: "other", gradYear: null, title: "Software Developer", ...(fit ? { fit } : {}) });
   test("the high-fit rule matches a smaller company's posting only once it is rated at or above the threshold", () => {
     expect(matchesRule(small(), fitRule)).toBe(false);
-    expect(matchesRule(small({ score: fitRule.min_fit! - 0.01, skip: null, reasons: [] }), fitRule)).toBe(false);
-    expect(matchesRule(small({ score: fitRule.min_fit!, skip: null, reasons: [] }), fitRule)).toBe(true);
+    expect(matchesRule(small({ score: fitRule.min_fit! - 0.01, skip: null, reasons: [], newGrad: true }), fitRule)).toBe(false);
+    expect(matchesRule(small({ score: fitRule.min_fit!, skip: null, reasons: [], newGrad: true }), fitRule)).toBe(true);
+    expect(matchesRule(small({ score: 0.95, skip: null, reasons: [], newGrad: false }), fitRule)).toBe(false); // a strong skills match that is not new-grad level
+    expect(matchesRule(small({ score: 0.95, skip: null, reasons: [] }), fitRule)).toBe(false);
   });
   test("a posting JEV ruled out never matches the high-fit rule, whatever its score", () => {
-    expect(matchesRule(small({ score: 0.9, skip: "asks for professional experience", reasons: [] }), fitRule)).toBe(false);
+    expect(matchesRule(small({ score: 0.9, skip: "asks for professional experience", reasons: [], newGrad: true }), fitRule)).toBe(false);
   });
   test("the keyword rules ignore the rating: a low or ruled-out rating never removes an alert", () => {
     expect(matchesRule(job({ fit: { score: 0.1, skip: "not a software role", reasons: [] } }), rule)).toBe(true);

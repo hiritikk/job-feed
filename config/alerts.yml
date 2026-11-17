@@ -22,7 +22,8 @@
   max_years: 2
   priority: { 1: default, 2: default }
 
-# Postings the keyword rules above pass over (smaller companies, unusual titles) that JEV rates 0.65 or more. In the
+# Postings the keyword rules above pass over (smaller companies, unusual titles) that JEV reads as new-grad or
+# early-career, open to your graduation date, and rates 0.65 or more. In the
 # first 400 real ratings (2026-11-17) the best scored 0.72 and 0.65 kept the clear new-grad roles in Canada (5 of 400). Only rated postings can
 # match, so this rule is silent unless OPENROUTER_API_KEY is set.
 - name: high-fit

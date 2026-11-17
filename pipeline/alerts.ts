@@ -24,7 +24,7 @@ export function matchesRule(job: Job, rule: AlertRule): boolean {
     rule.tiers.includes(job.tier) &&
     !rule.exclude_work_auth.includes(job.workAuth) &&
     (rule.max_years === undefined || job.yearsRequired === undefined || job.yearsRequired === null || job.yearsRequired <= rule.max_years) &&
-    (rule.min_fit === undefined || (job.fit !== undefined && job.fit.skip === null && job.fit.score >= rule.min_fit))
+    (rule.min_fit === undefined || (job.fit !== undefined && job.fit.skip === null && job.fit.newGrad === true && job.fit.score >= rule.min_fit))
   );
 }
 

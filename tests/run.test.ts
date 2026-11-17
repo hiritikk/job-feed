@@ -215,7 +215,7 @@ describe("runPipeline", () => {
       const seen: string[] = [];
       ctx.rateWith(jevOf(async (state) => { seen.push((state.job as { description: string }).description); return strong(); }));
       await ctx.run(t0, { greenhouse: async () => [small(1)] });
-      expect(ctx.read().jobs[0].fit).toEqual({ score: 0.78, skip: null, reasons: ["stack match: strong", "new-grad level", "no work-authorization barrier stated"] });
+      expect(ctx.read().jobs[0].fit).toEqual({ score: 0.78, skip: null, reasons: ["stack match: strong", "new-grad level", "no work-authorization barrier stated"], newGrad: true });
       await ctx.run(later(30), { greenhouse: async () => [small(1)] });
       expect(seen).toEqual(["Full posting text 1"]);
       expect(ctx.read().jobs[0].fit?.score).toBe(0.78);

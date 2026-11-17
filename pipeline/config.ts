@@ -45,7 +45,7 @@ export type AlertRule = {
   exclude_work_auth: Job["workAuth"][];
   /** When set, a posting that asks for more years of experience than this does not match (unknown experience still matches). */
   max_years?: number;
-  /** When set, only postings JEV has rated at or above this score (and has not ruled out) match. Unrated postings never do. */
+  /** When set, only postings JEV has read as new-grad level, not ruled out, and rated at or above this score match. Unrated postings never do. */
   min_fit?: number;
   priority: Record<string, "high" | "default" | "low">;
 };

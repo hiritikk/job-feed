@@ -112,10 +112,10 @@ describe("fit state and questions", () => {
 
 describe("scoreFit", () => {
   test("strong answers across the board score 0.78 with no skip", () => {
-    expect(scoreFit(answers(), profile)).toEqual({ score: 0.78, skip: null, reasons: ["stack match: strong", "new-grad level", "no work-authorization barrier stated"] });
+    expect(scoreFit(answers(), profile)).toEqual({ score: 0.78, skip: null, reasons: ["stack match: strong", "new-grad level", "no work-authorization barrier stated"], newGrad: true });
   });
   test("eligibility only: a clear new-grad role scores high, an unclear level stays under the alert threshold", () => {
-    expect(scoreFit(eligibilityAnswers(), basicsOnly)).toEqual({ score: 0.95, skip: null, reasons: ["new-grad level", "no work-authorization barrier stated"] });
+    expect(scoreFit(eligibilityAnswers(), basicsOnly)).toEqual({ score: 0.95, skip: null, reasons: ["new-grad level", "no work-authorization barrier stated"], newGrad: true });
     expect(scoreFit(eligibilityAnswers({ level: { type: "choice", choice: "new_grad", confidence: 0.4 } }), basicsOnly).score).toBe(0.7);
     expect(scoreFit(eligibilityAnswers({ level: { type: "choice", choice: "other", confidence: 0.9 } }), basicsOnly).score).toBe(0.4);
   });
@@ -138,6 +138,11 @@ describe("scoreFit", () => {
     expect(scoreFit(noSponsor, { citizenships: ["CA"], authorizedCountries: ["CA", "us"] }).skip).toBeNull();
     expect(scoreFit(citizen, profile).skip).toBe("US citizenship or clearance required");
     expect(scoreFit(citizen, { citizenships: ["US"], authorizedCountries: ["US"] }).skip).toBeNull();
+  });
+  test("newGrad is true only for a new-grad level whose graduation window does not exclude the candidate", () => {
+    expect(scoreFit(answers(), profile).newGrad).toBe(true);
+    expect(scoreFit(answers({ level: { type: "choice", choice: "other", confidence: 0.9 } }), profile).newGrad).toBe(false);
+    expect(scoreFit(answers({ graduation_excluded: { type: "noul", noul: 0.95 } }), profile).newGrad).toBe(false);
   });
   test("a graduation window that excludes the candidate lowers the score and says so, without skipping", () => {
     const fit = scoreFit(answers({ graduation_excluded: { type: "noul", noul: 0.95 } }), profile);
