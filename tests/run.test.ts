@@ -203,8 +203,8 @@ describe("runPipeline", () => {
       stack_match: { type: "score", score: stack, confidence: 0.7 }, experience_match: { type: "score", score: stack, confidence: 0.7 }, callback_likelihood: { type: "score", score: stack, confidence: 0.7 },
     });
     const jevOf = (decide: Jev["decide"]): Jev => ({ decide, usage: { calls: 0, costUsd: 0 } });
-    // a smaller company with a plain title: no keyword rule alerts on it
-    const small = (n: number, over: Partial<RawJob> = {}) => raw(n, { company: "Tiny Co", title: `Software Developer ${n}`, url: `https://boards.greenhouse.io/tiny/jobs/${n}`, descriptionHtml: `<p>Full posting text ${n}</p>`, ...over });
+    // a top company's plain-titled posting whose text mentions 3 years: no keyword rule alerts on it
+    const small = (n: number, over: Partial<RawJob> = {}) => raw(n, { title: `Software Developer ${n}`, descriptionHtml: `<p>Posting ${n}: our team has 3 years of experience shipping this.</p>`, ...over });
 
     test("without a key and profile nothing is rated and no job carries a fit", async () => {
       await ctx.run(t0, { greenhouse: async () => [small(1)] });
@@ -217,20 +217,20 @@ describe("runPipeline", () => {
       await ctx.run(t0, { greenhouse: async () => [small(1)] });
       expect(ctx.read().jobs[0].fit).toEqual({ score: 0.78, skip: null, reasons: ["stack match: strong", "new-grad level", "no work-authorization barrier stated"], newGrad: true });
       await ctx.run(later(30), { greenhouse: async () => [small(1)] });
-      expect(seen).toEqual(["Full posting text 1"]);
+      expect(seen).toEqual(["Posting 1: our team has 3 years of experience shipping this."]);
       expect(ctx.read().jobs[0].fit?.score).toBe(0.78);
     });
 
-    test("a high-fit posting at a smaller company alerts, though no keyword rule matches it", async () => {
+    test("a high-fit posting alerts, though no keyword rule matches it", async () => {
       ctx.rateWith(jevOf(async () => strong()));
       await ctx.run(t0, { greenhouse: async () => [small(1)] });
       await ctx.run(later(30), { greenhouse: async () => [small(1), small(2)] });
       expect(ctx.ntfy).toHaveLength(1);
-      expect(ctx.ntfy[0].title).toBe("Tiny Co: Software Developer 2");
+      expect(ctx.ntfy[0].title).toBe("Acme: Software Developer 2");
       expect(ctx.ntfy[0].message).toContain("fit 78%");
     });
 
-    test("a low-fit posting at a smaller company does not alert", async () => {
+    test("a low-fit posting the keyword rules turned away does not alert", async () => {
       ctx.rateWith(jevOf(async () => strong(1)));
       await ctx.run(t0, { greenhouse: async () => [small(1)] });
       await ctx.run(later(30), { greenhouse: async () => [small(1), small(2)] });
@@ -254,7 +254,7 @@ describe("runPipeline", () => {
       expect(ctx.ntfy).toHaveLength(0);
       down = false;
       await ctx.run(later(60), { greenhouse: async () => [small(1), small(2)] });
-      expect(ctx.ntfy.map((m) => m.title)).toEqual(["Tiny Co: Software Developer 2"]);
+      expect(ctx.ntfy.map((m) => m.title)).toEqual(["Acme: Software Developer 2"]);
     });
   });
 });

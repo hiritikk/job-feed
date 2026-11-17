@@ -13,7 +13,7 @@ GitHub Actions (every 30 min)           Vercel (static site in web/)
   -> check links -> alert -> publish ---> raw.githubusercontent.com/<owner>/<repo>/data/jobs.json
 ```
 
-- `pipeline/` fetches, classifies, de-duplicates, diffs and alerts. `config/companies.yml` lists ~320 employers (verified boards plus tier-only names), `config/alerts.yml` holds the alert rule, `config/sources.yml` switches sources on and off.
+- `pipeline/` fetches, classifies, de-duplicates, diffs and alerts. `config/companies.yml` lists ~510 employers (verified boards plus tier-only names, including a hand-picked list of large employers: Fortune 500, Global 500 and big Canadian corporations), `config/alerts.yml` holds the alert rule, `config/sources.yml` switches sources on and off.
 - Dates carry a precision (`exact`, `day`, `approx`, `none`); the site shows it next to every date and never invents one. "Found by this feed" is always exact.
 - Links are absolute https URLs with tracking removed. Links from lists and aggregators are opened and checked (404/410 or a redirect to a generic page hides the job).
 - Boards that forbid automated reading (LinkedIn, Indeed, Glassdoor, Wellfound, Job Bank) are not fetched; the site links to their searches. Pages that only serve real browsers (Tesla) are not supported, and the pipeline always identifies itself honestly.
@@ -24,7 +24,7 @@ With an OpenRouter key, each new posting is also read by [JEV](https://openroute
 
 - `config/fit.yml` says who it rates for (graduation date, where you can work). `pipeline/jev.ts` is the client; `pipeline/fit.ts` holds the questions, the score and the per-run limits (400 ratings, $0.25).
 - Each rated job gets `fit: { score, skip, reasons }`. The site shows it, sorts by it ("Best fit"), and alerts include it.
-- Ratings only add alerts: the keyword rules ignore them, and the `high-fit` rule in `config/alerts.yml` (score 0.65 or more) alerts on clear new-grad roles the keywords pass over.
+- Ratings only add alerts: the keyword rules ignore them, and the `high-fit` rule in `config/alerts.yml` alerts on postings at tier 1-2 companies that JEV reads as new-grad level (score 0.65 or more) though a number in the text made the keyword rules turn them away.
 - Only postings found in the last 14 days are rated, once each. Without the key, or when JEV is unreachable, the run behaves exactly as before.
 - Optional: a `FIT_PROFILE` secret (shape: `config/profile.example.json`) adds a skills match to the score. The scores and reasons are published in `jobs.json`, which is public.
 
