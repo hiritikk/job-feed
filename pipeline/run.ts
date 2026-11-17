@@ -12,8 +12,11 @@ import { classify, isSenior } from "./classify.js";
 import { loadAlertRules, loadCompanies, loadSources, type AlertRule } from "./config.js";
 import { norm } from "./dedupe.js";
 import { mergeRun, type SourceRun, type State } from "./diff.js";
+import { loadProfile, pastRatingWindow, rateJobs, type Profile } from "./fit.js";
 import { createHttp } from "./http.js";
+import { createJev, type Jev } from "./jev.js";
 import { createProbe, verifyLinks, type Probe } from "./linkcheck.js";
+import { toSnippet } from "./normalize.js";
 import type { CompanyEntry, Http, Job, JobsFile, RawJob, Tier } from "./types.js";
 
 export type RunOptions = {
@@ -26,6 +29,9 @@ export type RunOptions = {
   rules: AlertRule[];
   siteUrl: string;
   sources: Record<string, boolean>;
+  /** Fit ratings run only when both are given (in the real run: OPENROUTER_API_KEY, and a profile from config/fit.yml or FIT_PROFILE). */
+  jev?: Jev | null;
+  profile?: Profile | null;
   /** Minor (tier 3) boards are split into this many groups and one group is refreshed per run; default scales with their number. */
   shards?: number;
   /** Tests: replaces every built-in adapter. */
@@ -129,6 +135,10 @@ export async function runPipeline(opts: RunOptions): Promise<{ jobCount: number;
   const { state: prev, firstRun } = loadPrev(opts.dataDir);
   const tiers = new Map<string, Tier>(opts.companies.map((c) => [norm(c.name), c.tier]));
   const tierOf = (company: string): Tier => tiers.get(norm(company)) ?? 3;
+  const rating = opts.jev && opts.profile ? { jev: opts.jev, profile: opts.profile } : null;
+  // Posting text by URL, kept only for postings that may still be rated this run (the feed stores a short snippet).
+  const texts = new Map<string, string>();
+  const settled = new Set(rating ? prev.jobs.filter((j) => j.fit || pastRatingWindow(j, now)).map((j) => j.url) : []);
 
   const runs: SourceRun[] = await Promise.all(
     buildTasks(opts, prev, firstRun).map(async (task): Promise<SourceRun> => {
@@ -136,7 +146,9 @@ export async function runPipeline(opts: RunOptions): Promise<{ jobCount: number;
         const out = await task.run();
         const jobs = out.raw.flatMap((r) => {
           const job = classify(r, tierOf, now);
-          return job && job.roleType !== "other" && !isSenior(job.title) ? [job] : [];
+          if (!job || job.roleType === "other" || isSenior(job.title)) return [];
+          if (rating && !settled.has(job.url)) texts.set(job.url, toSnippet(r.descriptionHtml ?? "", 6000));
+          return [job];
         });
         const rejected = out.raw.length - jobs.length;
         console.log(`${task.source}: ${out.raw.length} fetched, ${jobs.length} kept${rejected ? ` (${rejected} dropped: internships, senior, non-engineering, bad links)` : ""}`);
@@ -150,6 +162,13 @@ export async function runPipeline(opts: RunOptions): Promise<{ jobCount: number;
 
   const merged = mergeRun(prev, runs, now);
   const jobs = (await verifyLinks(merged.jobs, opts.probe, { now })).sort((a, b) => b.postedAt.localeCompare(a.postedAt));
+
+  if (rating) {
+    const { rated, failed } = await rateJobs(jobs, texts, rating.jev, rating.profile, now);
+    if (rated + failed > 0) console.log(`fit: ${rated} rated, ${failed} failed, $${rating.jev.usage.costUsd.toFixed(4)} spent`);
+  }
+  // A posting still waiting for its rating may yet match a fit rule, so it is not final for alert purposes.
+  const awaitsRating = (j: Job): boolean => rating !== null && !j.fit && opts.rules.some((r) => r.min_fit !== undefined);
 
   const alerted = new Set(prev.alerted);
   let sentCount = 0;
@@ -166,7 +185,7 @@ export async function runPipeline(opts: RunOptions): Promise<{ jobCount: number;
     sentCount = sentIds.length;
     // jobs that match no rule are final for alert purposes; remember them so they are not re-evaluated every run
     const matching = new Set(candidates.filter((j) => opts.rules.some((r) => matchesRule(j, r))).map((j) => j.id));
-    for (const j of candidates) if (!matching.has(j.id)) alerted.add(j.id);
+    for (const j of candidates) if (!matching.has(j.id) && !awaitsRating(j)) alerted.add(j.id);
   }
 
   const liveIds = new Set(jobs.map((j) => j.id));
@@ -180,9 +199,12 @@ export async function runPipeline(opts: RunOptions): Promise<{ jobCount: number;
 const isMain = process.argv[1] !== undefined && import.meta.url === pathToFileURL(process.argv[1]).href;
 if (isMain) {
   const http = createHttp();
+  const key = process.env.OPENROUTER_API_KEY?.trim();
+  const profile = loadProfile(process.env);
   const result = await runPipeline({
     dataDir: process.env.DATA_DIR ?? "data", now: new Date(), http, probe: createProbe(), env: process.env,
     companies: loadCompanies(), rules: loadAlertRules(), siteUrl: process.env.SITE_URL ?? "https://example.invalid", sources: loadSources(),
+    jev: key ? createJev(http, key) : null, profile,
   });
   console.log(JSON.stringify(result));
 }

@@ -1,0 +1,7 @@
+{
+  "summary": "Computing Science student at a Canadian university graduating May 2027. Two software internships (backend and full stack). Built and shipped several web and data projects.",
+  "skills": ["TypeScript", "Python", "React", "Node.js", "PostgreSQL", "Go", "AWS", "Docker"],
+  "graduation": "May 2027",
+  "citizenships": ["CA"],
+  "authorizedCountries": ["CA"]
+}

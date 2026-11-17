@@ -4,7 +4,7 @@ import { loadAlertRules } from "../pipeline/config.js";
 import { parseLocations } from "../pipeline/location.js";
 import type { Http, Job } from "../pipeline/types.js";
 
-const [rule, plainRule] = loadAlertRules();
+const [rule, plainRule, fitRule] = loadAlertRules();
 const NOW = "2026-10-27T12:00:00.000Z";
 function job(over: Partial<Job> & { loc?: string[] } = {}): Job {
   const locations = over.loc ?? ["Toronto, ON"];
@@ -135,5 +135,26 @@ describe("sendNtfy", () => {
     const res = await sendNtfy(http, "t", [msg({ ids: ["a"] }), msg({ ids: ["b"] })]);
     expect(res.sentIds).toEqual(["b"]);
     warn.mockRestore();
+  });
+});
+
+describe("fit ratings in alerts", () => {
+  const small = (fit?: Job["fit"]) => job({ tier: 3, level: "other", gradYear: null, title: "Software Developer", ...(fit ? { fit } : {}) });
+  test("the high-fit rule matches a smaller company's posting only once it is rated at or above the threshold", () => {
+    expect(matchesRule(small(), fitRule)).toBe(false);
+    expect(matchesRule(small({ score: 0.74, skip: null, reasons: [] }), fitRule)).toBe(false);
+    expect(matchesRule(small({ score: 0.75, skip: null, reasons: [] }), fitRule)).toBe(true);
+  });
+  test("a posting JEV ruled out never matches the high-fit rule, whatever its score", () => {
+    expect(matchesRule(small({ score: 0.9, skip: "asks for professional experience", reasons: [] }), fitRule)).toBe(false);
+  });
+  test("the keyword rules ignore the rating: a low or ruled-out rating never removes an alert", () => {
+    expect(matchesRule(job({ fit: { score: 0.1, skip: "not a software role", reasons: [] } }), rule)).toBe(true);
+  });
+  test("the alert text carries the fit, or what to check when JEV ruled the posting out", () => {
+    const text = (fit: Job["fit"]) => planNotifications([job({ fit })], [rule], "https://x.example").messages[0].message;
+    expect(text({ score: 0.82, skip: null, reasons: [] })).toMatch(/ · fit 82%$/);
+    expect(text({ score: 0.2, skip: "US role, no sponsorship", reasons: [] })).toMatch(/ · check: US role, no sponsorship$/);
+    expect(planNotifications([job()], [rule], "https://x.example").messages[0].message).not.toContain("fit");
   });
 });

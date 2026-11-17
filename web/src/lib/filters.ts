@@ -1,7 +1,7 @@
 import type { Country, Job, Level, RoleType, Tier } from "./types";
 
 export type LocationKey = "CA" | "REMOTE" | "US" | "GB" | "EU" | "OTHER";
-export type SortKey = "posted" | "found";
+export type SortKey = "posted" | "found" | "fit";
 export type Filters = {
   locations: LocationKey[];
   cities: string[];
@@ -44,6 +44,9 @@ function matchesLocation(job: Job, chips: LocationKey[]): boolean {
   return false;
 }
 
+/** Best fit first; postings ruled out for a stated reason come after every rated one, and unrated postings last. */
+const fitRank = (j: Job): number => (!j.fit ? -2 : j.fit.skip ? -1 : j.fit.score);
+
 export function applyFilters(jobs: Job[], f: Filters, now: Date, applied: Record<string, string> = {}): Job[] {
   const words = f.q.toLowerCase().split(/\s+/).filter(Boolean);
   const cutoff = f.postedWithinDays === null ? null : now.getTime() - f.postedWithinDays * DAY_MS;
@@ -66,6 +69,7 @@ export function applyFilters(jobs: Job[], f: Filters, now: Date, applied: Record
     return true;
   });
   const key = (j: Job): string => (f.sort === "found" ? j.firstSeenAt : effectiveDate(j));
+  if (f.sort === "fit") return out.sort((a, b) => fitRank(b) - fitRank(a) || effectiveDate(b).localeCompare(effectiveDate(a)));
   return out.sort((a, b) => key(b).localeCompare(key(a)));
 }
 
@@ -136,7 +140,8 @@ export function searchToFilters(search: string): Filters {
   f.hideRestricted = p.get("restricted") !== "0";
   f.includeClosed = p.get("closed") === "1";
   f.hideApplied = p.get("applied") === "hide";
-  f.sort = p.get("sort") === "found" ? "found" : "posted";
+  const sort = p.get("sort");
+  f.sort = sort === "found" || sort === "fit" ? sort : "posted";
   f.q = p.get("q") ?? "";
   return f;
 }

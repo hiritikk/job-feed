@@ -50,6 +50,9 @@ export function formatWhen(job: Job, now: Date): { text: string; note: string | 
   return { text: formatPosted(job, now), note: job.postedPrecision === "approx" ? "Estimated from a relative age such as “7 days ago”." : null };
 }
 
+/** "82% fit" for a rated posting; null when it is unrated or was ruled out (the reason is shown instead). */
+export const fitLabel = (job: Job): string | null => (job.fit && !job.fit.skip ? `${Math.round(job.fit.score * 100)}% fit` : null);
+
 export function linkLabel(job: Job): string {
   if (job.linkStatus === "ok") return "verified";
   if (job.linkStatus === "dead") return "link broken";

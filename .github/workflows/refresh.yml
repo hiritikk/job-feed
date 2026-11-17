@@ -51,6 +51,8 @@ jobs:
           ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
           ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
           JOOBLE_KEY: ${{ secrets.JOOBLE_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          FIT_PROFILE: ${{ secrets.FIT_PROFILE }}
 
       - name: Publish to the data branch
         run: bash scripts/publish-data.sh

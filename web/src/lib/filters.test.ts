@@ -31,6 +31,17 @@ describe("defaultFilters + applyFilters", () => {
     const jobs = [makeJob({ title: "a", postedAt: hoursAgo(2), firstSeenAt: hoursAgo(30) }), makeJob({ title: "b", postedAt: hoursAgo(50), firstSeenAt: hoursAgo(1) })];
     expect(titles(applyFilters(jobs, f({ sort: "found" }), NOW))).toEqual(["b", "a"]);
   });
+  test("sort=fit puts the best fit first, ruled-out postings after every rated one, and unrated last", () => {
+    const fit = (score: number, skip: string | null = null) => ({ score, skip, reasons: [] });
+    const jobs = [makeJob({ title: "unrated" }), makeJob({ title: "ruled-out", fit: fit(0.9, "internship") }), makeJob({ title: "ok", fit: fit(0.5) }), makeJob({ title: "best", fit: fit(0.8) })];
+    expect(titles(applyFilters(jobs, f({ sort: "fit" }), NOW))).toEqual(["best", "ok", "ruled-out", "unrated"]);
+  });
+  test("sort=fit breaks ties by date and survives the URL round trip", () => {
+    const fit = { score: 0.7, skip: null, reasons: [] };
+    const jobs = [makeJob({ title: "old", postedAt: hoursAgo(50), fit }), makeJob({ title: "new", postedAt: hoursAgo(2), fit })];
+    expect(titles(applyFilters(jobs, f({ sort: "fit" }), NOW))).toEqual(["new", "old"]);
+    expect(searchToFilters(filtersToSearch(f({ sort: "fit" }))).sort).toBe("fit");
+  });
   test("a job with no known posting date is ordered by when we found it", () => {
     const jobs = [makeJob({ title: "undated", postedPrecision: "none", postedAt: hoursAgo(0.1), firstSeenAt: hoursAgo(40) }), makeJob({ title: "dated", postedAt: hoursAgo(10) })];
     expect(titles(applyFilters(jobs, defaultFilters(), NOW))).toEqual(["dated", "undated"]);

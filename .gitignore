@@ -5,3 +5,4 @@ data/
 web/dist
 web/node_modules
 .superpowers/
+config/profile.json

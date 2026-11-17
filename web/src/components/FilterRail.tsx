@@ -119,6 +119,7 @@ export function FilterRail({ jobs, filters, setFilters, sources, open, onClose, 
       <Group title="Sort by">
         <Chip on={filters.sort === "posted"} onClick={() => set({ sort: "posted" })}>Posted date</Chip>
         <Chip on={filters.sort === "found"} onClick={() => set({ sort: "found" })}>When we found it</Chip>
+        <Chip on={filters.sort === "fit"} onClick={() => set({ sort: "fit" })}>Best fit</Chip>
       </Group>
 
       <fieldset className="group">
