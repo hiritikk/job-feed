@@ -42,8 +42,9 @@ describe("plain-title rule (level other at tier 1-2 in Canada)", () => {
   test("a plain 'Software Engineer' at a tier-1 company in Toronto matches", () => expect(matchesRule(plain(), plainRule)).toBe(true));
   test("so does a tier-2 company", () => expect(matchesRule(plain({ tier: 2 }), plainRule)).toBe(true));
   test("it does not match when the posting asks for 5+ years", () => expect(matchesRule(plain({ yearsRequired: 5 }), plainRule)).toBe(false));
-  test("it matches when the posting asks for up to 2 years or states nothing", () => {
-    expect(matchesRule(plain({ yearsRequired: 2 }), plainRule)).toBe(true);
+  test("it matches when the posting asks for up to 1 year or states nothing, and not for 2 or more", () => {
+    expect(matchesRule(plain({ yearsRequired: 2 }), plainRule)).toBe(false);
+    expect(matchesRule(plain({ yearsRequired: 1 }), plainRule)).toBe(true);
     expect(matchesRule(plain({ yearsRequired: 0 }), plainRule)).toBe(true);
     expect(matchesRule(plain({ yearsRequired: null }), plainRule)).toBe(true);
     expect(matchesRule(plain({ yearsRequired: undefined }), plainRule)).toBe(true);
@@ -139,8 +140,18 @@ describe("sendNtfy", () => {
 });
 
 describe("fit ratings in alerts", () => {
-  const small = (fit?: Job["fit"]) => job({ tier: 3, level: "other", gradYear: null, title: "Software Developer", ...(fit ? { fit } : {}) });
-  test("the high-fit rule matches a smaller company's posting only once it is rated at or above the threshold", () => {
+  // a large employer's posting the keyword rules turn away: the text mentions 3 years somewhere
+  const small = (fit?: Job["fit"]) => job({ tier: 2, level: "other", gradYear: null, yearsRequired: 3, title: "Software Developer", ...(fit ? { fit } : {}) });
+  test("the keyword rules turn that posting away", () => {
+    expect(matchesRule(small(), rule)).toBe(false);
+    expect(matchesRule(small(), plainRule)).toBe(false);
+  });
+  test("the high-fit rule is for large employers only, and the core rule now skips postings asking for 2 or more years", () => {
+    expect(matchesRule({ ...small({ score: 0.9, skip: null, reasons: [], newGrad: true }), tier: 3 }, fitRule)).toBe(false);
+    expect(matchesRule(job({ yearsRequired: 2 }), rule)).toBe(false);
+    expect(matchesRule(job({ yearsRequired: 1 }), rule)).toBe(true);
+  });
+  test("the high-fit rule matches such a posting only once it is rated at or above the threshold", () => {
     expect(matchesRule(small(), fitRule)).toBe(false);
     expect(matchesRule(small({ score: fitRule.min_fit! - 0.01, skip: null, reasons: [], newGrad: true }), fitRule)).toBe(false);
     expect(matchesRule(small({ score: fitRule.min_fit!, skip: null, reasons: [], newGrad: true }), fitRule)).toBe(true);

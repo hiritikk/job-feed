@@ -9,11 +9,15 @@ const US_CITIES = /\b(new york|san francisco|seattle|austin|boston|los angeles|c
 const GB = /\b(united kingdom|england|scotland|wales|northern ireland|london|manchester|edinburgh)\b|\bUK\b/;
 const EU = /\b(europe|emea|germany|france|netherlands|spain|italy|ireland|dublin|berlin|munich|paris|amsterdam|madrid|barcelona|stockholm|sweden|poland|warsaw|portugal|lisbon|belgium|brussels|austria|vienna|denmark|copenhagen|finland|helsinki|switzerland|zurich|norway|czech|prague|romania|estonia|lithuania)\b/i;
 
+const US_NAMESAKE = new RegExp(`${CA_CITIES.source}\\s*,\\s*([A-Za-z]{2})\\b`, "gi");
+
 const ORDER: Country[] = ["CA", "US", "GB", "EU", "OTHER"];
 
 function countriesIn(s: string): Country[] {
   const found = new Set<Country>();
-  const isCa = CA_CITIES.test(s) || CA_WORDS.test(s) || CA_CODES.test(s);
+  // "Vancouver, WA" and "Waterloo, IA" are American towns: a Canadian city name directly followed by a US state is not Canada.
+  const withoutUsNamesakes = s.replace(US_NAMESAKE, (m, _city, state) => (state !== "CA" && US_STATE.test(`, ${state}`) ? "" : m));
+  const isCa = CA_CITIES.test(withoutUsNamesakes) || CA_WORDS.test(s) || CA_CODES.test(s);
   if (isCa) found.add("CA");
   // "CA" after a comma is California unless the string is already Canadian.
   const stateMatch = US_STATE.exec(s);
@@ -50,6 +54,9 @@ export function parseLocations(
   }
 
   const mode: RemoteMode = remote || remoteHint ? "remote" : hybrid ? "hybrid" : "unknown";
+  // A remote role listed under a country ("United States", flagged remote by the source) is remote within that country,
+  // not "remote, region not stated".
+  if (mode === "remote" && regions.size === 0) for (const c of countries) regions.add(c);
   return {
     countries: ORDER.filter((c) => countries.has(c)),
     remote: mode,

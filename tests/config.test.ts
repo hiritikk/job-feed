@@ -24,10 +24,11 @@ describe("alert rules: plain-title roles at top companies", () => {
   test("the default config has a second, quieter rule for level 'other' with a years cap", () => {
     const rules = loadAlertRules();
     expect(rules.map((r) => r.name)).toEqual(["core", "plain-title-top-companies", "high-fit"]);
-    expect(rules[1]).toMatchObject({ levels: ["other"], max_years: 2, tiers: [1, 2], countries: ["CA"] });
-    expect(rules[2]).toMatchObject({ tiers: [1, 2, 3], min_fit: 0.65 });
+    expect(rules[1]).toMatchObject({ levels: ["other"], max_years: 1, tiers: [1, 2], countries: ["CA"] });
+    expect(rules[2]).toMatchObject({ tiers: [1, 2], min_fit: 0.65 });
+    expect(rules[2].max_years).toBeUndefined(); // JEV judges the level, so a stray number in the text does not block it
     expect(rules[0].min_fit).toBeUndefined();
-    expect(rules[0].max_years).toBeUndefined();
+    expect(rules[0].max_years).toBe(1);
   });
 });
 

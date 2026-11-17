@@ -329,3 +329,200 @@
 - { name: "Goldman Sachs", ats: custom, slug: tier-only-goldman-sachs, tier: 2 }
 - { name: "JPMorgan", ats: custom, slug: tier-only-jpmorgan, tier: 2 }
 - { name: "JPMorgan Chase", ats: custom, slug: tier-only-jpmorgan-chase, tier: 2 }
+
+# --- Large employers (tier only) ---
+# Fortune 500 and Global 500 companies, big Canadian corporations, and the other spellings their postings arrive under.
+# A hand-picked list (2026-11-17), not the official 500: it exists so the alert rules, which cover tiers 1 and 2, reach
+# these names. Add a line here to be alerted about another company.
+- { name: "American Express", ats: custom, slug: tier-only-american-express, tier: 2 }
+- { name: "Amex", ats: custom, slug: tier-only-amex, tier: 2 }
+- { name: "Citigroup", ats: custom, slug: tier-only-citigroup, tier: 2 }
+- { name: "Bank of America", ats: custom, slug: tier-only-bank-of-america, tier: 2 }
+- { name: "Wells Fargo", ats: custom, slug: tier-only-wells-fargo, tier: 2 }
+- { name: "JPMorganChase", ats: custom, slug: tier-only-jpmorganchase, tier: 2 }
+- { name: "BlackRock", ats: custom, slug: tier-only-blackrock, tier: 2 }
+- { name: "State Street", ats: custom, slug: tier-only-state-street, tier: 2 }
+- { name: "Charles Schwab", ats: custom, slug: tier-only-charles-schwab, tier: 2 }
+- { name: "Fidelity Investments", ats: custom, slug: tier-only-fidelity-investments, tier: 2 }
+- { name: "Fidelity Canada", ats: custom, slug: tier-only-fidelity-canada, tier: 2 }
+- { name: "Fidelity International", ats: custom, slug: tier-only-fidelity-international, tier: 2 }
+- { name: "S&P Global", ats: custom, slug: tier-only-sandp-global, tier: 2 }
+- { name: "Moody's", ats: custom, slug: tier-only-moody-s, tier: 2 }
+- { name: "Fiserv", ats: custom, slug: tier-only-fiserv, tier: 2 }
+- { name: "FIS", ats: custom, slug: tier-only-fis, tier: 2 }
+- { name: "Global Payments", ats: custom, slug: tier-only-global-payments, tier: 2 }
+- { name: "Prudential", ats: custom, slug: tier-only-prudential, tier: 2 }
+- { name: "MetLife", ats: custom, slug: tier-only-metlife, tier: 2 }
+- { name: "Allstate", ats: custom, slug: tier-only-allstate, tier: 2 }
+- { name: "Progressive", ats: custom, slug: tier-only-progressive, tier: 2 }
+- { name: "AIG", ats: custom, slug: tier-only-aig, tier: 2 }
+- { name: "Chubb", ats: custom, slug: tier-only-chubb, tier: 2 }
+- { name: "Travelers", ats: custom, slug: tier-only-travelers, tier: 2 }
+- { name: "Zurich Insurance", ats: custom, slug: tier-only-zurich-insurance, tier: 2 }
+- { name: "Aviva", ats: custom, slug: tier-only-aviva, tier: 2 }
+- { name: "HSBC", ats: custom, slug: tier-only-hsbc, tier: 2 }
+- { name: "Barclays", ats: custom, slug: tier-only-barclays, tier: 2 }
+- { name: "UBS", ats: custom, slug: tier-only-ubs, tier: 2 }
+- { name: "Deutsche Bank", ats: custom, slug: tier-only-deutsche-bank, tier: 2 }
+- { name: "BNP Paribas", ats: custom, slug: tier-only-bnp-paribas, tier: 2 }
+- { name: "Ford Motor Company", ats: custom, slug: tier-only-ford-motor-company, tier: 2 }
+- { name: "Toyota", ats: custom, slug: tier-only-toyota, tier: 2 }
+- { name: "Honda", ats: custom, slug: tier-only-honda, tier: 2 }
+- { name: "Volkswagen", ats: custom, slug: tier-only-volkswagen, tier: 2 }
+- { name: "BMW", ats: custom, slug: tier-only-bmw, tier: 2 }
+- { name: "Mercedes-Benz", ats: custom, slug: tier-only-mercedes-benz, tier: 2 }
+- { name: "Stellantis", ats: custom, slug: tier-only-stellantis, tier: 2 }
+- { name: "Magna", ats: custom, slug: tier-only-magna, tier: 2 }
+- { name: "Magna International", ats: custom, slug: tier-only-magna-international, tier: 2 }
+- { name: "Aptiv", ats: custom, slug: tier-only-aptiv, tier: 2 }
+- { name: "John Deere", ats: custom, slug: tier-only-john-deere, tier: 2 }
+- { name: "Deere", ats: custom, slug: tier-only-deere, tier: 2 }
+- { name: "Caterpillar", ats: custom, slug: tier-only-caterpillar, tier: 2 }
+- { name: "3M", ats: custom, slug: tier-only-3m, tier: 2 }
+- { name: "GE", ats: custom, slug: tier-only-ge, tier: 2 }
+- { name: "GE Aerospace", ats: custom, slug: tier-only-ge-aerospace, tier: 2 }
+- { name: "GE Vernova", ats: custom, slug: tier-only-ge-vernova, tier: 2 }
+- { name: "GE HealthCare", ats: custom, slug: tier-only-ge-healthcare, tier: 2 }
+- { name: "Siemens", ats: custom, slug: tier-only-siemens, tier: 2 }
+- { name: "Bosch", ats: custom, slug: tier-only-bosch, tier: 2 }
+- { name: "ABB", ats: custom, slug: tier-only-abb, tier: 2 }
+- { name: "Schneider Electric", ats: custom, slug: tier-only-schneider-electric, tier: 2 }
+- { name: "Johnson Controls", ats: custom, slug: tier-only-johnson-controls, tier: 2 }
+- { name: "jci", ats: custom, slug: tier-only-jci, tier: 2 }
+- { name: "Trane Technologies", ats: custom, slug: tier-only-trane-technologies, tier: 2 }
+- { name: "Baker Hughes", ats: custom, slug: tier-only-baker-hughes, tier: 2 }
+- { name: "bakerhughes", ats: custom, slug: tier-only-bakerhughes, tier: 2 }
+- { name: "Lincoln Electric", ats: custom, slug: tier-only-lincoln-electric, tier: 2 }
+- { name: "General Dynamics", ats: custom, slug: tier-only-general-dynamics, tier: 2 }
+- { name: "General Dynamics Mission Systems", ats: custom, slug: tier-only-general-dynamics-mission-systems, tier: 2 }
+- { name: "L3Harris", ats: custom, slug: tier-only-l3harris, tier: 2 }
+- { name: "L3Harris Technologies", ats: custom, slug: tier-only-l3harris-technologies, tier: 2 }
+- { name: "RTX", ats: custom, slug: tier-only-rtx, tier: 2 }
+- { name: "Northrop Grumman", ats: custom, slug: tier-only-northrop-grumman, tier: 2 }
+- { name: "Boeing", ats: custom, slug: tier-only-boeing, tier: 2 }
+- { name: "Airbus", ats: custom, slug: tier-only-airbus, tier: 2 }
+- { name: "Thales", ats: custom, slug: tier-only-thales, tier: 2 }
+- { name: "Bombardier", ats: custom, slug: tier-only-bombardier, tier: 2 }
+- { name: "IBM", ats: custom, slug: tier-only-ibm, tier: 2 }
+- { name: "Hewlett Packard Enterprise", ats: custom, slug: tier-only-hewlett-packard-enterprise, tier: 2 }
+- { name: "hpe", ats: custom, slug: tier-only-hpe, tier: 2 }
+- { name: "Dell Technologies", ats: custom, slug: tier-only-dell-technologies, tier: 2 }
+- { name: "Texas Instruments", ats: custom, slug: tier-only-texas-instruments, tier: 2 }
+- { name: "Applied Materials", ats: custom, slug: tier-only-applied-materials, tier: 2 }
+- { name: "Lam Research", ats: custom, slug: tier-only-lam-research, tier: 2 }
+- { name: "Western Digital", ats: custom, slug: tier-only-western-digital, tier: 2 }
+- { name: "TSMC", ats: custom, slug: tier-only-tsmc, tier: 2 }
+- { name: "Sony Interactive Entertainment", ats: custom, slug: tier-only-sony-interactive-entertainment, tier: 2 }
+- { name: "Sonyinteractiveentertainmentglobal", ats: custom, slug: tier-only-sonyinteractiveentertainmentglobal, tier: 2 }
+- { name: "Panasonic", ats: custom, slug: tier-only-panasonic, tier: 2 }
+- { name: "LG", ats: custom, slug: tier-only-lg, tier: 2 }
+- { name: "Hitachi", ats: custom, slug: tier-only-hitachi, tier: 2 }
+- { name: "Nokia", ats: custom, slug: tier-only-nokia, tier: 2 }
+- { name: "Qualcomm Canada ULC", ats: custom, slug: tier-only-qualcomm-canada-ulc, tier: 2 }
+- { name: "Motorola", ats: custom, slug: tier-only-motorola, tier: 2 }
+- { name: "SAP", ats: custom, slug: tier-only-sap, tier: 2 }
+- { name: "Accenture", ats: custom, slug: tier-only-accenture, tier: 2 }
+- { name: "Cognizant", ats: custom, slug: tier-only-cognizant, tier: 2 }
+- { name: "Kyndryl", ats: custom, slug: tier-only-kyndryl, tier: 2 }
+- { name: "DXC Technology", ats: custom, slug: tier-only-dxc-technology, tier: 2 }
+- { name: "NTT DATA", ats: custom, slug: tier-only-ntt-data, tier: 2 }
+- { name: "CGI", ats: custom, slug: tier-only-cgi, tier: 2 }
+- { name: "Equinix", ats: custom, slug: tier-only-equinix, tier: 2 }
+- { name: "Akamai Technologies", ats: custom, slug: tier-only-akamai-technologies, tier: 2 }
+- { name: "eBay", ats: custom, slug: tier-only-ebay, tier: 2 }
+- { name: "Booking Holdings", ats: custom, slug: tier-only-booking-holdings, tier: 2 }
+- { name: "Expedia Group", ats: custom, slug: tier-only-expedia-group, tier: 2 }
+- { name: "Verizon", ats: custom, slug: tier-only-verizon, tier: 2 }
+- { name: "AT&T", ats: custom, slug: tier-only-atandt, tier: 2 }
+- { name: "Comcast", ats: custom, slug: tier-only-comcast, tier: 2 }
+- { name: "Deloitte", ats: custom, slug: tier-only-deloitte, tier: 2 }
+- { name: "PwC", ats: custom, slug: tier-only-pwc, tier: 2 }
+- { name: "KPMG", ats: custom, slug: tier-only-kpmg, tier: 2 }
+- { name: "EY", ats: custom, slug: tier-only-ey, tier: 2 }
+- { name: "IQVIA", ats: custom, slug: tier-only-iqvia, tier: 2 }
+- { name: "Equifax", ats: custom, slug: tier-only-equifax, tier: 2 }
+- { name: "Walmart", ats: custom, slug: tier-only-walmart, tier: 2 }
+- { name: "Costco", ats: custom, slug: tier-only-costco, tier: 2 }
+- { name: "Home Depot", ats: custom, slug: tier-only-home-depot, tier: 2 }
+- { name: "The Home Depot", ats: custom, slug: tier-only-the-home-depot, tier: 2 }
+- { name: "Target", ats: custom, slug: tier-only-target, tier: 2 }
+- { name: "Lowe's", ats: custom, slug: tier-only-lowe-s, tier: 2 }
+- { name: "Best Buy", ats: custom, slug: tier-only-best-buy, tier: 2 }
+- { name: "Nike", ats: custom, slug: tier-only-nike, tier: 2 }
+- { name: "PepsiCo", ats: custom, slug: tier-only-pepsico, tier: 2 }
+- { name: "Coca-Cola", ats: custom, slug: tier-only-coca-cola, tier: 2 }
+- { name: "Procter & Gamble", ats: custom, slug: tier-only-procter-and-gamble, tier: 2 }
+- { name: "P&G", ats: custom, slug: tier-only-pandg, tier: 2 }
+- { name: "Nestle", ats: custom, slug: tier-only-nestle, tier: 2 }
+- { name: "Nestlé", ats: custom, slug: tier-only-nestle-2, tier: 2 }
+- { name: "Unilever", ats: custom, slug: tier-only-unilever, tier: 2 }
+- { name: "Starbucks", ats: custom, slug: tier-only-starbucks, tier: 2 }
+- { name: "McDonald's", ats: custom, slug: tier-only-mcdonald-s, tier: 2 }
+- { name: "Kroger", ats: custom, slug: tier-only-kroger, tier: 2 }
+- { name: "Walgreens", ats: custom, slug: tier-only-walgreens, tier: 2 }
+- { name: "FedEx", ats: custom, slug: tier-only-fedex, tier: 2 }
+- { name: "UPS", ats: custom, slug: tier-only-ups, tier: 2 }
+- { name: "Marriott", ats: custom, slug: tier-only-marriott, tier: 2 }
+- { name: "Delta Air Lines", ats: custom, slug: tier-only-delta-air-lines, tier: 2 }
+- { name: "United Airlines", ats: custom, slug: tier-only-united-airlines, tier: 2 }
+- { name: "American Airlines", ats: custom, slug: tier-only-american-airlines, tier: 2 }
+- { name: "Johnson & Johnson", ats: custom, slug: tier-only-johnson-and-johnson, tier: 2 }
+- { name: "Pfizer", ats: custom, slug: tier-only-pfizer, tier: 2 }
+- { name: "Merck", ats: custom, slug: tier-only-merck, tier: 2 }
+- { name: "AbbVie", ats: custom, slug: tier-only-abbvie, tier: 2 }
+- { name: "UnitedHealth Group", ats: custom, slug: tier-only-unitedhealth-group, tier: 2 }
+- { name: "Optum", ats: custom, slug: tier-only-optum, tier: 2 }
+- { name: "CVS Health", ats: custom, slug: tier-only-cvs-health, tier: 2 }
+- { name: "McKesson", ats: custom, slug: tier-only-mckesson, tier: 2 }
+- { name: "Cardinal Health", ats: custom, slug: tier-only-cardinal-health, tier: 2 }
+- { name: "Medtronic", ats: custom, slug: tier-only-medtronic, tier: 2 }
+- { name: "Abbott", ats: custom, slug: tier-only-abbott, tier: 2 }
+- { name: "Thermo Fisher Scientific", ats: custom, slug: tier-only-thermo-fisher-scientific, tier: 2 }
+- { name: "Danaher", ats: custom, slug: tier-only-danaher, tier: 2 }
+- { name: "Stryker", ats: custom, slug: tier-only-stryker, tier: 2 }
+- { name: "Philips", ats: custom, slug: tier-only-philips, tier: 2 }
+- { name: "ExxonMobil", ats: custom, slug: tier-only-exxonmobil, tier: 2 }
+- { name: "Chevron", ats: custom, slug: tier-only-chevron, tier: 2 }
+- { name: "Shell", ats: custom, slug: tier-only-shell, tier: 2 }
+- { name: "BP", ats: custom, slug: tier-only-bp, tier: 2 }
+- { name: "TD Bank", ats: custom, slug: tier-only-td-bank, tier: 2 }
+- { name: "TD Bank Group", ats: custom, slug: tier-only-td-bank-group, tier: 2 }
+- { name: "Bank of Montreal", ats: custom, slug: tier-only-bank-of-montreal, tier: 2 }
+- { name: "BMO Financial Group", ats: custom, slug: tier-only-bmo-financial-group, tier: 2 }
+- { name: "National Bank", ats: custom, slug: tier-only-national-bank, tier: 2 }
+- { name: "National Bank of Canada", ats: custom, slug: tier-only-national-bank-of-canada, tier: 2 }
+- { name: "Desjardins", ats: custom, slug: tier-only-desjardins, tier: 2 }
+- { name: "ATB", ats: custom, slug: tier-only-atb, tier: 2 }
+- { name: "ATB Financial", ats: custom, slug: tier-only-atb-financial, tier: 2 }
+- { name: "Sun Life Financial", ats: custom, slug: tier-only-sun-life-financial, tier: 2 }
+- { name: "Manulife Financial", ats: custom, slug: tier-only-manulife-financial, tier: 2 }
+- { name: "Canada Life", ats: custom, slug: tier-only-canada-life, tier: 2 }
+- { name: "Great-West Lifeco", ats: custom, slug: tier-only-great-west-lifeco, tier: 2 }
+- { name: "Power Corporation of Canada", ats: custom, slug: tier-only-power-corporation-of-canada, tier: 2 }
+- { name: "Intact", ats: custom, slug: tier-only-intact, tier: 2 }
+- { name: "Intact Financial", ats: custom, slug: tier-only-intact-financial, tier: 2 }
+- { name: "intactfc", ats: custom, slug: tier-only-intactfc, tier: 2 }
+- { name: "Brookfield", ats: custom, slug: tier-only-brookfield, tier: 2 }
+- { name: "Mackenzie Investments", ats: custom, slug: tier-only-mackenzie-investments, tier: 2 }
+- { name: "IGM Financial", ats: custom, slug: tier-only-igm-financial, tier: 2 }
+- { name: "RBC Borealis", ats: custom, slug: tier-only-rbc-borealis, tier: 2 }
+- { name: "Borealis AI", ats: custom, slug: tier-only-borealis-ai, tier: 2 }
+- { name: "TMX", ats: custom, slug: tier-only-tmx, tier: 2 }
+- { name: "TMX Group", ats: custom, slug: tier-only-tmx-group, tier: 2 }
+- { name: "Interac", ats: custom, slug: tier-only-interac, tier: 2 }
+- { name: "Telus Health", ats: custom, slug: tier-only-telus-health, tier: 2 }
+- { name: "Bell Canada", ats: custom, slug: tier-only-bell-canada, tier: 2 }
+- { name: "Rogers Communications", ats: custom, slug: tier-only-rogers-communications, tier: 2 }
+- { name: "Loblaw", ats: custom, slug: tier-only-loblaw, tier: 2 }
+- { name: "Loblaw Digital", ats: custom, slug: tier-only-loblaw-digital, tier: 2 }
+- { name: "Canadian Tire", ats: custom, slug: tier-only-canadian-tire, tier: 2 }
+- { name: "CN", ats: custom, slug: tier-only-cn, tier: 2 }
+- { name: "Canadian National Railway", ats: custom, slug: tier-only-canadian-national-railway, tier: 2 }
+- { name: "CPKC", ats: custom, slug: tier-only-cpkc, tier: 2 }
+- { name: "Air Canada", ats: custom, slug: tier-only-air-canada, tier: 2 }
+- { name: "Suncor", ats: custom, slug: tier-only-suncor, tier: 2 }
+- { name: "Enbridge", ats: custom, slug: tier-only-enbridge, tier: 2 }
+- { name: "TC Energy", ats: custom, slug: tier-only-tc-energy, tier: 2 }
+- { name: "Nutrien", ats: custom, slug: tier-only-nutrien, tier: 2 }
+- { name: "Lululemon", ats: custom, slug: tier-only-lululemon, tier: 2 }
+- { name: "WSP", ats: custom, slug: tier-only-wsp, tier: 2 }
