@@ -1,4 +1,5 @@
 import type { AlertRule } from "./config.js";
+import { isMidLevelTitle } from "./classify.js";
 import type { Http, Job } from "./types.js";
 
 export type NtfyMessage = { title: string; message: string; click: string; priority: 1 | 2 | 3 | 4 | 5; ids: string[] };
@@ -23,6 +24,8 @@ export function matchesRule(job: Job, rule: AlertRule): boolean {
     rule.role_types.includes(job.roleType) &&
     rule.tiers.includes(job.tier) &&
     !rule.exclude_work_auth.includes(job.workAuth) &&
+    !(rule.exclude_mid_level && isMidLevelTitle(job.title)) &&
+    (rule.available_from === undefined || !job.startBy || job.startBy >= rule.available_from) &&
     (rule.max_years === undefined || job.yearsRequired === undefined || job.yearsRequired === null || job.yearsRequired <= rule.max_years) &&
     (rule.min_fit === undefined || (job.fit !== undefined && job.fit.skip === null && job.fit.newGrad === true && job.fit.score >= rule.min_fit))
   );
@@ -62,6 +65,27 @@ export function planNotifications(newJobs: Job[], rules: AlertRule[], siteUrl: s
       message: `${job.locations.slice(0, 2).join("; ") || "location n/a"} · tier ${job.tier} · ${job.level}${job.gradYear ? ` ${job.gradYear}` : ""}${fitNote(job)}`,
       click: job.url, priority: priorityFor(job, rule), ids: [job.id],
     })),
+  };
+}
+
+const CATCH_UP_LINES = 8;
+
+/**
+ * Open postings that match a rule but are too old to count as "new" (the first run's backlog, or a posting a source picked up
+ * weeks late). They go out as one digest so a new source cannot flood the phone, and so a matching job is never silently dropped.
+ */
+export function planCatchUp(jobs: Job[], rules: AlertRule[], siteUrl: string): NtfyMessage | null {
+  const matched = jobs
+    .map((job) => ({ job, rank: rules.findIndex((r) => matchesRule(job, r)) }))
+    .filter((m) => m.rank !== -1)
+    .sort((a, b) => a.rank - b.rank || a.job.tier - b.job.tier || b.job.postedAt.localeCompare(a.job.postedAt));
+  if (matched.length === 0) return null;
+  const lines = matched.slice(0, CATCH_UP_LINES).map(({ job }) => `${job.company}: ${job.title} (${job.locations[0] ?? "?"}, posted ${job.postedAt.slice(0, 10)})`);
+  if (matched.length > CATCH_UP_LINES) lines.push(`+${matched.length - CATCH_UP_LINES} more on the site`);
+  return {
+    title: `Catch-up: ${matched.length} open role${matched.length === 1 ? "" : "s"} match your alerts`,
+    message: lines.join("\n"),
+    click: siteUrl, priority: PRIORITY.default, ids: matched.map((m) => m.job.id),
   };
 }
 

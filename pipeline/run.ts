@@ -7,7 +7,7 @@ import { bigTechAdapters } from "./adapters/bigtech/index.js";
 import { communityAdapters } from "./adapters/communityLists.js";
 import { fetchHnHiring } from "./adapters/hn.js";
 import { fetchAdzuna, fetchJooble } from "./adapters/keyed.js";
-import { matchesRule, planNotifications, sendNtfy } from "./alerts.js";
+import { matchesRule, planCatchUp, planNotifications, sendNtfy } from "./alerts.js";
 import { classify, isSenior } from "./classify.js";
 import { loadAlertRules, loadCompanies, loadSources, type AlertRule } from "./config.js";
 import { norm } from "./dedupe.js";
@@ -172,20 +172,21 @@ export async function runPipeline(opts: RunOptions): Promise<{ jobCount: number;
 
   const alerted = new Set(prev.alerted);
   let sentCount = 0;
-  if (firstRun) {
-    for (const j of jobs) alerted.add(j.id); // seed silently: the first run must not push the whole backlog
-  } else {
+  {
     const candidates = jobs.filter((j) =>
-      !j.closedAt && !alerted.has(j.id) &&
-      now.getTime() - new Date(j.firstSeenAt).getTime() <= ALERT_WINDOW_HOURS * HOUR &&
-      now.getTime() - new Date(j.postedAt).getTime() <= ALERT_MAX_POSTING_AGE_DAYS * DAY);
-    const plan = planNotifications(candidates, opts.rules, opts.siteUrl);
-    const { sentIds } = await sendNtfy(opts.http, opts.env.NTFY_TOPIC, plan.messages);
+      !j.closedAt && !alerted.has(j.id) && (firstRun || now.getTime() - new Date(j.firstSeenAt).getTime() <= ALERT_WINDOW_HOURS * HOUR));
+    // A fresh posting gets its own alert; the first run's backlog and postings a source picked up late go into one catch-up digest.
+    const isFresh = (j: Job): boolean => !firstRun && now.getTime() - new Date(j.postedAt).getTime() <= ALERT_MAX_POSTING_AGE_DAYS * DAY;
+    const plan = planNotifications(candidates.filter(isFresh), opts.rules, opts.siteUrl);
+    const catchUp = planCatchUp(candidates.filter((j) => !isFresh(j)), opts.rules, opts.siteUrl);
+    const { sentIds } = await sendNtfy(opts.http, opts.env.NTFY_TOPIC, catchUp ? [...plan.messages, catchUp] : plan.messages);
     for (const id of sentIds) alerted.add(id);
     sentCount = sentIds.length;
     // jobs that match no rule are final for alert purposes; remember them so they are not re-evaluated every run
     const matching = new Set(candidates.filter((j) => opts.rules.some((r) => matchesRule(j, r))).map((j) => j.id));
     for (const j of candidates) if (!matching.has(j.id) && !awaitsRating(j)) alerted.add(j.id);
+    // The first run's backlog was offered once in the digest; later runs treat all of it as seen, rated or not.
+    if (firstRun) for (const j of jobs) alerted.add(j.id);
   }
 
   const liveIds = new Set(jobs.map((j) => j.id));

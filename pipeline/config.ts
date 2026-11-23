@@ -31,6 +31,8 @@ const alertRuleSchema = z.object({
   exclude_work_auth: z.array(z.enum(["none", "restricted", "no-sponsorship", "sponsors", "unknown"])),
   max_years: z.number().int().min(0).optional(),
   min_fit: z.number().min(0).max(1).optional(),
+  available_from: z.string().regex(/^\d{4}-\d{2}$/, "use YYYY-MM").optional(),
+  exclude_mid_level: z.boolean().optional(),
   priority: z.record(z.string(), z.enum(["high", "default", "low"])),
 });
 
@@ -45,6 +47,10 @@ export type AlertRule = {
   exclude_work_auth: Job["workAuth"][];
   /** When set, a posting that asks for more years of experience than this does not match (unknown experience still matches). */
   max_years?: number;
+  /** When set (YYYY-MM), a posting that needs you to start before this month does not match. */
+  available_from?: string;
+  /** When true, "Engineer II"-style titles (a level that usually asks for 2+ years) do not match. */
+  exclude_mid_level?: boolean;
   /** When set, only postings JEV has read as new-grad level, not ruled out, and rated at or above this score match. Unrated postings never do. */
   min_fit?: number;
   priority: Record<string, "high" | "default" | "low">;

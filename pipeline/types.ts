@@ -38,6 +38,8 @@ export type Job = {
   gradYear: 2026 | 2027 | 2028 | null;
   /** Smallest years of experience the posting asks for; undefined on data published before this field existed. */
   yearsRequired?: number | null;
+  /** The latest month (YYYY-MM) the posting lets you start in, when it states one. */
+  startBy?: string | null;
   workAuth: WorkAuth;
   tier: Tier;
   snippet: string;

@@ -35,12 +35,19 @@ describe("matchesRule (default core rule)", () => {
   test("a job whose link is dead does not match", () => expect(matchesRule(job({ linkStatus: "dead" }), rule)).toBe(false));
   test("a job whose link status is unknown still matches", () => expect(matchesRule(job({ linkStatus: "unknown" }), rule)).toBe(true));
   test("a closed job does not match", () => expect(matchesRule(job({ closedAt: NOW }), rule)).toBe(false));
+  test("a posting that needs you to start before you are available (May 2027) does not match", () => expect(matchesRule(job({ startBy: "2026-12" }), rule)).toBe(false));
+  test("a posting with a start date from May 2027 on matches", () => expect(matchesRule(job({ startBy: "2027-06" }), rule)).toBe(true));
+  test("a posting with no stated start date matches", () => expect(matchesRule(job({ startBy: null }), rule)).toBe(true));
+  test("an 'Engineer II' title does not match, even when labelled early-career", () => expect(matchesRule(job({ title: "Software Engineer II", level: "early-career", gradYear: null }), rule)).toBe(false));
+  test("1 year of experience still matches (an internship may count)", () => expect(matchesRule(job({ yearsRequired: 1 }), rule)).toBe(true));
 });
 
 describe("plain-title rule (level other at tier 1-2 in Canada)", () => {
   const plain = (over: Partial<Job> & { loc?: string[] } = {}) => job({ level: "other", gradYear: null, title: "Software Engineer", ...over });
   test("a plain 'Software Engineer' at a tier-1 company in Toronto matches", () => expect(matchesRule(plain(), plainRule)).toBe(true));
   test("so does a tier-2 company", () => expect(matchesRule(plain({ tier: 2 }), plainRule)).toBe(true));
+  test("an 'Engineer II' title stays out", () => expect(matchesRule(plain({ title: "Software Engineer II" }), plainRule)).toBe(false));
+  test("a posting that needs you to start before May 2027 stays out", () => expect(matchesRule(plain({ startBy: "2027-01" }), plainRule)).toBe(false));
   test("it does not match when the posting asks for 5+ years", () => expect(matchesRule(plain({ yearsRequired: 5 }), plainRule)).toBe(false));
   test("it matches when the posting asks for up to 1 year or states nothing, and not for 2 or more", () => {
     expect(matchesRule(plain({ yearsRequired: 2 }), plainRule)).toBe(false);
@@ -157,6 +164,9 @@ describe("fit ratings in alerts", () => {
     expect(matchesRule(small({ score: fitRule.min_fit!, skip: null, reasons: [], newGrad: true }), fitRule)).toBe(true);
     expect(matchesRule(small({ score: 0.95, skip: null, reasons: [], newGrad: false }), fitRule)).toBe(false); // a strong skills match that is not new-grad level
     expect(matchesRule(small({ score: 0.95, skip: null, reasons: [] }), fitRule)).toBe(false);
+  });
+  test("an 'Engineer II' title never matches the high-fit rule, even when JEV calls it new-grad", () => {
+    expect(matchesRule({ ...small({ score: 0.9, skip: null, reasons: [], newGrad: true }), title: "Software Engineer II - AI Engineering" }, fitRule)).toBe(false);
   });
   test("a posting JEV ruled out never matches the high-fit rule, whatever its score", () => {
     expect(matchesRule(small({ score: 0.9, skip: "asks for professional experience", reasons: [], newGrad: true }), fitRule)).toBe(false);
