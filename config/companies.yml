@@ -8,13 +8,15 @@
 - { name: "Analog Devices", ats: workday, slug: analogdevices, tier: 2, site: External, wd: 1 }  # 833 jobs
 - { name: "Autodesk", ats: workday, slug: autodesk, tier: 2, site: Ext, wd: 1 }  # 176 jobs
 - { name: "BMO", ats: workday, slug: bmo, tier: 2, site: External, wd: 3 }  # 989 jobs
+- { name: "BlackBerry", ats: workday, slug: bb, tier: 2, site: blackberry, wd: 3 }
+- { name: "BlackBerry", ats: workday, slug: bb, tier: 2, site: qnx, wd: 3 }  # QNX, a BlackBerry division
 - { name: "Broadcom", ats: workday, slug: broadcom, tier: 2, site: External_Career, wd: 1 }  # 374 jobs
 - { name: "CAE", ats: workday, slug: cae, tier: 3, site: career, wd: 3 }  # 388 jobs
 - { name: "CIBC", ats: workday, slug: cibc, tier: 2, site: search, wd: 3 }  # 614 jobs
 - { name: "Capital One", ats: workday, slug: capitalone, tier: 1, site: Capital_One, wd: 12 }  # 2017 jobs
 - { name: "Ciena", ats: workday, slug: ciena, tier: 2, site: Careers, wd: 5 }  # 146 jobs
 - { name: "Cisco", ats: workday, slug: cisco, tier: 1, site: Cisco_Careers, wd: 5 }  # 1531 jobs
-- { name: "Citi", ats: workday, slug: citi, tier: 3, site: "2", wd: 5 }  # 2000 jobs
+- { name: "Citi", ats: workday, slug: citi, tier: 2, site: "2", wd: 5 }  # 2000 jobs
 - { name: "CrowdStrike", ats: workday, slug: crowdstrike, tier: 2, site: crowdstrikecareers, wd: 5 }  # 377 jobs
 - { name: "Disney", ats: workday, slug: disney, tier: 2, site: disneycareer, wd: 5 }  # 351 jobs
 - { name: "Etsy", ats: workday, slug: etsy, tier: 2, site: etsy_careers, wd: 5 }  # 74 jobs

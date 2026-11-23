@@ -8,6 +8,8 @@
   tiers: [1, 2]
   exclude_work_auth: [restricted]
   max_years: 1               # a posting asking for 2 or more years is skipped; unstated experience still matches
+  available_from: "2027-05"    # graduating April 2027: a posting that needs you to start earlier is skipped
+  exclude_mid_level: true    # "Engineer II"-style titles usually want 2+ years of full-time work
   priority: { 1: high, 2: default }
 
 # Plain titles ("Software Engineer", no new-grad wording) at tier 1-2 companies in Canada. Quieter than the rule above, and
@@ -21,6 +23,8 @@
   tiers: [1, 2]
   exclude_work_auth: [restricted]
   max_years: 1
+  available_from: "2027-05"
+  exclude_mid_level: true
   priority: { 1: default, 2: default }
 
 # Postings at the same companies that the keyword rules above turn away because of a number in the text (a "3 years"
@@ -36,4 +40,6 @@
   tiers: [1, 2]              # add 3 to also hear about strong fits at smaller companies
   exclude_work_auth: [restricted]
   min_fit: 0.65
+  available_from: "2027-05"
+  exclude_mid_level: true    # JEV has called Microsoft "Software Engineer II" new-grad; a numbered level II+ title is not
   priority: { 1: default, 2: default }

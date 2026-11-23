@@ -1,6 +1,6 @@
 import { describe, test, expect } from "vitest";
 import {
-  classify, classifyGradYear, classifyLevel, classifyRoleType, classifyWorkAuth, classifyYearsRequired, isInternship, isSenior,
+  classify, classifyGradYear, classifyLevel, classifyRoleType, classifyStartBy, classifyWorkAuth, classifyYearsRequired, isInternship, isMidLevelTitle, isSenior,
 } from "../pipeline/classify.js";
 import type { RawJob } from "../pipeline/types.js";
 
@@ -38,7 +38,8 @@ describe("classifyLevel", () => {
     ["Graduate Student Researcher, Distributed Systems", "other"],
     ["Senior Software Engineer, Graduate Programs", "other"],
     ["Junior Backend Developer", "early-career"],
-    ["Software Engineer II", "early-career"],
+    ["Software Engineer II", "other"],
+    ["Software Dev Engineer II, 1P Audio Video Measurement", "other"],
     ["Senior Software Engineer", "other"],
     ["Staff Engineer, New Grad Programs Lead", "other"],
     ["Software Engineer III", "other"],
@@ -60,6 +61,35 @@ describe("classifyGradYear", () => {
   test("description 'class of 2027' is used when the title has no year", () => {
     expect(classifyGradYear("Software Engineer, New Grad", "Open to the class of 2027")).toBe(2027);
   });
+  test.each([
+    ["A Bachelor's or Master's degree in computer science or a directly related field, obtained by summer 2026, or equivalent work experience", 2026],
+    ["A Bachelor's or Master's degree in computer science or a directly related field, obtained by summer 2027, or equivalent work experience", 2027],
+    ["Degree completed before December 2026.", 2026],
+    ["Open to the class of 2026 or 2027.", 2027],
+    ["Graduating between December 2025 and June 2026.", 2026],
+    ["We have been building since 2026.", null],
+  ])("degree deadline in the description: %s -> %s", (text, expected) => expect(classifyGradYear("Software Engineer, New Grad", text)).toBe(expected));
+});
+
+describe("classifyStartBy", () => {
+  test.each([
+    ["Must be available to start full-time before December 1, 2026", "2026-12"],
+    ["You must be able to start no later than January 2027.", "2027-01"],
+    ["Start date: January 2027", "2027-01"],
+    ["Able to start by summer 2027", "2027-06"],
+    ["Start dates are flexible throughout 2027.", null],
+    ["We started the company in 2019.", null],
+    ["", null],
+  ])("%s -> %s", (text, expected) => expect(classifyStartBy(text)).toBe(expected));
+});
+
+describe("isMidLevelTitle", () => {
+  test.each([
+    ["Software Engineer II", true], ["Software Engineer II - CIAM", true], ["SDE II", true], ["Software Developer 2", true],
+    ["Software Dev Engineer II, 1P Audio Video Measurement", true], ["Data Scientist III", true],
+    ["Software Engineer I", false], ["Software Engineer", false], ["New Grad 2027: Software Engineer", false],
+    ["Software Engineer II, New Grad", false], ["Software Engineer 2027", false],
+  ])("%s -> %s", (title, expected) => expect(isMidLevelTitle(title)).toBe(expected));
 });
 
 describe("classifyWorkAuth", () => {

@@ -17,7 +17,12 @@ export function classifyRoleType(title: string): RoleType {
 
 const SENIOR = /\b(senior|sr\.?|staff|principal|lead|manager|director|head of|vp|architect|distinguished|fellow)\b/i;
 const NEW_GRAD = /\b(new[\s-]?grad(uate)?s?|new college grad|university grad(uate)?s?|recent grad(uate)?s?|college grad(uate)?s?|campus|entry[\s-]?level|graduates?(?! (student|school|degree|research)))\b|\b(sde|swe|sdet)\s*(1|i)\b|\bsoftware (development )?engineer\s*(1|i)\b|\bassociate\b.*\b(engineer|developer|sde|swe)\b/i;
-const EARLY = /\b(junior|jr\.?|early[\s-]?careers?)\b|\b(software|backend|frontend|full[\s-]?stack)?\s*(engineer|developer|sde|swe)\s*(2|ii)\b|\b(0|1)\s*(-|to)\s*2\s*years\b/i;
+const EARLY = /\b(junior|jr\.?|early[\s-]?careers?)\b|\b(0|1)\s*(-|to)\s*2\s*years\b/i;
+// "Engineer II", "SDE 2", "Data Scientist III": a level that usually asks for 2+ years of full-time work.
+const MID_LEVEL = /\b(engineer|developer|sde|swe|sdet|scientist|programmer)\s*(ii|iii|iv|2|3|4)\b/i;
+
+/** A numbered level of II or above, unless the title also says new grad, junior or early career. */
+export const isMidLevelTitle = (title: string): boolean => MID_LEVEL.test(title) && !NEW_GRAD.test(title) && !EARLY.test(title);
 
 /** Titles that mark a role as senior; these are dropped at ingest because they are never relevant to a new-grad search. */
 export const isSenior = (title: string): boolean => SENIOR.test(title);
@@ -45,9 +50,39 @@ const GRAD_TERMS = /(new[\s-]?grad|graduate|college grad|university grad|class o
 export function classifyGradYear(title: string, description = ""): 2026 | 2027 | 2028 | null {
   const t = /\b(2026|2027|2028)\b/.exec(title);
   if (t && GRAD_TERMS.test(title)) return Number(t[1]) as 2026 | 2027 | 2028;
-  const d = /class of (2026|2027|2028)\b|graduat\w*[^.]{0,40}\b(2026|2027|2028)\b/i.exec(description);
-  if (d) return Number(d[1] ?? d[2]) as 2026 | 2027 | 2028;
-  return null;
+  // Every graduation year the description ties to the degree; when several are named ("class of 2026 or 2027") the latest wins,
+  // so a posting is only ruled out when no year it accepts is late enough.
+  const years: number[] = [];
+  for (const re of [GRAD_IN_TEXT, DEGREE_DEADLINE]) {
+    for (const m of description.matchAll(re)) for (const y of m[0].matchAll(/\b(2026|2027|2028)\b/g)) years.push(Number(y[1]));
+  }
+  return years.length > 0 ? (Math.max(...years) as 2026 | 2027 | 2028) : null;
+}
+
+const GRAD_IN_TEXT = /class of (2026|2027|2028)\b(\s*(or|and|,|-|–|to)\s*(2026|2027|2028)\b)?|graduat\w*[^.]{0,40}\b(2026|2027|2028)\b/gi;
+const WHEN = String.raw`(?:(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\.?|spring|summer|fall|autumn|winter)?\s*(?:\d{1,2}(?:st|nd|rd|th)?,?\s+)?`;
+// "degree ... obtained by summer 2026", "degree completed before December 2026"
+const DEGREE_DEADLINE = new RegExp(String.raw`\b(?:degree|bachelor|master|diploma)[^.]{0,90}?\b(?:obtained|completed|conferred|earned|received|finished)\s+(?:by|before|no later than|prior to)\s+(?:the\s+)?${WHEN}(2026|2027|2028)\b`, "gi");
+
+const MONTHS: Record<string, string> = {
+  jan: "01", feb: "02", mar: "03", apr: "04", may: "05", jun: "06", jul: "07", aug: "08", sep: "09", oct: "10", nov: "11", dec: "12",
+  spring: "03", summer: "06", fall: "09", autumn: "09", winter: "12",
+};
+const START_BY = new RegExp(String.raw`\b(?:start|begin|commence)\w*\b[^.;:]{0,40}?\b(before|by|no later than|prior to)\s+(?:the\s+)?(?:([a-z]+)\.?\s+)?(?:\d{1,2}(?:st|nd|rd|th)?,?\s+)?(20\d\d)\b|\bstart date\s*(?:is|:|of)\s*([a-z]+)\.?\s+(?:\d{1,2}(?:st|nd|rd|th)?,?\s+)?(20\d\d)\b`, "i");
+
+/**
+ * The latest month (YYYY-MM) the posting lets you start in, or null when it states none. "Start before December 1, 2026"
+ * -> 2026-12, "Start date: January 2027" -> 2027-01. A bare year counts as its last month ("start by 2027" -> 2027-12),
+ * except after "before" ("before 2027" -> 2027-01), so an unclear date never rules a posting out.
+ */
+export function classifyStartBy(text: string): string | null {
+  const m = START_BY.exec(text);
+  if (!m) return null;
+  const [word, monthWord, year] = m[3] ? [m[1].toLowerCase(), m[2], m[3]] : ["by", m[4], m[5]];
+  const lower = monthWord?.toLowerCase();
+  const month = lower ? MONTHS[lower] ?? MONTHS[lower.slice(0, 3)] : undefined;
+  if (monthWord && !month) return null; // "start before the end of 2026" style wording we do not read
+  return `${year}-${month ?? (word === "before" ? "01" : "12")}`;
 }
 
 // Real limits: citizenship or clearance requirements. A job like this may be closed to the user even in Canada.
@@ -114,6 +149,7 @@ export function classify(raw: RawJob, tierOf: (company: string) => Tier, now: Da
     level: classifyLevel(raw.title, text),
     gradYear: classifyGradYear(raw.title, text),
     yearsRequired: classifyYearsRequired(text),
+    startBy: classifyStartBy(text),
     workAuth: classifyWorkAuth(`${raw.title} ${text}`, raw.sponsorshipHint),
     tier: tierOf(raw.company),
     snippet: toSnippet(raw.descriptionHtml ?? "", 400),

@@ -46,19 +46,24 @@ describe("runPipeline", () => {
   let ctx: ReturnType<typeof setup>;
   beforeEach(() => { ctx = setup(); });
 
-  test("first run writes jobs.json and state.json and sends nothing", async () => {
-    const res = await ctx.run(t0, { greenhouse: async () => [raw(1), raw(2)] });
-    expect(ctx.ntfy).toHaveLength(0);
-    expect(res).toMatchObject({ jobCount: 2, firstRun: true, alerted: 0 });
+  test("first run writes jobs.json and state.json and sends the open matches as one catch-up digest, not one alert each", async () => {
+    const res = await ctx.run(t0, { greenhouse: async () => [raw(1), raw(2), raw(3, { title: "Account Manager" })] });
+    expect(ctx.ntfy).toHaveLength(1);
+    expect(ctx.ntfy[0].title).toBe("Catch-up: 2 open roles match your alerts");
+    expect(ctx.ntfy[0].message).toContain("Acme: Software Engineer, New Grad 1");
+    expect(ctx.ntfy[0].click).toBe("https://jobs.example.app");
+    expect(res).toMatchObject({ jobCount: 2, firstRun: true, alerted: 2 });
     const file = ctx.read();
     expect(file.jobs).toHaveLength(2);
     expect(file.sources).toEqual([expect.objectContaining({ source: "greenhouse", status: "ok", jobCount: 2 })]);
     expect(file.generatedAt).toBe(t0.toISOString());
     expect(existsSync(join(ctx.dataDir, "state.json"))).toBe(true);
+    await ctx.run(later(30), { greenhouse: async () => [raw(1), raw(2)] });
+    expect(ctx.ntfy).toHaveLength(1); // never repeated
   });
 
   test("a later run alerts exactly once for a newly appeared matching job, and never twice", async () => {
-    await ctx.run(t0, { greenhouse: async () => [raw(1)] });
+    await ctx.run(t0, { greenhouse: async () => [raw(1)] }); ctx.ntfy.length = 0; // ignore the first run's catch-up digest
     await ctx.run(later(30), { greenhouse: async () => [raw(1), raw(2)] });
     expect(ctx.ntfy).toHaveLength(1);
     expect(ctx.ntfy[0].title).toContain("Acme");
@@ -76,7 +81,7 @@ describe("runPipeline", () => {
   });
 
   test("when every adapter fails the previous jobs are published unchanged, nothing closed, nothing alerted", async () => {
-    await ctx.run(t0, { greenhouse: async () => [raw(1), raw(2)] });
+    await ctx.run(t0, { greenhouse: async () => [raw(1), raw(2)] }); ctx.ntfy.length = 0; // ignore the first run's catch-up digest
     const before = ctx.read().jobs;
     await ctx.run(later(30), { greenhouse: async () => { throw new Error("HTTP 503"); } });
     const after = ctx.read();
@@ -87,7 +92,7 @@ describe("runPipeline", () => {
   });
 
   test("a failed ntfy send is retried on the next run", async () => {
-    await ctx.run(t0, { greenhouse: async () => [raw(1)] });
+    await ctx.run(t0, { greenhouse: async () => [raw(1)] }); ctx.ntfy.length = 0; // ignore the first run's catch-up digest
     ctx.failNtfy(true);
     await ctx.run(later(30), { greenhouse: async () => [raw(1), raw(2)] });
     expect(ctx.ntfy).toHaveLength(0);
@@ -96,9 +101,20 @@ describe("runPipeline", () => {
     expect(ctx.ntfy).toHaveLength(1);
   });
 
-  test("a posting that is already old when it first appears does not alert (new source can't flood)", async () => {
+  test("postings already old when they first appear go into one catch-up digest (a new source can't flood, and nothing is dropped)", async () => {
     await ctx.run(t0, { greenhouse: async () => [raw(1)] });
-    await ctx.run(later(30), { greenhouse: async () => [raw(1), raw(2, { postedAt: "2026-09-01T00:00:00.000Z" })] });
+    ctx.ntfy.length = 0;
+    const old = (n: number) => raw(n, { postedAt: "2026-09-01T00:00:00.000Z" });
+    await ctx.run(later(30), { greenhouse: async () => [raw(1), raw(2), old(3), old(4), old(5)] });
+    expect(ctx.ntfy.map((m) => m.title)).toEqual(["Acme: Software Engineer, New Grad 2", "Catch-up: 3 open roles match your alerts"]);
+    await ctx.run(later(60), { greenhouse: async () => [raw(1), raw(2), old(3), old(4), old(5)] });
+    expect(ctx.ntfy).toHaveLength(2);
+  });
+
+  test("an old posting that matches no rule sends nothing", async () => {
+    await ctx.run(t0, { greenhouse: async () => [raw(1)] });
+    ctx.ntfy.length = 0;
+    await ctx.run(later(30), { greenhouse: async () => [raw(1), raw(2, { postedAt: "2026-09-01T00:00:00.000Z", locations: ["Berlin, Germany"] })] });
     expect(ctx.ntfy).toHaveLength(0);
   });
 
@@ -113,7 +129,7 @@ describe("runPipeline", () => {
   });
 
   test("a dead link from a non-direct source is marked dead and never alerted", async () => {
-    await ctx.run(t0, { jobright: async () => [raw(1, { source: "jobright", url: "https://jobright.ai/jobs/info/1" })] });
+    await ctx.run(t0, { jobright: async () => [raw(1, { source: "jobright", url: "https://jobright.ai/jobs/info/1" })] }); ctx.ntfy.length = 0; // ignore the first run's catch-up digest
     ctx.setProbe(404);
     await ctx.run(later(30), { jobright: async () => [raw(1, { source: "jobright", url: "https://jobright.ai/jobs/info/1" }), raw(2, { source: "jobright", url: "https://jobright.ai/jobs/info/2" })] });
     const jobs = ctx.read().jobs;
@@ -204,7 +220,7 @@ describe("runPipeline", () => {
     });
     const jevOf = (decide: Jev["decide"]): Jev => ({ decide, usage: { calls: 0, costUsd: 0 } });
     // a top company's plain-titled posting whose text mentions 3 years: no keyword rule alerts on it
-    const small = (n: number, over: Partial<RawJob> = {}) => raw(n, { title: `Software Developer ${n}`, descriptionHtml: `<p>Posting ${n}: our team has 3 years of experience shipping this.</p>`, ...over });
+    const small = (n: number, over: Partial<RawJob> = {}) => raw(n, { title: `Software Developer, Team ${n}`, descriptionHtml: `<p>Posting ${n}: our team has 3 years of experience shipping this.</p>`, ...over });
 
     test("without a key and profile nothing is rated and no job carries a fit", async () => {
       await ctx.run(t0, { greenhouse: async () => [small(1)] });
@@ -223,23 +239,23 @@ describe("runPipeline", () => {
 
     test("a high-fit posting alerts, though no keyword rule matches it", async () => {
       ctx.rateWith(jevOf(async () => strong()));
-      await ctx.run(t0, { greenhouse: async () => [small(1)] });
+      await ctx.run(t0, { greenhouse: async () => [small(1)] }); ctx.ntfy.length = 0; // ignore the first run's catch-up digest
       await ctx.run(later(30), { greenhouse: async () => [small(1), small(2)] });
       expect(ctx.ntfy).toHaveLength(1);
-      expect(ctx.ntfy[0].title).toBe("Acme: Software Developer 2");
+      expect(ctx.ntfy[0].title).toBe("Acme: Software Developer, Team 2");
       expect(ctx.ntfy[0].message).toContain("fit 78%");
     });
 
     test("a low-fit posting the keyword rules turned away does not alert", async () => {
       ctx.rateWith(jevOf(async () => strong(1)));
-      await ctx.run(t0, { greenhouse: async () => [small(1)] });
+      await ctx.run(t0, { greenhouse: async () => [small(1)] }); ctx.ntfy.length = 0; // ignore the first run's catch-up digest
       await ctx.run(later(30), { greenhouse: async () => [small(1), small(2)] });
       expect(ctx.ntfy).toHaveLength(0);
     });
 
     test("when JEV is down the run still publishes and keyword alerts still fire", async () => {
       ctx.rateWith(jevOf(async () => { throw new Error("HTTP 503"); }));
-      await ctx.run(t0, { greenhouse: async () => [raw(1)] });
+      await ctx.run(t0, { greenhouse: async () => [raw(1)] }); ctx.ntfy.length = 0; // ignore the first run's catch-up digest
       const res = await ctx.run(later(30), { greenhouse: async () => [raw(1), raw(2)] });
       expect(res.jobCount).toBe(2);
       expect(ctx.ntfy).toHaveLength(1);
@@ -249,12 +265,12 @@ describe("runPipeline", () => {
     test("a posting JEV could not rate in one run is rated, and alerted, in the next", async () => {
       let down = true;
       ctx.rateWith(jevOf(async () => { if (down) throw new Error("HTTP 503"); return strong(); }));
-      await ctx.run(t0, { greenhouse: async () => [small(1)] });
+      await ctx.run(t0, { greenhouse: async () => [small(1)] }); ctx.ntfy.length = 0; // ignore the first run's catch-up digest
       await ctx.run(later(30), { greenhouse: async () => [small(1), small(2)] });
       expect(ctx.ntfy).toHaveLength(0);
       down = false;
       await ctx.run(later(60), { greenhouse: async () => [small(1), small(2)] });
-      expect(ctx.ntfy.map((m) => m.title)).toEqual(["Acme: Software Developer 2"]);
+      expect(ctx.ntfy.map((m) => m.title)).toEqual(["Acme: Software Developer, Team 2"]);
     });
   });
 });
